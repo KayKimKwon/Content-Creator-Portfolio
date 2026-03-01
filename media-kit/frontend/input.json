@@ -1,39 +1,17 @@
 {
-    "creator": {
-      "name": "Jane Doe",
-      "niche": "",
-      "shortBio": "",
-      "contact": {
-        "email": "",
-        "instagram": "",
-        "tiktok": "",
-        "youtube": ""
-      },
-      "location": "",
-      "profilePhoto": "base64string | url",
-  
-      "youtubeChannelID": "",
-  
-      "metrics": [
-        {
-          "platform": "instagram",
-          "followers": null,
-          "avgLike": null,
-          "avgComments": null,
-          "avgViews": null,
-          "mostViews": null,
-          "mostLikes": null,
-          "mostComments": null
-        }
-      ],
-  
-      "pastCollabs": [
-        {
-          "brandName": "",
-          "campaignType": "sponsored post",
-          "deliverables": "",
-          "year": 2020
-        }
-      ]
+    "name": "Jane Doe",
+    "youtubeChannelID": "",
+
+    "niche": "", 
+    "email": "",
+    "targetCompanies": "",
+
+    "platforms": [
+    {
+        "instagramFollowers": null,
+        "tiktokFollowers": null
     }
-  }
+    ],
+
+    "pastCollabs": ""
+}
