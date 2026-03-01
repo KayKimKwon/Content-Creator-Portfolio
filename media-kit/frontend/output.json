@@ -1,0 +1,24 @@
+{
+    "kitId": "creator-kit-12345",
+    "engagement": {
+        "overallEngagementRate": 4.2,
+        "byPlatform": [
+            {
+                "platform": "instagram",
+                "engagementRate": 3.8
+            },
+            {
+                "platform": "tiktok", 
+                "engagementRate": 5.1
+            }
+        ]
+    },
+    "pricing": {
+        "perPost": 180,
+        "perPackage": 540,
+        "currency": "USD"
+    },
+    "professionalBio": "Dynamic content creator specializing in fitness and lifestyle content. With 75K+ combined followers across Instagram and TikTok, I deliver authentic engagement through workout tutorials, healthy recipes, and motivational content.",
+    "audienceSummary": "Primary audience: 18-34 year old fitness enthusiasts (65% female). High engagement from US and Canada. Content resonates most with gym-goers and home workout communities.",
+    "pitchEmail": "Subject: Collaboration Opportunity - Fitness Content Partnership\n\nHi [Brand],\n\nI'm Jane Doe, a fitness creator with 75K+ engaged followers across IG/TikTok. My audience loves practical workout content and I'd love to partner on [campaign].\n\nMy stats:\n• Instagram: 45K followers, 4.2% engagement\n• TikTok: 30K followers, 5.1% engagement\n\nSuggested rate: $180/post, $540/package\n\nExcited to discuss!\nJane"
+}
