@@ -1,0 +1,440 @@
+{
+    "brands": [
+      {
+        "name": "Amazon",
+        "niche": "lifestyle",
+        "brandTier": "iconic",
+        "fameScore": 0.97,
+        "idealCreatorTier": ["micro", "mid", "macro", "mega"],
+        "minSubscribers": 5000,
+        "maxSubscribers": 50000000,
+        "avgCPM": 18,
+        "collaborationStyle": "affiliate-heavy, product placement, seasonal campaigns",
+        "brandPersonality": "convenient, everyday, value-driven, universal",
+        "notes": "Primarily drives affiliate / Amazon Associates deals; direct sponsorships reserved for macro+"
+      },
+      {
+        "name": "Notion",
+        "niche": "lifestyle",
+        "brandTier": "mid",
+        "fameScore": 0.62,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 5000000,
+        "avgCPM": 30,
+        "collaborationStyle": "integration demo, tutorial, workflow showcase",
+        "brandPersonality": "clean, modern, aspirational, productivity-focused",
+        "notes": "Extremely active sponsorship program; creator-friendly with good rep responsiveness"
+      },
+      {
+        "name": "Skylight Calendar",
+        "niche": "lifestyle",
+        "brandTier": "emerging",
+        "fameScore": 0.28,
+        "idealCreatorTier": ["nano", "micro", "mid"],
+        "minSubscribers": 1000,
+        "maxSubscribers": 500000,
+        "avgCPM": 35,
+        "collaborationStyle": "family/home integration, routine showcase",
+        "brandPersonality": "family-oriented, organized, wholesome, practical",
+        "notes": "Smart home family product — great fit for daily routine / family lifestyle creators"
+      },
+  
+
+      {
+        "name": "Nike",
+        "niche": "fitness",
+        "brandTier": "iconic",
+        "fameScore": 0.98,
+        "idealCreatorTier": ["mid", "macro", "mega"],
+        "minSubscribers": 100000,
+        "maxSubscribers": 50000000,
+        "avgCPM": 25,
+        "collaborationStyle": "performance-driven, campaign-based, ambassador",
+        "brandPersonality": "premium, motivational, high-performance, aspirational",
+        "notes": "Highly selective; prioritizes athletes and high-production fitness creators"
+      },
+      {
+        "name": "MyProtein",
+        "niche": "fitness",
+        "brandTier": "mid",
+        "fameScore": 0.58,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 5000,
+        "maxSubscribers": 3000000,
+        "avgCPM": 28,
+        "collaborationStyle": "discount code, product gifting, affiliate",
+        "brandPersonality": "science-backed, value, accessible, gym-culture",
+        "notes": "Very active sponsor in fitness space; known for generous affiliate commissions"
+      },
+      {
+        "name": "Whoop",
+        "niche": "fitness",
+        "brandTier": "emerging",
+        "fameScore": 0.41,
+        "idealCreatorTier": ["micro", "mid"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 1000000,
+        "avgCPM": 40,
+        "collaborationStyle": "review, data-driven storytelling, lifestyle integration",
+        "brandPersonality": "data-obsessed, elite, biohacking, performance-tracking",
+        "notes": "Rising wearable brand — great for creators who blend fitness with tech/optimization content"
+      },
+  
+
+      {
+        "name": "L'Oréal",
+        "niche": "beauty",
+        "brandTier": "iconic",
+        "fameScore": 0.95,
+        "idealCreatorTier": ["mid", "macro", "mega"],
+        "minSubscribers": 50000,
+        "maxSubscribers": 50000000,
+        "avgCPM": 22,
+        "collaborationStyle": "product launch, tutorial integration, ambassador",
+        "brandPersonality": "empowering, inclusive, science-meets-glamour, iconic",
+        "notes": "Strong creator program across all sub-brands (Maybelline, NYX, Garnier, etc.)"
+      },
+      {
+        "name": "GRWM Cosmetics",
+        "niche": "beauty",
+        "brandTier": "mid",
+        "fameScore": 0.45,
+        "idealCreatorTier": ["micro", "mid"],
+        "minSubscribers": 5000,
+        "maxSubscribers": 800000,
+        "avgCPM": 32,
+        "collaborationStyle": "get-ready-with-me integration, haul, review",
+        "brandPersonality": "trendy, Gen Z, fun, affordable, social-first",
+        "notes": "Born on YouTube/TikTok — actively seeks creator partnerships as core marketing strategy"
+      },
+      {
+        "name": "Soft Services",
+        "niche": "beauty",
+        "brandTier": "emerging",
+        "fameScore": 0.22,
+        "idealCreatorTier": ["nano", "micro"],
+        "minSubscribers": 1000,
+        "maxSubscribers": 200000,
+        "avgCPM": 45,
+        "collaborationStyle": "skincare routine, ingredient deep-dive, honest review",
+        "brandPersonality": "clinical, body-positive, ingredient-transparent, editorial",
+        "notes": "Niche skincare brand with cult following; prioritizes authenticity over reach"
+      },
+
+
+      {
+        "name": "HelloFresh",
+        "niche": "food",
+        "brandTier": "iconic",
+        "fameScore": 0.82,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 10000000,
+        "avgCPM": 35,
+        "collaborationStyle": "meal unboxing, recipe integration, discount code",
+        "brandPersonality": "fresh, convenient, family-friendly, approachable",
+        "notes": "One of the most prolific YouTube sponsors ever; wide creator range accepted"
+      },
+      {
+        "name": "Made In Cookware",
+        "niche": "food",
+        "brandTier": "mid",
+        "fameScore": 0.50,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 2000000,
+        "avgCPM": 38,
+        "collaborationStyle": "recipe showcase, product review, kitchen tour",
+        "brandPersonality": "craft, quality, chef-inspired, premium-accessible",
+        "notes": "Rapidly growing DTC cookware brand with active creator program"
+      },
+      {
+        "name": "Brightland",
+        "niche": "food",
+        "brandTier": "emerging",
+        "fameScore": 0.25,
+        "idealCreatorTier": ["nano", "micro"],
+        "minSubscribers": 1000,
+        "maxSubscribers": 150000,
+        "avgCPM": 50,
+        "collaborationStyle": "ingredient spotlight, cooking integration, aesthetic unboxing",
+        "brandPersonality": "artisan, farm-to-table, aesthetic, health-conscious",
+        "notes": "Premium olive oil / vinegar brand; ideal for food creators with aesthetic / slow-living angle"
+      },
+  
+
+      {
+        "name": "Samsung",
+        "niche": "tech",
+        "brandTier": "iconic",
+        "fameScore": 0.96,
+        "idealCreatorTier": ["macro", "mega"],
+        "minSubscribers": 500000,
+        "maxSubscribers": 50000000,
+        "avgCPM": 20,
+        "collaborationStyle": "product launch, device review, campaign integration",
+        "brandPersonality": "innovative, premium, mainstream, feature-rich",
+        "notes": "Reserved for large channels; typically goes through agency intermediaries"
+      },
+      {
+        "name": "Anker",
+        "niche": "tech",
+        "brandTier": "mid",
+        "fameScore": 0.60,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 5000000,
+        "avgCPM": 27,
+        "collaborationStyle": "product review, unboxing, setup/desk tour integration",
+        "brandPersonality": "reliable, practical, value-focused, everyday-tech",
+        "notes": "Extremely creator-friendly; one of the most accessible mid-tier tech sponsors"
+      },
+      {
+        "name": "Ugreen",
+        "niche": "tech",
+        "brandTier": "emerging",
+        "fameScore": 0.33,
+        "idealCreatorTier": ["nano", "micro", "mid"],
+        "minSubscribers": 2000,
+        "maxSubscribers": 500000,
+        "avgCPM": 33,
+        "collaborationStyle": "setup tour, cable/hub review, desk organization",
+        "brandPersonality": "clean, functional, setup-culture, value-premium",
+        "notes": "Aggressively sponsoring tech/setup creators; fast approval, competitive rates"
+      },
+  
+
+      {
+        "name": "Fidelity",
+        "niche": "finance",
+        "brandTier": "iconic",
+        "fameScore": 0.88,
+        "idealCreatorTier": ["mid", "macro", "mega"],
+        "minSubscribers": 100000,
+        "maxSubscribers": 20000000,
+        "avgCPM": 45,
+        "collaborationStyle": "educational integration, sponsored segment, brand awareness",
+        "brandPersonality": "trustworthy, authoritative, long-term, established",
+        "notes": "Heavily regulated — requires compliance review; CPM is high but process is slower"
+      },
+      {
+        "name": "Monarch Money",
+        "niche": "finance",
+        "brandTier": "mid",
+        "fameScore": 0.42,
+        "idealCreatorTier": ["micro", "mid"],
+        "minSubscribers": 5000,
+        "maxSubscribers": 1000000,
+        "avgCPM": 55,
+        "collaborationStyle": "budgeting tutorial, app walkthrough, personal finance story",
+        "brandPersonality": "modern, empowering, visual, budgeting-focused",
+        "notes": "Fast-growing Mint alternative; actively seeking finance and lifestyle creator partners"
+      },
+      {
+        "name": "Blossom",
+        "niche": "finance",
+        "brandTier": "emerging",
+        "fameScore": 0.20,
+        "idealCreatorTier": ["nano", "micro"],
+        "minSubscribers": 1000,
+        "maxSubscribers": 200000,
+        "avgCPM": 60,
+        "collaborationStyle": "investing explainer, app review, beginner finance tutorial",
+        "brandPersonality": "approachable, beginner-friendly, community-driven, transparent",
+        "notes": "Stock market social app targeting Gen Z investors; high CPM for small niche audiences"
+      },
+  
+
+      {
+        "name": "Razer",
+        "niche": "gaming",
+        "brandTier": "iconic",
+        "fameScore": 0.87,
+        "idealCreatorTier": ["mid", "macro", "mega"],
+        "minSubscribers": 50000,
+        "maxSubscribers": 30000000,
+        "avgCPM": 22,
+        "collaborationStyle": "peripheral review, setup showcase, esports integration",
+        "brandPersonality": "edgy, performance, esports, RGB, community-driven",
+        "notes": "Strong creator program; brand recognition does a lot of the selling for you"
+      },
+      {
+        "name": "GFuel",
+        "niche": "gaming",
+        "brandTier": "mid",
+        "fameScore": 0.55,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 5000,
+        "maxSubscribers": 5000000,
+        "avgCPM": 25,
+        "collaborationStyle": "drink integration, custom flavor collab, discount code",
+        "brandPersonality": "hype, gaming culture, bold, community-first",
+        "notes": "Iconic gaming energy drink; one of the most widely distributed gaming sponsorships"
+      },
+      {
+        "name": "Backbone",
+        "niche": "gaming",
+        "brandTier": "emerging",
+        "fameScore": 0.35,
+        "idealCreatorTier": ["nano", "micro", "mid"],
+        "minSubscribers": 2000,
+        "maxSubscribers": 500000,
+        "avgCPM": 38,
+        "collaborationStyle": "mobile gaming review, controller showcase, travel gaming",
+        "brandPersonality": "sleek, mobile-first, modern, premium-portable",
+        "notes": "Mobile game controller brand growing rapidly; good fit for console + mobile crossover creators"
+      },
+  
+
+      {
+        "name": "Booking.com",
+        "niche": "travel",
+        "brandTier": "iconic",
+        "fameScore": 0.91,
+        "idealCreatorTier": ["micro", "mid", "macro", "mega"],
+        "minSubscribers": 5000,
+        "maxSubscribers": 30000000,
+        "avgCPM": 30,
+        "collaborationStyle": "accommodation integration, travel vlog, affiliate link",
+        "brandPersonality": "global, accessible, deal-focused, adventure-enabling",
+        "notes": "One of the most widely-used travel sponsors; accessible to creators of all sizes"
+      },
+      {
+        "name": "Heymondo Travel Insurance",
+        "niche": "travel",
+        "brandTier": "mid",
+        "fameScore": 0.40,
+        "idealCreatorTier": ["micro", "mid"],
+        "minSubscribers": 5000,
+        "maxSubscribers": 800000,
+        "avgCPM": 42,
+        "collaborationStyle": "travel safety story, sponsored segment, affiliate",
+        "brandPersonality": "adventurous, responsible, global, safety-conscious",
+        "notes": "Aggressively sponsoring travel creators; good commission rates for affiliates"
+      },
+      {
+        "name": "Ekster Wallets",
+        "niche": "travel",
+        "brandTier": "emerging",
+        "fameScore": 0.30,
+        "idealCreatorTier": ["nano", "micro", "mid"],
+        "minSubscribers": 2000,
+        "maxSubscribers": 400000,
+        "avgCPM": 40,
+        "collaborationStyle": "travel gear review, minimalist packing, everyday carry",
+        "brandPersonality": "sleek, minimalist, smart, travel-optimized",
+        "notes": "Smart wallet brand; ideal for minimalist travel creators or everyday carry content"
+      },
+  
+
+      {
+        "name": "Skillshare",
+        "niche": "education",
+        "brandTier": "iconic",
+        "fameScore": 0.80,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 10000000,
+        "avgCPM": 32,
+        "collaborationStyle": "class recommendation, sponsored segment, affiliate trial",
+        "brandPersonality": "creative, curious, self-improvement, accessible",
+        "notes": "Bread-and-butter YouTube sponsor; very high acceptance rate for educational creators"
+      },
+      {
+        "name": "Brilliant",
+        "niche": "education",
+        "brandTier": "mid",
+        "fameScore": 0.55,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 20000,
+        "maxSubscribers": 5000000,
+        "avgCPM": 38,
+        "collaborationStyle": "problem-solving demo, STEM integration, trial offer",
+        "brandPersonality": "intellectual, curious, science-driven, visual-learner",
+        "notes": "STEM-focused learning platform; particularly strong fit for math, science, and logic creators"
+      },
+      {
+        "name": "Readwise",
+        "niche": "education",
+        "brandTier": "emerging",
+        "fameScore": 0.27,
+        "idealCreatorTier": ["nano", "micro"],
+        "minSubscribers": 1000,
+        "maxSubscribers": 200000,
+        "avgCPM": 50,
+        "collaborationStyle": "reading habit content, note-taking workflow, book summary",
+        "brandPersonality": "intellectual, book-lover, productivity, quiet-ambition",
+        "notes": "Cult reading/highlighting tool; ideal for book review or PKM (personal knowledge management) creators"
+      },
+  
+
+      {
+        "name": "Honey (PayPal)",
+        "niche": "entertainment",
+        "brandTier": "iconic",
+        "fameScore": 0.85,
+        "idealCreatorTier": ["micro", "mid", "macro", "mega"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 50000000,
+        "avgCPM": 20,
+        "collaborationStyle": "mid-roll segment, savings story, challenge integration",
+        "brandPersonality": "fun, savings-obsessed, accessible, reward-driven",
+        "notes": "Legendary YouTube sponsor — almost universally recognizable; wide creator range"
+      },
+      {
+        "name": "Ridge Wallet",
+        "niche": "entertainment",
+        "brandTier": "mid",
+        "fameScore": 0.52,
+        "idealCreatorTier": ["micro", "mid", "macro"],
+        "minSubscribers": 10000,
+        "maxSubscribers": 5000000,
+        "avgCPM": 28,
+        "collaborationStyle": "product placement, unboxing, casual mention",
+        "brandPersonality": "minimalist, masculine, everyday-carry, no-nonsense",
+        "notes": "Extremely prolific YouTube sponsor; fits almost any male-skewing entertainment creator"
+      },
+      {
+        "name": "Established Titles",
+        "niche": "entertainment",
+        "brandTier": "emerging",
+        "fameScore": 0.24,
+        "idealCreatorTier": ["nano", "micro", "mid"],
+        "minSubscribers": 2000,
+        "maxSubscribers": 500000,
+        "avgCPM": 35,
+        "collaborationStyle": "novelty gift mention, fun challenge, gifting segment",
+        "brandPersonality": "quirky, gifting, fun, lighthearted, novelty",
+        "notes": "Novelty land title brand popular in comedy/challenge content; easy integration"
+      }
+  
+    ],
+  
+    "meta": {
+      "version": "1.0",
+      "lastUpdated": "2026-03-01",
+      "totalBrands": 30,
+      "niches": [
+        "lifestyle", "fitness", "beauty", "food",
+        "tech", "finance", "gaming", "travel",
+        "education", "entertainment"
+      ],
+      "tiers": {
+        "iconic": { "fameScoreRange": [0.75, 1.0], "fameScore_numeric": [8, 10] },
+        "mid":     { "fameScoreRange": [0.40, 0.74], "fameScore_numeric": [4, 7] },
+        "emerging": { "fameScoreRange": [0.10, 0.39], "fameScore_numeric": [1, 3] }
+      },
+      "creatorTiers": {
+        "nano":  { "minSubs": 1000,    "maxSubs": 9999 },
+        "micro": { "minSubs": 10000,   "maxSubs": 99999 },
+        "mid":   { "minSubs": 100000,  "maxSubs": 499999 },
+        "macro": { "minSubs": 500000,  "maxSubs": 4999999 },
+        "mega":  { "minSubs": 5000000, "maxSubs": null }
+      },
+      "schema": {
+        "required": ["name", "niche", "brandTier", "fameScore", "idealCreatorTier", "minSubscribers", "maxSubscribers", "avgCPM", "collaborationStyle", "brandPersonality"],
+        "optional": ["notes"]
+      }
+    }
+  }
