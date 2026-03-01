@@ -5,13 +5,15 @@
     "niche": "", 
     "email": "",
     "targetCompanies": "",
-
     "platforms": [
-    {
-        "instagramFollowers": null,
-        "tiktokFollowers": null
-    }
+        {
+            "instagramFollowers": null,
+            "instagramMaxLikes": null,
+            "instagramMaxViews": null,
+            "tiktokFollowers": null,
+            "tiktokMaxLikes": null,
+            "tiktokMaxViews": null
+        }
     ],
-
     "pastCollabs": ""
 }
