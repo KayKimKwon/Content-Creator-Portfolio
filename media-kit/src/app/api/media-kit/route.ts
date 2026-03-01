@@ -1,7 +1,7 @@
 // Basic types for the creator media kit payload and response.
 // These can evolve with your frontend form.
 
-type PlatformName = "instagram" | "tiktok" | "youtube" | "twitter" | "other";
+type PlatformName = "youtubbe" | "instagram" | "tiktok" | "twitter" | "other";
 
 interface PlatformStats {
   platform: PlatformName;
@@ -22,21 +22,13 @@ interface Collaboration {
   year: number;
 }
 
-type BrandCategory = "fitness" | "tech" | "beauty" | "fashion" | "gaming" | "art" | "lifestyle" | "other";
-
-
-interface Contact {
-  email: string;
-  instagram?: string;
-  tiktok?: string;
-  youtube?: string;
-}
+type BrandCategory = "fitness" | "tech" | "beauty" | "gaming" | "art" | "lifestyle" | "other";
 
 interface CreatorMediaKitRequest {
   name: string;
   niche: string;
   shortBio: string;
-  contact: Contact;
+  contact: {email: string, instagram?: string, tiktok?: string, youtube?: string};
   website?: string;
   targetBrandCategory: BrandCategory;
   platforms: PlatformStats[];

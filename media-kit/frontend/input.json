@@ -1,32 +1,39 @@
 {
     "creator": {
-        "name" : "Jane Doe",
-        "niche" : "",
-        "shortBio": "",
-        "contact" : {
-            "email" : "",
-            "instagram" : "",
-            "tiktok" : "",
-            "youtube" : ""
-        },
-        "location" : "",
-        "profilePhoto" : "base64string | url",
-        "metrics" : {
-            "platform" : "",
-            "followers" : 10000,
-            "avgLike": 4900, //this will differ in pricing for youtube and instagram
-            "avgComments" : 200,
-            "avgViews" : 45000,
-            "mostViews" : 3200000,
-            "mostLikes" : 100000,
-            "mostComments" : 4239
-        },
-
-        "pastCollabs" : {
-            "brandName": "",
-            "campaignType" : "sponsored post",
-            "deliverables" : "",
-            "year" : 2020
+      "name": "Jane Doe",
+      "niche": "",
+      "shortBio": "",
+      "contact": {
+        "email": "",
+        "instagram": "",
+        "tiktok": "",
+        "youtube": ""
+      },
+      "location": "",
+      "profilePhoto": "base64string | url",
+  
+      "youtubeChannelID": "",
+  
+      "metrics": [
+        {
+          "platform": "instagram",
+          "followers": null,
+          "avgLike": null,
+          "avgComments": null,
+          "avgViews": null,
+          "mostViews": null,
+          "mostLikes": null,
+          "mostComments": null
         }
+      ],
+  
+      "pastCollabs": [
+        {
+          "brandName": "",
+          "campaignType": "sponsored post",
+          "deliverables": "",
+          "year": 2020
+        }
+      ]
     }
-}
+  }
