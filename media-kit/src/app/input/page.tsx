@@ -1,4 +1,52 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function InputPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [channelId, setChannelId] = useState("");
+  const [targetCompanies, setTargetCompanies] = useState("");
+  const [otherPlatforms, setOtherPlatforms] = useState("");
+  const [pastCollabs, setPastCollabs] = useState("");
+  const [niche, setNiche] = useState("");
+
+  const handleSubmit = async () => {
+    if (!channelId) return;
+    setLoading(true);
+    try {
+      const ytData = await fetch("/api/youtube", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ channelId }),
+      }).then((r) => r.json());
+
+      const analysis = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ytData, otherPlatforms, niche }),
+      }).then((r) => r.json());
+
+      const generated = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ytData, analysis }),
+      }).then((r) => r.json());
+
+      localStorage.setItem(
+        "results",
+        JSON.stringify({ ytData, analysis, generated })
+      );
+      router.push("/results");
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-zinc-50 px-6 py-16 font-sans text-zinc-900 dark:bg-black dark:text-zinc-50">
       <div className="mx-auto flex max-w-3xl flex-col gap-10">
@@ -19,8 +67,10 @@ export default function InputPage() {
             </label>
             <input
               type="text"
+              value={channelId}
+              onChange={(e) => setChannelId(e.target.value)}
               placeholder="https://www.youtube.com/@yourchannel or UC..."
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
             />
             <p className="text-xs text-zinc-500">
               We&apos;ll use the YouTube API to fetch your stats and recent
@@ -34,8 +84,10 @@ export default function InputPage() {
             </label>
             <textarea
               rows={3}
+              value={targetCompanies}
+              onChange={(e) => setTargetCompanies(e.target.value)}
               placeholder="Nike, Gymshark, Adidas"
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
             />
             <p className="text-xs text-zinc-500">
               If you already know who you want to pitch, list brand names here
@@ -50,8 +102,10 @@ export default function InputPage() {
               </label>
               <textarea
                 rows={3}
-                placeholder="Instagram: 25,000 followers&#10;TikTok: 40,000 followers"
-                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                value={otherPlatforms}
+                onChange={(e) => setOtherPlatforms(e.target.value)}
+                placeholder={"Instagram: 25,000 followers\nTikTok: 40,000 followers"}
+                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
               />
               <p className="text-xs text-zinc-500">
                 Simple follower counts are enough for now.
@@ -64,8 +118,10 @@ export default function InputPage() {
               </label>
               <textarea
                 rows={3}
-                placeholder="Brand: campaign type or short note&#10;Example: Nike: long-term ambassador"
-                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                value={pastCollabs}
+                onChange={(e) => setPastCollabs(e.target.value)}
+                placeholder={"Nike: long-term ambassador\nGymshark: sponsored post"}
+                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
               />
               <p className="text-xs text-zinc-500">
                 Helps us avoid repeats and tailor outreach.
@@ -75,26 +131,35 @@ export default function InputPage() {
 
           <div className="space-y-2">
             <label className="block text-sm font-medium">
-              Niche (optional)
+              Niche override (optional)
             </label>
-            <input
-              type="text"
-              placeholder="If empty, we&apos;ll infer from your channel"
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
-            />
+            <select
+              value={niche}
+              onChange={(e) => setNiche(e.target.value)}
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+            >
+              <option value="">Auto-detect from channel</option>
+              <option value="tech">Tech</option>
+              <option value="fitness">Fitness</option>
+              <option value="beauty">Beauty</option>
+              <option value="gaming">Gaming</option>
+              <option value="food">Food</option>
+              <option value="lifestyle">Lifestyle</option>
+            </select>
           </div>
         </section>
 
         <div className="flex justify-end">
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-zinc-50 shadow-sm transition hover:bg-zinc-800 dark:bg-zinc-50 dark:text-black dark:hover:bg-zinc-200"
+            onClick={handleSubmit}
+            disabled={loading || !channelId}
+            className="inline-flex items-center justify-center rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-zinc-50 shadow-sm transition hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-50 dark:text-black dark:hover:bg-zinc-200"
           >
-            Generate recommendations
+            {loading ? "Analyzing..." : "Generate recommendations"}
           </button>
         </div>
       </div>
     </main>
   );
 }
-
