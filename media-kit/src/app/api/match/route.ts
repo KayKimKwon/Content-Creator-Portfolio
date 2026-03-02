@@ -116,40 +116,6 @@ interface YouTubeCreatorData {
   recentVideoTitles: string[];
 }
 
-async function inferNicheFromContent(
-  youtubeData: YouTubeCreatorData
-): Promise<string | null> {
-  const metaConfig = getMeta();
-  const allowed = metaConfig.niches ?? [];
-  if (!allowed.length) return null;
-
-  const description = youtubeData.channelDescription ?? "";
-  const titles = (youtubeData.recentVideoTitles ?? []).map((t) => `- ${t}`).join("\n");
-
-  const prompt =
-    `You are classifying a YouTube channel into exactly one niche from this list:\n` +
-    `${allowed.join(", ")}\n\n` +
-    `Channel description:\n${description}\n\n` +
-    `Recent video titles:\n${titles}\n\n` +
-    `Respond with ONLY the single niche string from the list above (no explanations or extra text).`;
-
-  const msg = await anthropic.messages.create({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 30,
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  const raw =
-    msg.content[0].type === "text" ? msg.content[0].text.trim() : "";
-  if (!raw) return null;
-
-  const normalized = raw.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
-  const match = allowed.find(
-    (n) => n.toLowerCase() === normalized
-  );
-  return match ?? null;
-}
-
 function tokenizeTextToSet(text: string | null | undefined): Set<string> {
   const set = new Set<string>();
   if (!text) return set;
@@ -160,6 +126,34 @@ function tokenizeTextToSet(text: string | null | undefined): Set<string> {
     .filter((t) => t.length >= 3);
   for (const t of tokens) set.add(t);
   return set;
+}
+
+function inferNicheFromTokens(contentTokens: Set<string>): string | null {
+  const metaConfig = getMeta();
+  const niches = metaConfig.niches ?? [];
+  if (!niches.length || contentTokens.size === 0) return null;
+
+  let bestNiche: string | null = null;
+  let bestScore = 0;
+
+  for (const niche of niches) {
+    const brands = getBrandsForNiche(niche);
+    if (!brands.length) continue;
+    let score = 0;
+    for (const brand of brands) {
+      const brandText = `${brand.collaborationStyle ?? ""} ${brand.brandPersonality ?? ""} ${brand.notes ?? ""}`;
+      const brandTokens = tokenizeTextToSet(brandText);
+      for (const token of brandTokens) {
+        if (contentTokens.has(token)) score++;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestNiche = niche;
+    }
+  }
+
+  return bestScore > 0 ? bestNiche : null;
 }
 
 function getTierFromSubscribers(subscribers: number): CreatorTierName {
@@ -341,8 +335,18 @@ function scoreBrand(
   const isHigh = rawBase > SCALE_THRESHOLD;
   const minMult = isHigh ? 0.92 : 0.8;
   const maxMult = isHigh ? 1.08 : 1.2;
-  const min = Math.round(basePrice * minMult);
-  const max = Math.round(basePrice * maxMult);
+  let min = Math.round(basePrice * minMult);
+  let max = Math.round(basePrice * maxMult);
+
+  // Ensure sensible minimums so we never show $0–$0,
+  // especially for nano creators.
+  if (creator.tier === "nano" && max <= 0) {
+    min = 50;
+    max = 150;
+  } else if (max <= 0) {
+    min = 100;
+    max = 300;
+  }
 
   const pricing: PricingRange = {
     min,
@@ -430,22 +434,22 @@ export async function POST(req: Request) {
       }
     }
 
-    // Optionally infer niche from channel content when the user selected auto-detect.
-    const wantsAutoNiche = raw.niche === "__auto__";
-    if (wantsAutoNiche && youtubeData) {
-      try {
-        const inferred = await inferNicheFromContent(youtubeData);
-        if (inferred) {
-          normalized.nicheOverride = inferred;
-        }
-      } catch (err) {
-        console.warn("Anthropic niche inference failed; falling back to manual niche.", err);
+    // If the user did not supply a niche, infer it locally from channel content.
+    if (!normalized.nicheOverride && youtubeData) {
+      const combined = [
+        youtubeData.channelDescription ?? "",
+        ...(youtubeData.recentVideoTitles ?? []),
+      ].join(" ");
+      const tokens = tokenizeTextToSet(combined);
+      const inferred = inferNicheFromTokens(tokens);
+      if (inferred) {
+        normalized.nicheOverride = inferred;
       }
     }
 
     const creator = estimateCreatorProfile(normalized, youtubeData);
 
-    // Niche is required (dropdown); use it to load only that niche's brands first.
+    // Niche is required; use it to load only that niche's brands first.
     const userNiche = (normalized.nicheOverride ?? "").toLowerCase().trim();
     if (!userNiche) {
       return new Response(

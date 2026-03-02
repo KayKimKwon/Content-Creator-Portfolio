@@ -9,8 +9,6 @@ export default function InputPage() {
   const [name, setName] = useState("");
   const [youtubeChannelID, setYoutubeChannelID] = useState("");
   const [email, setEmail] = useState("");
-  const [niche, setNiche] = useState("");
-  const [nicheOptions, setNicheOptions] = useState<string[]>([]);
   const [targetCompanies, setTargetCompanies] = useState("");
   const [pastCollabs, setPastCollabs] = useState("");
   const [instagramFollowers, setInstagramFollowers] = useState("");
@@ -22,13 +20,7 @@ export default function InputPage() {
   const [showAdvancedMetrics, setShowAdvancedMetrics] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch("/api/meta")
-      .then((r) => (r.ok ? r.json() : { niches: [] }))
-      .then((data) => setNicheOptions(data.niches ?? []))
-      .catch(() => setNicheOptions([]));
-  }, []);
+  const [loadingStep, setLoadingStep] = useState(0);
 
   // Pre-fill from last submission when returning from output (e.g. "Back to input").
   useEffect(() => {
@@ -40,7 +32,6 @@ export default function InputPage() {
         name?: string;
         youtubeChannelID?: string;
         email?: string;
-        niche?: string;
         targetCompanies?: string;
         pastCollabs?: string;
         platforms?: Array<{
@@ -56,7 +47,6 @@ export default function InputPage() {
       if (payload.youtubeChannelID != null)
         setYoutubeChannelID(String(payload.youtubeChannelID));
       if (payload.email != null) setEmail(String(payload.email));
-      if (payload.niche != null) setNiche(String(payload.niche));
       if (payload.targetCompanies != null)
         setTargetCompanies(String(payload.targetCompanies));
       if (payload.pastCollabs != null)
@@ -81,6 +71,18 @@ export default function InputPage() {
     }
   }, []);
 
+  // Rotate loading messages while request is in flight.
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingStep(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setLoadingStep((prev) => (prev + 1) % 4);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [isLoading]);
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
@@ -100,11 +102,6 @@ export default function InputPage() {
       return;
     }
 
-    if (!niche.trim()) {
-      setError("Please select your niche from the dropdown.");
-      return;
-    }
-
     const parseNumberOrNull = (value: string) => {
       const trimmed = value.trim();
       if (!trimmed) return null;
@@ -115,7 +112,6 @@ export default function InputPage() {
     const payload = {
       name,
       youtubeChannelID,
-      niche,
       email,
       targetCompanies,
       pastCollabs,
@@ -176,6 +172,13 @@ export default function InputPage() {
       setIsLoading(false);
     }
   }
+
+  const loadingMessages = [
+    "Fetching your YouTube stats…",
+    "Inferring your niche from channel content…",
+    "Scoring brands based on fit…",
+    "Writing tailored bios and pitch emails…",
+  ];
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-zinc-50 to-emerald-50/30 px-4 py-12 font-sans text-zinc-900 dark:from-zinc-950 dark:to-emerald-950/20 dark:text-zinc-50 sm:px-6 sm:py-16">
@@ -242,24 +245,11 @@ export default function InputPage() {
 
           <div className="space-y-2">
             <label className="block text-sm font-medium">
-              Niche <span className="text-red-500">*</span>
+              Niche detection
             </label>
-            <select
-              value={niche}
-              onChange={(e) => setNiche(e.target.value)}
-              required
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
-            >
-              <option value="">Select a niche</option>
-              <option value="__auto__">Auto-detect from your YouTube channel</option>
-              {nicheOptions.map((n) => (
-                <option key={n} value={n}>
-                  {n}
-                </option>
-              ))}
-            </select>
             <p className="text-xs text-zinc-500">
-              Recommendations will focus on this niche plus one from a related niche. You can also choose auto-detect to infer your niche from channel content.
+              We&apos;ll infer your niche automatically from your YouTube channel
+              description and recent video titles.
             </p>
           </div>
 
@@ -401,6 +391,11 @@ export default function InputPage() {
               {isLoading ? "Generating..." : "Generate recommendations"}
             </button>
           </div>
+          {isLoading && (
+            <p className="mt-2 text-xs text-zinc-500 animate-pulse dark:text-zinc-400">
+              {loadingMessages[loadingStep]}
+            </p>
+          )}
         </form>
       </div>
     </main>

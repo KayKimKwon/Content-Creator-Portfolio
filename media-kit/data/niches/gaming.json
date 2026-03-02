@@ -3,270 +3,480 @@
     "name": "Razer",
     "brandTier": "iconic",
     "fameScore": 0.87,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 50000,
     "maxSubscribers": 30000000,
     "avgCPM": 22,
     "collaborationStyle": "peripheral review, setup showcase, esports integration",
     "brandPersonality": "edgy, performance, esports, RGB, community-driven",
-    "notes": "Strong creator program; brand recognition does a lot of the selling for you",
-    "niche": "gaming"
+    "notes": "Strong creator program; brand recognition does a lot of the selling for you"
   },
   {
     "name": "PlayStation",
     "brandTier": "iconic",
     "fameScore": 0.95,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 100000,
     "maxSubscribers": 40000000,
     "avgCPM": 30,
     "collaborationStyle": "game launch campaign, console review, exclusive gameplay integration",
     "brandPersonality": "epic, cinematic, community, blockbuster-gaming",
-    "notes": "Reserved for large channels; primarily agency-mediated; strong fit for AAA game and console review creators",
-    "niche": "gaming"
+    "notes": "Reserved for large channels; primarily agency-mediated; strong fit for AAA game and console review creators"
   },
   {
     "name": "Xbox / Microsoft Gaming",
     "brandTier": "iconic",
     "fameScore": 0.93,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 50000,
     "maxSubscribers": 30000000,
     "avgCPM": 28,
     "collaborationStyle": "Game Pass showcase, console review, exclusive title launch",
     "brandPersonality": "inclusive, value-driven, community, cross-platform",
-    "notes": "Game Pass is a highly sponsorable product; more creator-accessible than PlayStation for mid-tier channels",
-    "niche": "gaming"
+    "notes": "Game Pass is a highly sponsorable product; more creator-accessible than PlayStation for mid-tier channels"
   },
   {
     "name": "ASUS ROG",
     "brandTier": "iconic",
     "fameScore": 0.88,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 50000,
     "maxSubscribers": 15000000,
     "avgCPM": 25,
     "collaborationStyle": "PC build showcase, peripheral review, esports integration",
     "brandPersonality": "performance, premium, esports-grade, aggressive-aesthetic",
-    "notes": "Republic of Gamers brand; strong fit for PC building, hardware review, and esports creators",
-    "niche": "gaming"
+    "notes": "Republic of Gamers brand; strong fit for PC building, hardware review, and esports creators"
+  },
+  {
+    "name": "Nvidia",
+    "brandTier": "iconic",
+    "fameScore": 0.96,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 100000,
+    "maxSubscribers": 30000000,
+    "avgCPM": 32,
+    "collaborationStyle": "GPU review, PC build integration, ray tracing showcase",
+    "brandPersonality": "cutting-edge, performance, tech-forward, enthusiast-grade",
+    "notes": "Most coveted GPU brand in gaming; high CPM due to premium tech audience; agency-mediated for large deals"
+  },
+  {
+    "name": "AMD",
+    "brandTier": "iconic",
+    "fameScore": 0.91,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 28,
+    "collaborationStyle": "CPU/GPU review, PC build showcase, performance benchmark",
+    "brandPersonality": "challenger, value-performance, enthusiast, community-driven",
+    "notes": "Strong alternative to Nvidia; slightly more creator-accessible; great fit for PC build and hardware review channels"
+  },
+  {
+    "name": "Logitech G",
+    "brandTier": "iconic",
+    "fameScore": 0.89,
+    "idealCreatorTier": ["micro", "mid", "macro", "mega"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 26,
+    "collaborationStyle": "peripheral review, setup showcase, esports integration",
+    "brandPersonality": "reliable, performance, accessible, esports-trusted",
+    "notes": "One of the most widely recognized gaming peripheral brands; very active creator program across all tiers"
+  },
+  {
+    "name": "Nintendo",
+    "brandTier": "iconic",
+    "fameScore": 0.97,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 100000,
+    "maxSubscribers": 40000000,
+    "avgCPM": 25,
+    "collaborationStyle": "game launch integration, console showcase, family gaming content",
+    "brandPersonality": "iconic, family-friendly, nostalgic, creative",
+    "notes": "Notoriously protective of their IP; sponsorships are rare but highly valuable when they occur"
+  },
+  {
+    "name": "HyperX",
+    "brandTier": "iconic",
+    "fameScore": 0.85,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 20000,
+    "maxSubscribers": 10000000,
+    "avgCPM": 24,
+    "collaborationStyle": "headset review, setup showcase, esports integration",
+    "brandPersonality": "esports-trusted, accessible, performance, community",
+    "notes": "HP-owned gaming peripheral brand; extremely active sponsorship program; one of the most creator-accessible iconic brands in gaming"
+  },
+  {
+    "name": "Alienware",
+    "brandTier": "iconic",
+    "fameScore": 0.86,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 15000000,
+    "avgCPM": 30,
+    "collaborationStyle": "gaming laptop review, high-end PC showcase, setup tour",
+    "brandPersonality": "premium, futuristic, performance, aspirational-gaming",
+    "notes": "Dell's premium gaming brand; strong fit for high-end PC gaming and setup creators; selective but active program"
   },
   {
     "name": "GFuel",
     "brandTier": "mid",
     "fameScore": 0.55,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 5000,
     "maxSubscribers": 5000000,
     "avgCPM": 25,
     "collaborationStyle": "drink integration, custom flavor collab, discount code",
     "brandPersonality": "hype, gaming-culture, bold, community-first",
-    "notes": "Iconic gaming energy drink; one of the most widely distributed gaming sponsorships; easy integration",
-    "niche": "gaming"
+    "notes": "Iconic gaming energy drink; one of the most widely distributed gaming sponsorships; easy integration"
   },
   {
     "name": "SteelSeries",
     "brandTier": "mid",
     "fameScore": 0.62,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 4000000,
     "avgCPM": 26,
     "collaborationStyle": "peripheral review, setup showcase, competitive gaming integration",
     "brandPersonality": "precision, competitive, esports-trusted, performance-first",
-    "notes": "Strong alternative to Razer for peripheral sponsorships; very active creator program",
-    "niche": "gaming"
+    "notes": "Strong alternative to Razer for peripheral sponsorships; very active creator program"
   },
   {
     "name": "Corsair",
     "brandTier": "mid",
     "fameScore": 0.65,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 5000000,
     "avgCPM": 27,
     "collaborationStyle": "PC build integration, peripheral review, RGB setup showcase",
     "brandPersonality": "premium, builder-focused, RGB, performance-driven",
-    "notes": "Covers peripherals, PC components, and streaming gear; wide product range makes for flexible integrations",
-    "niche": "gaming"
-  },
-  {
-    "name": "NordVPN",
-    "brandTier": "mid",
-    "fameScore": 0.7,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
-    "minSubscribers": 10000,
-    "maxSubscribers": 8000000,
-    "avgCPM": 32,
-    "collaborationStyle": "mid-roll segment, gaming security story, evergreen integration",
-    "brandPersonality": "security-focused, practical, digital-freedom, trustworthy",
-    "notes": "Extremely common gaming channel sponsor; easy evergreen integration regardless of content sub-niche",
-    "niche": "gaming"
-  },
-  {
-    "name": "Epidemic Sound",
-    "brandTier": "mid",
-    "fameScore": 0.58,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
-    "minSubscribers": 5000,
-    "maxSubscribers": 3000000,
-    "avgCPM": 28,
-    "collaborationStyle": "music licensing story, content creation workflow, mid-roll segment",
-    "brandPersonality": "creative, professional, creator-native, music-forward",
-    "notes": "Royalty-free music platform; universal fit for any gaming creator who produces edited video content",
-    "niche": "gaming"
+    "notes": "Covers peripherals, PC components, and streaming gear; wide product range makes for flexible integrations"
   },
   {
     "name": "Secretlab",
     "brandTier": "mid",
     "fameScore": 0.68,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 5000000,
     "avgCPM": 30,
     "collaborationStyle": "gaming chair review, setup tour, long-session comfort story",
     "brandPersonality": "premium, esports-endorsed, comfort-obsessed, setup-culture",
-    "notes": "Leading gaming chair brand; extremely active sponsorship program with wide creator range",
-    "niche": "gaming"
+    "notes": "Leading gaming chair brand; extremely active sponsorship program with wide creator range"
+  },
+  {
+    "name": "Epidemic Sound",
+    "brandTier": "mid",
+    "fameScore": 0.58,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 28,
+    "collaborationStyle": "music licensing story, content creation workflow, mid-roll segment",
+    "brandPersonality": "creative, professional, creator-native, music-forward",
+    "notes": "Royalty-free music platform; universal fit for any gaming creator who produces edited video content"
+  },
+  {
+    "name": "NordVPN",
+    "brandTier": "mid",
+    "fameScore": 0.70,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 8000000,
+    "avgCPM": 32,
+    "collaborationStyle": "mid-roll segment, gaming security story, evergreen integration",
+    "brandPersonality": "security-focused, practical, digital-freedom, trustworthy",
+    "notes": "Extremely common gaming channel sponsor; easy evergreen integration regardless of content sub-niche"
+  },
+  {
+    "name": "Elgato",
+    "brandTier": "mid",
+    "fameScore": 0.62,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 34,
+    "collaborationStyle": "streaming setup review, capture card showcase, studio tour",
+    "brandPersonality": "creator-native, streaming-focused, clean, professional",
+    "notes": "Corsair-owned streaming gear brand; ideal for YouTube/Twitch setup and streaming-focused gaming creators"
+  },
+  {
+    "name": "Turtle Beach",
+    "brandTier": "mid",
+    "fameScore": 0.60,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 24,
+    "collaborationStyle": "headset review, console gaming integration, competitive audio story",
+    "brandPersonality": "accessible, console-focused, competitive, community",
+    "notes": "Leading console gaming headset brand; strong fit for console-focused and competitive multiplayer creators"
+  },
+  {
+    "name": "Twitch",
+    "brandTier": "mid",
+    "fameScore": 0.88,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 8000000,
+    "avgCPM": 22,
+    "collaborationStyle": "streaming story, platform integration, gaming lifestyle content",
+    "brandPersonality": "community, live, authentic, gaming-culture",
+    "notes": "Platform-level sponsorships for creators who also stream; strong crossover for YouTube gaming creators with Twitch presence"
+  },
+  {
+    "name": "NZXT",
+    "brandTier": "mid",
+    "fameScore": 0.55,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 2000000,
+    "avgCPM": 32,
+    "collaborationStyle": "PC build showcase, case review, clean aesthetic setup",
+    "brandPersonality": "clean, minimalist-PC, builder-focused, aesthetic-first",
+    "notes": "PC cases and components brand; strong fit for creators who prioritize clean aesthetic PC builds"
+  },
+  {
+    "name": "Astro Gaming",
+    "brandTier": "mid",
+    "fameScore": 0.64,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 28,
+    "collaborationStyle": "headset reviews, console and PC audio setups, esports content",
+    "brandPersonality": "tournament-proven, console-forward, lifestyle-gaming, premium",
+    "notes": "Headset brand popular with console and esports players; good fit for competitive and controller-first channels"
+  },
+  {
+    "name": "BenQ / Zowie",
+    "brandTier": "mid",
+    "fameScore": 0.6,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 30,
+    "collaborationStyle": "monitor reviews, esports aim/latency content, pro-setup tours",
+    "brandPersonality": "low-latency, pro-FPS, no-frills, performance-first",
+    "notes": "Monitor line deeply associated with competitive FPS; ideal for ranked and aim-focused creators"
+  },
+  {
+    "name": "DXRacer",
+    "brandTier": "mid",
+    "fameScore": 0.58,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 28,
+    "collaborationStyle": "gaming chair reviews, long-session comfort content, setup tours",
+    "brandPersonality": "classic-gamer, colorful, esports-pedigree, comfort-focused",
+    "notes": "Legacy gaming chair brand; a good alternative to Secretlab for mid-tier creators"
+  },
+  {
+    "name": "Streamlabs",
+    "brandTier": "mid",
+    "fameScore": 0.6,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 30,
+    "collaborationStyle": "overlay/tutorial content, donation and alerts workflow, streaming setup guides",
+    "brandPersonality": "streamer-first, monetization-aware, overlay-heavy, creator-tools",
+    "notes": "Streaming software and tools; ideal for creators teaching streaming setups and monetization"
+  },
+  {
+    "name": "GameStop (campaign-based)",
+    "brandTier": "mid",
+    "fameScore": 0.7,
+    "idealCreatorTier": ["mid", "macro"],
+    "minSubscribers": 30000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 26,
+    "collaborationStyle": "launch event coverage, physical/digital game promos, collector’s editions",
+    "brandPersonality": "retail, collector-focused, nostalgic, chain-store",
+    "notes": "Occasional campaigns around big launches; good fit for console, physical media, and collector-focused channels"
   },
   {
     "name": "Backbone",
     "brandTier": "emerging",
     "fameScore": 0.35,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["nano", "micro", "mid"],
     "minSubscribers": 2000,
     "maxSubscribers": 500000,
     "avgCPM": 38,
     "collaborationStyle": "mobile gaming review, controller showcase, travel gaming",
     "brandPersonality": "sleek, mobile-first, modern, premium-portable",
-    "notes": "Mobile game controller growing rapidly; good fit for console and mobile crossover creators",
-    "niche": "gaming"
+    "notes": "Mobile game controller growing rapidly; good fit for console and mobile crossover creators"
   },
   {
     "name": "Glorious",
     "brandTier": "emerging",
     "fameScore": 0.32,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["nano", "micro", "mid"],
     "minSubscribers": 2000,
     "maxSubscribers": 400000,
     "avgCPM": 32,
     "collaborationStyle": "mouse/keyboard review, modding showcase, competitive setup content",
     "brandPersonality": "enthusiast-grade, community-built, modding-culture, precision",
-    "notes": "Cult gaming peripheral brand popular with enthusiasts; ideal for creators covering competitive or modding content",
-    "niche": "gaming"
-  },
-  {
-    "name": "NZXT",
-    "brandTier": "emerging",
-    "fameScore": 0.38,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
-    "minSubscribers": 5000,
-    "maxSubscribers": 600000,
-    "avgCPM": 34,
-    "collaborationStyle": "PC build showcase, case review, clean aesthetic setup",
-    "brandPersonality": "clean, minimalist-PC, builder-focused, aesthetic-first",
-    "notes": "PC cases and components brand; strong fit for creators who prioritize clean aesthetic PC builds",
-    "niche": "gaming"
+    "notes": "Cult gaming peripheral brand popular with enthusiasts; ideal for creators covering competitive or modding content"
   },
   {
     "name": "Ironside Computers",
     "brandTier": "emerging",
     "fameScore": 0.25,
-    "idealCreatorTier": [
-      "nano",
-      "micro"
-    ],
+    "idealCreatorTier": ["nano", "micro"],
     "minSubscribers": 2000,
     "maxSubscribers": 250000,
     "avgCPM": 36,
     "collaborationStyle": "custom PC showcase, build reveal, gaming setup tour",
     "brandPersonality": "custom, performance, gamer-built, American-made",
-    "notes": "Custom PC builder with an active creator program; good fit for gaming setup and PC build channels",
-    "niche": "gaming"
-  },
-  {
-    "name": "Xtrfy",
-    "brandTier": "emerging",
-    "fameScore": 0.2,
-    "idealCreatorTier": [
-      "nano",
-      "micro"
-    ],
-    "minSubscribers": 1000,
-    "maxSubscribers": 150000,
-    "avgCPM": 30,
-    "collaborationStyle": "peripheral review, esports gear showcase, competitive setup",
-    "brandPersonality": "esports-rooted, precision, Scandinavian, competitive",
-    "notes": "Esports peripheral brand from Sweden; niche but loyal following among competitive FPS players",
-    "niche": "gaming"
+    "notes": "Custom PC builder with an active creator program; good fit for gaming setup and PC build channels"
   },
   {
     "name": "Mobalytics",
     "brandTier": "emerging",
     "fameScore": 0.22,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["nano", "micro", "mid"],
     "minSubscribers": 2000,
     "maxSubscribers": 300000,
     "avgCPM": 35,
     "collaborationStyle": "rank improvement story, analytics demo, coaching integration",
     "brandPersonality": "improvement-focused, data-driven, community, competitive",
-    "notes": "Gaming analytics and coaching platform; ideal for creators focused on ranked improvement in games like LoL, Valorant, or TFT",
-    "niche": "gaming"
+    "notes": "Gaming analytics and coaching platform; ideal for creators focused on ranked improvement in games like LoL, Valorant, or TFT"
+  },
+  {
+    "name": "Xtrfy",
+    "brandTier": "emerging",
+    "fameScore": 0.20,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 30,
+    "collaborationStyle": "peripheral review, esports gear showcase, competitive setup",
+    "brandPersonality": "esports-rooted, precision, Scandinavian, competitive",
+    "notes": "Esports peripheral brand from Sweden; niche but loyal following among competitive FPS players"
+  },
+  {
+    "name": "Artisan Mousepads",
+    "brandTier": "emerging",
+    "fameScore": 0.18,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 100000,
+    "avgCPM": 34,
+    "collaborationStyle": "peripheral review, competitive setup showcase, mousepad comparison",
+    "brandPersonality": "enthusiast, Japanese-crafted, precision, niche-premium",
+    "notes": "Japanese premium mousepad brand with cult following among competitive FPS players; ideal for hyper-niche peripheral review creators"
+  },
+  {
+    "name": "Scuf Gaming",
+    "brandTier": "emerging",
+    "fameScore": 0.38,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 600000,
+    "avgCPM": 36,
+    "collaborationStyle": "controller review, competitive console gaming story, pro-setup showcase",
+    "brandPersonality": "pro-level, competitive, console-focused, performance",
+    "notes": "Custom pro controller brand for console gamers; ideal for competitive console gaming creators covering FPS or sports games"
+  },
+  {
+    "name": "Drop (Massdrop)",
+    "brandTier": "emerging",
+    "fameScore": 0.30,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 400000,
+    "avgCPM": 38,
+    "collaborationStyle": "mechanical keyboard review, enthusiast gear showcase, collab product drop",
+    "brandPersonality": "enthusiast, community-driven, collab-focused, quality-obsessed",
+    "notes": "Community-driven gear brand known for mechanical keyboards and audiophile products; ideal for keyboard enthusiast and setup creators"
+  },
+  {
+    "name": "Jinx",
+    "brandTier": "emerging",
+    "fameScore": 0.24,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 200000,
+    "avgCPM": 28,
+    "collaborationStyle": "gaming apparel showcase, merch integration, gaming lifestyle content",
+    "brandPersonality": "gamer-culture, fun, nerdy-proud, community",
+    "notes": "Gaming apparel and merchandise brand; ideal for creators with a strong gaming lifestyle or pop culture angle"
+  },
+  {
+    "name": "Litter Robot",
+    "brandTier": "emerging",
+    "fameScore": 0.28,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 400000,
+    "avgCPM": 40,
+    "collaborationStyle": "gaming setup integration, pet + gaming lifestyle story, product showcase",
+    "brandPersonality": "smart-home, pet-friendly, gamer-lifestyle, innovative",
+    "notes": "Automatic litter box brand that actively sponsors gaming creators; surprisingly strong conversion among gamer-pet-owner audience"
+  },
+  {
+    "name": "Displate",
+    "brandTier": "emerging",
+    "fameScore": 0.32,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 500000,
+    "avgCPM": 30,
+    "collaborationStyle": "setup decoration showcase, gaming art integration, room tour",
+    "brandPersonality": "artistic, gaming-culture, setup-aesthetic, collectible",
+    "notes": "Metal gaming and pop culture art prints; extremely popular with gaming setup creators; easy room tour integration"
+  },
+  {
+    "name": "Thermaltake",
+    "brandTier": "emerging",
+    "fameScore": 0.34,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 500000,
+    "avgCPM": 32,
+    "collaborationStyle": "PC build showcase, case/cooling review, RGB setup integration",
+    "brandPersonality": "builder-focused, RGB, performance-cooling, enthusiast",
+    "notes": "PC cases, cooling, and peripherals brand; active creator program; good fit for PC building and modding creators"
+  },
+  {
+    "name": "Ubisoft",
+    "brandTier": "emerging",
+    "fameScore": 0.78,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 28,
+    "collaborationStyle": "game launch integration, sponsored gameplay, campaign review",
+    "brandPersonality": "open-world, adventure, accessible, franchise-driven",
+    "notes": "More creator-accessible than Sony or Nintendo for game sponsorships; actively seeks mid-tier gaming creators for launches"
+  },
+  {
+    "name": "Humble Bundle",
+    "brandTier": "emerging",
+    "fameScore": 0.36,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 400000,
+    "avgCPM": 30,
+    "collaborationStyle": "bundle highlight videos, charity-focused content, backlog and discovery content",
+    "brandPersonality": "charitable, indie-friendly, value-focused, PC-first",
+    "notes": "Game bundles and store with revenue sharing to charity; ideal for PC gaming and indie discovery channels"
+  },
+  {
+    "name": "Epic Games Store",
+    "brandTier": "emerging",
+    "fameScore": 0.8,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 15000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 32,
+    "collaborationStyle": "storefront promotions, free game highlights, creator code integrations",
+    "brandPersonality": "bold, publisher/publisher hybrid, creator-code-friendly, PC store challenger",
+    "notes": "Creator code program offers revenue share; natural fit for creators recommending PC games on a regular basis"
   }
 ]

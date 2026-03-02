@@ -3,270 +3,446 @@
     "name": "L'Oréal",
     "brandTier": "iconic",
     "fameScore": 0.95,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 50000,
     "maxSubscribers": 50000000,
     "avgCPM": 22,
     "collaborationStyle": "product launch, tutorial integration, ambassador",
     "brandPersonality": "empowering, inclusive, science-meets-glamour, iconic",
-    "notes": "Strong creator program across all sub-brands (Maybelline, NYX, Garnier, Lancôme); mid+ preferred",
-    "niche": "beauty"
+    "notes": "Strong creator program across all sub-brands (Maybelline, NYX, Garnier, Lancôme); mid+ preferred"
   },
   {
     "name": "Sephora",
     "brandTier": "iconic",
     "fameScore": 0.94,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro", "mega"],
     "minSubscribers": 10000,
     "maxSubscribers": 30000000,
     "avgCPM": 28,
     "collaborationStyle": "haul, product review, brand ambassador, campaign",
     "brandPersonality": "curated, inclusive, trend-forward, beauty-obsessed",
-    "notes": "Sephora Squad program makes this accessible to micro creators; one of the most creator-active beauty retailers",
-    "niche": "beauty"
+    "notes": "Sephora Squad program makes this accessible to micro creators; one of the most creator-active beauty retailers"
   },
   {
     "name": "Estée Lauder",
     "brandTier": "iconic",
     "fameScore": 0.91,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 100000,
     "maxSubscribers": 20000000,
     "avgCPM": 35,
     "collaborationStyle": "luxury product launch, skincare routine, editorial-style campaign",
     "brandPersonality": "luxury, timeless, sophisticated, science-backed",
-    "notes": "Goes through agency; selective about creator aesthetic — prefers polished, editorial tone",
-    "niche": "beauty"
+    "notes": "Goes through agency; selective about creator aesthetic — prefers polished, editorial tone"
   },
   {
     "name": "Charlotte Tilbury",
     "brandTier": "iconic",
     "fameScore": 0.88,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 20000,
     "maxSubscribers": 10000000,
     "avgCPM": 32,
     "collaborationStyle": "glam tutorial, product launch, get-ready-with-me",
     "brandPersonality": "glamorous, aspirational, celebrity-adjacent, warm",
-    "notes": "Very active in creator space; accessible to mid-tier beauty creators with strong makeup content",
-    "niche": "beauty"
+    "notes": "Very active in creator space; accessible to mid-tier beauty creators with strong makeup content"
   },
+  {
+    "name": "Fenty Beauty",
+    "brandTier": "iconic",
+    "fameScore": 0.93,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 20000,
+    "maxSubscribers": 15000000,
+    "avgCPM": 34,
+    "collaborationStyle": "shade range showcase, complexion routine, campaign integration",
+    "brandPersonality": "inclusive, bold, celebrity-led, culture-shaping",
+    "notes": "Rihanna's brand; perfect for creators highlighting inclusive shade ranges and bold looks"
+  },
+  {
+    "name": "MAC Cosmetics",
+    "brandTier": "iconic",
+    "fameScore": 0.9,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 30,
+    "collaborationStyle": "pro-level tutorials, collection launches, editorial glam",
+    "brandPersonality": "artistic, professional, bold, backstage",
+    "notes": "Legacy pro brand; strong fit for creators with editorial or bold artistry looks"
+  },
+  {
+    "name": "Huda Beauty",
+    "brandTier": "iconic",
+    "fameScore": 0.9,
+    "idealCreatorTier": ["micro", "mid", "macro", "mega"],
+    "minSubscribers": 20000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 33,
+    "collaborationStyle": "glam looks, palette launches, social-first campaigns",
+    "brandPersonality": "social-native, dramatic, high-glam, trend-led",
+    "notes": "Creator-founded brand with heavy social presence; ideal for bold makeup channels"
+  },
+  {
+    "name": "Maybelline New York",
+    "brandTier": "iconic",
+    "fameScore": 0.89,
+    "idealCreatorTier": ["nano", "micro", "mid", "macro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 15000000,
+    "avgCPM": 20,
+    "collaborationStyle": "drugstore haul, everyday makeup, mascara/foundation launches",
+    "brandPersonality": "accessible, trend-aware, urban, mass-market",
+    "notes": "Mass drugstore brand; strong fit for creators who do affordable beauty content"
+  },
+  {
+    "name": "Dior Beauty",
+    "brandTier": "iconic",
+    "fameScore": 0.92,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 75000,
+    "maxSubscribers": 15000000,
+    "avgCPM": 45,
+    "collaborationStyle": "luxury campaigns, red-carpet looks, fragrance launches",
+    "brandPersonality": "haute couture, luxurious, French, aspirational",
+    "notes": "Luxury house; best for highly polished luxury or fashion-beauty hybrid channels"
+  },
+  {
+    "name": "Glossier",
+    "brandTier": "iconic",
+    "fameScore": 0.87,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 15000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 29,
+    "collaborationStyle": "no-makeup makeup tutorials, skincare-first routines, aesthetic storytelling",
+    "brandPersonality": "millennial-pink, skin-first, community-built, minimalist",
+    "notes": "Strong alignment with natural, dewy, and aesthetic-focused beauty creators"
+  },
+
   {
     "name": "e.l.f. Cosmetics",
     "brandTier": "mid",
     "fameScore": 0.68,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["nano", "micro", "mid", "macro"],
     "minSubscribers": 1000,
     "maxSubscribers": 5000000,
     "avgCPM": 24,
     "collaborationStyle": "dupes, affordable haul, tutorial, TikTok-style challenge",
     "brandPersonality": "accessible, fun, Gen Z, cruelty-free, value-driven",
-    "notes": "One of the most creator-native beauty brands; famous for viral campaigns; wide creator range accepted",
-    "niche": "beauty"
+    "notes": "One of the most creator-native beauty brands; famous for viral campaigns; wide creator range accepted"
   },
   {
     "name": "Tatcha",
     "brandTier": "mid",
     "fameScore": 0.6,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 3000000,
     "avgCPM": 38,
     "collaborationStyle": "skincare ritual, ingredient deep-dive, luxury routine",
     "brandPersonality": "Japanese-inspired, luxurious, ritual-driven, clean",
-    "notes": "Premium skincare with a loyal cult following; strong fit for skincare-focused and slow beauty creators",
-    "niche": "beauty"
+    "notes": "Premium skincare with a loyal cult following; strong fit for skincare-focused and slow beauty creators"
   },
   {
     "name": "Rare Beauty",
     "brandTier": "mid",
     "fameScore": 0.72,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 6000000,
     "avgCPM": 30,
     "collaborationStyle": "GRWM, mental health x beauty story, product showcase",
     "brandPersonality": "inclusive, authentic, mental-health-forward, Gen Z",
-    "notes": "Selena Gomez's brand; resonates strongly with creators who blend beauty with personal/mental wellness content",
-    "niche": "beauty"
+    "notes": "Selena Gomez's brand; resonates strongly with creators who blend beauty with personal/mental wellness content"
   },
   {
     "name": "Drunk Elephant",
     "brandTier": "mid",
     "fameScore": 0.65,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 4000000,
     "avgCPM": 40,
     "collaborationStyle": "skincare routine, ingredient education, shelfie/routine showcase",
     "brandPersonality": "ingredient-obsessed, playful, clean, science-forward",
-    "notes": "Hugely popular skincare brand on YouTube; high audience recognition drives strong conversion",
-    "niche": "beauty"
+    "notes": "Hugely popular skincare brand on YouTube; high audience recognition drives strong conversion"
   },
   {
     "name": "Morphe",
     "brandTier": "mid",
     "fameScore": 0.58,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 4000000,
     "avgCPM": 26,
     "collaborationStyle": "full glam tutorial, palette review, collab product launch",
     "brandPersonality": "bold, pro-makeup, accessible, creator-native",
-    "notes": "Built its brand through creator collabs; very familiar with partnership workflow; accessible CPM",
-    "niche": "beauty"
+    "notes": "Built its brand through creator collabs; very familiar with partnership workflow; accessible CPM"
   },
   {
     "name": "NARS",
     "brandTier": "mid",
     "fameScore": 0.62,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 15000,
     "maxSubscribers": 5000000,
     "avgCPM": 34,
     "collaborationStyle": "editorial makeup look, product spotlight, campaign integration",
     "brandPersonality": "edgy, artistic, bold, fashion-forward",
-    "notes": "Strong fit for creators with a fashion or editorial aesthetic; slightly more selective than drugstore brands",
-    "niche": "beauty"
+    "notes": "Strong fit for creators with a fashion or editorial aesthetic; slightly more selective than drugstore brands"
   },
+  {
+    "name": "ColourPop",
+    "brandTier": "mid",
+    "fameScore": 0.63,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 25,
+    "collaborationStyle": "affordable hauls, collection launches, collab reviews",
+    "brandPersonality": "trend-chasing, colorful, social-native, accessible",
+    "notes": "Extremely active with creators; good for colorful, experimental, or budget beauty channels"
+  },
+  {
+    "name": "Milk Makeup",
+    "brandTier": "mid",
+    "fameScore": 0.6,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 1500000,
+    "avgCPM": 31,
+    "collaborationStyle": "stick products, clean looks, festival/creative content",
+    "brandPersonality": "clean, cool, downtown, experimental",
+    "notes": "Best for creators with an editorial or experimental aesthetic who like cream and stick formats"
+  },
+  {
+    "name": "The Ordinary",
+    "brandTier": "mid",
+    "fameScore": 0.7,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 20000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 29,
+    "collaborationStyle": "ingredient education, skincare science, routine building",
+    "brandPersonality": "clinical, transparent, ingredient-first, affordable",
+    "notes": "Strong fit for skincare educators and science-focused beauty channels"
+  },
+  {
+    "name": "La Roche-Posay",
+    "brandTier": "mid",
+    "fameScore": 0.68,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 20000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 32,
+    "collaborationStyle": "dermatologist-style content, sensitive skin routines, SPF education",
+    "brandPersonality": "derm-backed, sensitive-skin-safe, pharmacy-trusted, clinical",
+    "notes": "Great for creators who collaborate with derms or do evidence-based skincare content"
+  },
+  {
+    "name": "Anastasia Beverly Hills",
+    "brandTier": "mid",
+    "fameScore": 0.66,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 15000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 30,
+    "collaborationStyle": "brow tutorials, eye looks, palette launches",
+    "brandPersonality": "glam, strong brows, artistry-driven, trend-aware",
+    "notes": "Brow-first brand with strong name recognition; ideal for eye and brow-focused tutorials"
+  },
+  {
+    "name": "Urban Decay",
+    "brandTier": "mid",
+    "fameScore": 0.64,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 15000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 30,
+    "collaborationStyle": "smoky eye looks, palette launches, edgy glam",
+    "brandPersonality": "edgy, alt, nightlife-inspired, bold color",
+    "notes": "Best for edgier or colorful eye-focused creators; legacy Naked palette audience"
+  },
+  {
+    "name": "Sol de Janeiro",
+    "brandTier": "mid",
+    "fameScore": 0.6,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 1500000,
+    "avgCPM": 32,
+    "collaborationStyle": "body care routines, fragrance layering, summer content",
+    "brandPersonality": "beachy, joyful, scent-driven, body-positive",
+    "notes": "Fragrance and body care brand; a favorite in GRWM and body care routines"
+  },
+
   {
     "name": "Soft Services",
     "brandTier": "emerging",
     "fameScore": 0.22,
-    "idealCreatorTier": [
-      "nano",
-      "micro"
-    ],
+    "idealCreatorTier": ["nano", "micro"],
     "minSubscribers": 1000,
     "maxSubscribers": 200000,
     "avgCPM": 45,
     "collaborationStyle": "body skincare routine, ingredient spotlight, honest review",
     "brandPersonality": "clinical, body-positive, ingredient-transparent, editorial",
-    "notes": "Cult body skincare brand; prioritizes authenticity over reach — ideal for niche skincare creators",
-    "niche": "beauty"
+    "notes": "Cult body skincare brand; prioritizes authenticity over reach — ideal for niche skincare creators"
   },
   {
     "name": "Tower 28",
     "brandTier": "emerging",
     "fameScore": 0.3,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["nano", "micro", "mid"],
     "minSubscribers": 2000,
     "maxSubscribers": 400000,
     "avgCPM": 38,
     "collaborationStyle": "sensitive skin story, clean beauty routine, minimal makeup look",
     "brandPersonality": "clean, sensitive-skin-safe, beach-inspired, inclusive",
-    "notes": "SkinSafe-certified clean beauty brand; great for creators with sensitive skin or clean beauty audiences",
-    "niche": "beauty"
+    "notes": "SkinSafe-certified clean beauty brand; great for creators with sensitive skin or clean beauty audiences"
   },
   {
     "name": "Ami Colé",
     "brandTier": "emerging",
     "fameScore": 0.2,
-    "idealCreatorTier": [
-      "nano",
-      "micro"
-    ],
+    "idealCreatorTier": ["nano", "micro"],
     "minSubscribers": 1000,
     "maxSubscribers": 150000,
     "avgCPM": 42,
     "collaborationStyle": "natural glam, skin-first makeup, representation-focused content",
     "brandPersonality": "melanin-celebrating, minimalist, skin-first, authentic",
-    "notes": "Makeup brand designed for deeper skin tones; ideal for creators in the Black beauty or skin-first makeup space",
-    "niche": "beauty"
+    "notes": "Makeup brand designed for deeper skin tones; ideal for creators in the Black beauty or skin-first makeup space"
   },
   {
     "name": "Topicals",
     "brandTier": "emerging",
     "fameScore": 0.28,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["nano", "micro", "mid"],
     "minSubscribers": 2000,
     "maxSubscribers": 350000,
     "avgCPM": 44,
     "collaborationStyle": "skin condition story, treatment review, before/after integration",
     "brandPersonality": "fun, destigmatizing, dermatology-adjacent, bold",
-    "notes": "Skincare brand targeting hyperpigmentation and eczema; strong fit for creators who discuss skin conditions openly",
-    "niche": "beauty"
+    "notes": "Skincare brand targeting hyperpigmentation and eczema; strong fit for creators who discuss skin conditions openly"
   },
   {
     "name": "Kulfi Beauty",
     "brandTier": "emerging",
     "fameScore": 0.18,
-    "idealCreatorTier": [
-      "nano",
-      "micro"
-    ],
+    "idealCreatorTier": ["nano", "micro"],
     "minSubscribers": 1000,
     "maxSubscribers": 100000,
     "avgCPM": 40,
     "collaborationStyle": "South Asian beauty story, kajal/liner tutorial, cultural beauty content",
     "brandPersonality": "South Asian-inspired, joyful, bold, culturally rich",
-    "notes": "Beauty brand rooted in South Asian beauty traditions; ideal for creators in the desi or multicultural beauty space",
-    "niche": "beauty"
+    "notes": "Beauty brand rooted in South Asian beauty traditions; ideal for creators in the desi or multicultural beauty space"
   },
   {
     "name": "Kosas",
     "brandTier": "emerging",
     "fameScore": 0.34,
-    "idealCreatorTier": [
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["micro", "mid"],
     "minSubscribers": 5000,
     "maxSubscribers": 500000,
     "avgCPM": 36,
     "collaborationStyle": "clean makeup routine, skin-first look, ingredient education",
     "brandPersonality": "clean, effortless, skin-enhancing, modern",
-    "notes": "Fast-growing clean color cosmetics brand; strong fit for creators who blend skincare and makeup content",
-    "niche": "beauty"
+    "notes": "Fast-growing clean color cosmetics brand; strong fit for creators who blend skincare and makeup content"
+  },
+  {
+    "name": "Youth To The People",
+    "brandTier": "emerging",
+    "fameScore": 0.36,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 600000,
+    "avgCPM": 34,
+    "collaborationStyle": "superfood skincare routines, sustainable packaging content, ingredient stories",
+    "brandPersonality": "green, modern, ingredient-forward, eco-conscious",
+    "notes": "Strong fit for eco-conscious skincare creators with a focus on ingredients"
+  },
+  {
+    "name": "Summer Fridays",
+    "brandTier": "emerging",
+    "fameScore": 0.35,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 500000,
+    "avgCPM": 36,
+    "collaborationStyle": "jet-lag beauty routines, aesthetic bathroom shelfies, clean girl looks",
+    "brandPersonality": "Instagram-native, aesthetic, travel-inspired, minimalist",
+    "notes": "Perfect for aesthetic-heavy beauty channels and GRWM content"
+  },
+  {
+    "name": "Saie",
+    "brandTier": "emerging",
+    "fameScore": 0.3,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 300000,
+    "avgCPM": 34,
+    "collaborationStyle": "no-makeup makeup routine, clean girl looks, hybrid skincare-makeup",
+    "brandPersonality": "clean, dewy, minimalist, cool-girl",
+    "notes": "Great for creators doing natural, glowy editorial looks"
+  },
+  {
+    "name": "Merit Beauty",
+    "brandTier": "emerging",
+    "fameScore": 0.32,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 3000,
+    "maxSubscribers": 400000,
+    "avgCPM": 35,
+    "collaborationStyle": "five-minute face routines, minimalist beauty content, aesthetic hauls",
+    "brandPersonality": "quiet luxury, minimalist, capsule-beauty, elevated",
+    "notes": "Ideal for creators leaning into quiet luxury and capsule wardrobe-style beauty"
+  },
+  {
+    "name": "Freck Beauty",
+    "brandTier": "emerging",
+    "fameScore": 0.26,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 250000,
+    "avgCPM": 33,
+    "collaborationStyle": "freckle tutorials, e-girl looks, playful content",
+    "brandPersonality": "playful, alt, indie, expressive",
+    "notes": "Perfect for experimental, alt, or e-girl makeup creators"
+  },
+  {
+    "name": "Byoma",
+    "brandTier": "emerging",
+    "fameScore": 0.24,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 30,
+    "collaborationStyle": "barrier routine content, drugstore skincare hauls, ingredient education",
+    "brandPersonality": "barrier-focused, colorful, accessible, Gen Z-friendly",
+    "notes": "Great for barrier repair and beginner drugstore skincare creators"
+  },
+  {
+    "name": "Naturium",
+    "brandTier": "emerging",
+    "fameScore": 0.3,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 300000,
+    "avgCPM": 32,
+    "collaborationStyle": "ingredient-led routines, comparison content, skincare education",
+    "brandPersonality": "clinical, high-performance, influencer-founded, mid-priced",
+    "notes": "Susan Yara's brand; strong fit for skincare educators and routine creators"
+  },
+  {
+    "name": "Live Tinted",
+    "brandTier": "emerging",
+    "fameScore": 0.22,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 34,
+    "collaborationStyle": "color-correcting tutorials, hyperpigmentation content, representation-focused stories",
+    "brandPersonality": "inclusive, color-correcting, multicultural, storytelling",
+    "notes": "Excellent for creators focusing on hyperpigmentation and inclusive shade ranges"
   }
 ]

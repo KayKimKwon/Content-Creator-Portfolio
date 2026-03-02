@@ -1,10 +1,14 @@
 {
-  "lifestyle": ["fitness", "beauty", "food", "travel"],
+  "lifestyle": ["fitness", "beauty", "food", "travel", "productivity"],
   "fitness": ["lifestyle", "food"],
   "beauty": ["lifestyle"],
   "food": ["lifestyle", "fitness", "travel"],
-  "tech": ["gaming", "finance"],
+  "tech": ["gaming", "finance", "productivity"],
   "finance": ["tech", "lifestyle"],
   "gaming": ["tech"],
-  "travel": ["lifestyle", "food"]
+  "travel": ["lifestyle", "food"],
+  "music": ["lifestyle", "education"],
+  "education": ["productivity", "tech"],
+  "productivity": ["tech", "education", "lifestyle"],
+  "other": ["lifestyle", "tech"]
 }

@@ -157,7 +157,9 @@ export async function fetchYouTubeCreatorData(channelId: string): Promise<{
     0
   );
   const avgViewsPerVideo =
-    recentVideos.length > 0 ? totalViews / recentVideos.length : channel.viewCount / Math.max(1, channel.videoCount);
+    recentVideos.length > 0 && totalViews > 0
+      ? totalViews / recentVideos.length
+      : channel.viewCount / Math.max(1, channel.videoCount);
   const engagementProxy =
     totalViews > 0 ? (totalEngagement / totalViews) * 100 : 0;
 

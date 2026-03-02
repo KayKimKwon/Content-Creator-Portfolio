@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastUpdated": "2026-03-01",
+  "lastUpdated": "2026-03-02",
   "niches": [
     "lifestyle",
     "fitness",
@@ -9,7 +9,11 @@
     "tech",
     "finance",
     "gaming",
-    "travel"
+    "travel",
+    "music",
+    "education",
+    "productivity",
+    "other"
   ],
   "tiers": {
     "iconic": { "fameScoreRange": [0.75, 1.0], "fameScore_numeric": [8, 10] },
