@@ -130,6 +130,7 @@ export default function InputPage() {
         body: JSON.stringify(payload),
       });
 
+<<<<<<< HEAD
       const data = await res.json();
 
       if (!res.ok) {
@@ -145,12 +146,52 @@ export default function InputPage() {
       }
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem("matchResult", JSON.stringify(data));
+=======
+      if (!res.ok) {
+        throw new Error("Failed to generate recommendations.");
+      }
+      
+      
+      const matchData = await res.json();
+      const genRes = await fetch("/api/generate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          creator: matchData.creator,
+          recommendations: matchData.recommendations,
+        }),
+      });
+
+      let finalData = matchData;
+      if (genRes.ok) {
+        const genData = await genRes.json();
+        const genMap = new Map(
+          (genData.results ?? []).map(
+            (r: { brandName: string; bio: string; pitchEmail: string }) => [r.brandName, r]
+          )
+        );
+        finalData = {
+          ...matchData,
+          recommendations: matchData.recommendations.map((rec: {brandName: string}) => {
+            const gen = genMap.get(rec.brandName);
+            return gen ? {...rec, bio: gen.bio, pitchEmail: gen.pitchEmail} : rec;
+          }),
+        };
+      }
+
+      if (typeof window != "undefined") {
+        window.sessionStorage.setItem("matchResult", JSON.stringify(finalData));
+>>>>>>> 1c9312a (generate api integration)
         window.sessionStorage.setItem("lastMatchPayload", JSON.stringify(payload));
-        const shown = (data.recommendations ?? []).map((r: { brandName: string }) => r.brandName);
+        const shown = (finalData.recommendations ?? []).map((r: { brandName: string }) => r.brandName);
         window.sessionStorage.setItem("shownBrandNames", JSON.stringify(shown));
         window.sessionStorage.setItem("matchRefreshUsed", "false");
       }
+
       router.push("/output");
+
+
+
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Something went wrong. Please try again."
