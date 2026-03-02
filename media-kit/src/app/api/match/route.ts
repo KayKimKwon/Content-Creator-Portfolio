@@ -44,6 +44,7 @@ interface RawMatchRequest {
   niche?: string;
   email: string;
   targetCompanies?: string;
+  excludeBrands?: string[]; // brand names already shown (for refresh)
   platforms?: {
     instagramFollowers?: number | null;
     instagramMaxLikes?: number | null;
@@ -68,6 +69,7 @@ interface MatchRequest {
   email: string;
   nicheOverride?: string;
   targetCompanies: string[];
+  excludeBrands: string[];
   additionalPlatforms: AdditionalPlatformMetrics[];
   pastCollabs: string[];
 }
@@ -284,6 +286,10 @@ function normalizeMatchRequest(raw: RawMatchRequest): MatchRequest {
       .map((name) => name.trim())
       .filter((name) => name.length > 0) ?? [];
 
+  const excludeBrands = Array.isArray(raw.excludeBrands)
+    ? raw.excludeBrands.filter((n) => typeof n === "string" && n.trim().length > 0)
+    : [];
+
   const additionalPlatforms: AdditionalPlatformMetrics[] = [];
 
   if (raw.platforms && raw.platforms.length > 0) {
@@ -312,6 +318,7 @@ function normalizeMatchRequest(raw: RawMatchRequest): MatchRequest {
     email: raw.email,
     nicheOverride: raw.niche && raw.niche.trim().length > 0 ? raw.niche : undefined,
     targetCompanies,
+    excludeBrands,
     additionalPlatforms,
     pastCollabs,
   };
@@ -324,8 +331,15 @@ export async function POST(req: Request) {
 
     const creator = estimateCreatorProfile(normalized);
 
+    const excludeSet = new Set(
+      normalized.excludeBrands.map((n) => n.toLowerCase().trim())
+    );
+    const candidateBrands = ALL_BRANDS.filter(
+      (b) => !excludeSet.has(b.name.toLowerCase().trim())
+    );
+
     // Score all brands for this creator.
-    const scored = ALL_BRANDS.map((brand) => {
+    const scored = candidateBrands.map((brand) => {
       const scores = scoreBrand(brand, creator, normalized);
       return { brand, ...scores };
     }).sort((a, b) => b.finalScore - a.finalScore);
@@ -343,19 +357,29 @@ export async function POST(req: Request) {
         (s.acceptance.bucket === "High" || s.acceptance.bucket === "Medium")
     );
 
-    const chosenReach = reachCandidates[0] ?? scored[0];
+    const chosenReach1 = reachCandidates[0] ?? scored[0];
+    const chosenReach2 =
+      reachCandidates.find((s) => s.brand.name !== chosenReach1.brand.name) ??
+      scored.find((s) => s.brand.name !== chosenReach1.brand.name) ??
+      scored[1];
+
     const remainingForTargets = scored.filter(
-      (s) => s.brand.name !== chosenReach.brand.name
+      (s) =>
+        s.brand.name !== chosenReach1.brand.name &&
+        s.brand.name !== chosenReach2.brand.name
     );
 
     const chosenTargets: typeof scored = [];
     for (const cand of targetCandidates) {
-      if (cand.brand.name === chosenReach.brand.name) continue;
+      if (
+        cand.brand.name === chosenReach1.brand.name ||
+        cand.brand.name === chosenReach2.brand.name
+      )
+        continue;
       chosenTargets.push(cand);
       if (chosenTargets.length === 2) break;
     }
 
-    // Fallback: if we don't have enough target candidates, fill from remaining.
     let i = 0;
     while (chosenTargets.length < 2 && i < remainingForTargets.length) {
       const cand = remainingForTargets[i++];
@@ -363,11 +387,16 @@ export async function POST(req: Request) {
       chosenTargets.push(cand);
     }
 
-    const picked = [chosenReach, ...chosenTargets].slice(0, 3);
+    const picked = [
+      chosenReach1,
+      chosenReach2,
+      chosenTargets[0],
+      chosenTargets[1],
+    ].filter(Boolean).slice(0, 4);
 
     const recommendations: BrandRecommendation[] = picked.map((item, index) => {
       const kind: RecommendationKind =
-        index === 0 ? "reach" : "target";
+        index < 2 ? "reach" : "target";
 
       return {
         brandName: item.brand.name,

@@ -18,6 +18,7 @@ export default function InputPage() {
   const [tiktokFollowers, setTiktokFollowers] = useState("");
   const [tiktokMaxLikes, setTiktokMaxLikes] = useState("");
   const [tiktokMaxViews, setTiktokMaxViews] = useState("");
+  const [showAdvancedMetrics, setShowAdvancedMetrics] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -81,6 +82,9 @@ export default function InputPage() {
       const data = await res.json();
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem("matchResult", JSON.stringify(data));
+        window.sessionStorage.setItem("lastMatchPayload", JSON.stringify(payload));
+        const shown = (data.recommendations ?? []).map((r: { brandName: string }) => r.brandName);
+        window.sessionStorage.setItem("shownBrandNames", JSON.stringify(shown));
       }
       router.push("/output");
     } catch (err) {
@@ -93,7 +97,7 @@ export default function InputPage() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-50 px-6 py-16 font-sans text-zinc-900 dark:bg-black dark:text-zinc-50">
+    <main className="min-h-screen bg-zinc-50 px-6 py-16 font-sans text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
       <div className="mx-auto flex max-w-3xl flex-col gap-10">
         <header className="space-y-3">
           <h1 className="text-2xl font-semibold sm:text-3xl">
@@ -156,6 +160,19 @@ export default function InputPage() {
 
           <div className="space-y-2">
             <label className="block text-sm font-medium">
+              Niche (optional)
+            </label>
+            <input
+              type="text"
+              value={niche}
+              onChange={(e) => setNiche(e.target.value)}
+              placeholder="e.g. fitness, tech, beauty — or we'll infer from your channel"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">
               Target companies (optional)
             </label>
             <textarea
@@ -171,7 +188,29 @@ export default function InputPage() {
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">
+              Past collaborations (optional)
+            </label>
+            <textarea
+              rows={2}
+              value={pastCollabs}
+              onChange={(e) => setPastCollabs(e.target.value)}
+              placeholder="Brand names or notes, comma-separated"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+            />
+          </div>
+
+          <div className="space-y-3">
+            <button
+              type="button"
+              onClick={() => setShowAdvancedMetrics((v) => !v)}
+              className="text-sm font-medium text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
+            >
+              {showAdvancedMetrics ? "− Hide" : "+"} Advanced — platform metrics
+            </button>
+            {showAdvancedMetrics && (
+              <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-3">
               <p className="text-sm font-medium">Instagram (optional)</p>
               <div className="space-y-2">
@@ -252,18 +291,7 @@ export default function InputPage() {
               </div>
             </div>
           </div>
-
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">
-              Niche (optional)
-            </label>
-            <input
-              type="text"
-              value={niche}
-              onChange={(e) => setNiche(e.target.value)}
-              placeholder="If empty, we&apos;ll infer from your channel"
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
-            />
+            )}
           </div>
 
           {error && (
@@ -276,7 +304,7 @@ export default function InputPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="inline-flex items-center justify-center rounded-full bg-zinc-900 px-6 py-2.5 text-sm font-medium text-zinc-50 shadow-sm transition hover:bg-zinc-800 disabled:opacity-60 dark:bg-zinc-50 dark:text-black dark:hover:bg-zinc-200"
+              className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-emerald-700 disabled:opacity-60 dark:bg-emerald-500 dark:hover:bg-emerald-600"
             >
               {isLoading ? "Generating..." : "Generate recommendations"}
             </button>
