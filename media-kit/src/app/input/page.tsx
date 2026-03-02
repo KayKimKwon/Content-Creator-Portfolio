@@ -383,4 +383,3 @@ export default function InputPage() {
     </main>
   );
 }
-
