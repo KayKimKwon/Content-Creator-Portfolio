@@ -9,7 +9,7 @@ Built at **HOTH XIII** with Next.js, Anthropic API, and the YouTube Data API.
 ## What It Does
 
 1. **You enter your YouTube channel** — the app pulls your real subscriber count, average views, and recent video titles
-2. **Pick your niche** — lifestyle, fitness, beauty, food, tech, finance, gaming, or travel
+2. **Pick your creator niche** — lifestyle, fitness, beauty, food, tech and more
 3. **Get 5 brand recommendations** ranked by compatibility:
    - 2 **Reach** brands — iconic names that are a stretch but worth shooting for
    - 2 **Target** brands — best-fit brands with high acceptance odds
