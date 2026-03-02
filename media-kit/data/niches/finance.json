@@ -1,14 +1,9 @@
 [
   {
     "name": "Fidelity",
-    "niche": "finance",
     "brandTier": "iconic",
     "fameScore": 0.88,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 100000,
     "maxSubscribers": 20000000,
     "avgCPM": 45,
@@ -17,14 +12,46 @@
     "notes": "Heavily regulated — requires compliance review; CPM is high but process is slower"
   },
   {
+    "name": "Intuit (TurboTax / QuickBooks)",
+    "brandTier": "iconic",
+    "fameScore": 0.90,
+    "idealCreatorTier": ["micro", "mid", "macro", "mega"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 40,
+    "collaborationStyle": "tax season campaign, small business story, software walkthrough",
+    "brandPersonality": "practical, trusted, accessible, small-business-friendly",
+    "notes": "Seasonal spikes around tax season; TurboTax deals widely available across creator sizes"
+  },
+  {
+    "name": "Coinbase",
+    "brandTier": "iconic",
+    "fameScore": 0.85,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 55,
+    "collaborationStyle": "crypto explainer, platform walkthrough, market commentary",
+    "brandPersonality": "forward-thinking, accessible, crypto-mainstream, trustworthy",
+    "notes": "High CPM but heavily regulated; requires careful compliance language; strong fit for crypto and investing creators"
+  },
+  {
+    "name": "American Express",
+    "brandTier": "iconic",
+    "fameScore": 0.93,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 100000,
+    "maxSubscribers": 30000000,
+    "avgCPM": 50,
+    "collaborationStyle": "rewards story, travel integration, premium lifestyle segment",
+    "brandPersonality": "premium, aspirational, rewards-driven, established",
+    "notes": "Very selective; strong fit for travel-finance crossover creators and high-income audience channels"
+  },
+  {
     "name": "Monarch Money",
-    "niche": "finance",
     "brandTier": "mid",
     "fameScore": 0.42,
-    "idealCreatorTier": [
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["micro", "mid"],
     "minSubscribers": 5000,
     "maxSubscribers": 1000000,
     "avgCPM": 55,
@@ -33,19 +60,135 @@
     "notes": "Fast-growing Mint alternative; actively seeking finance and lifestyle creator partners"
   },
   {
+    "name": "Acorns",
+    "brandTier": "mid",
+    "fameScore": 0.60,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 48,
+    "collaborationStyle": "beginner investing story, round-up feature demo, financial wellness segment",
+    "brandPersonality": "approachable, beginner-friendly, micro-investing, habit-building",
+    "notes": "Great fit for personal finance creators targeting beginners or Gen Z audiences"
+  },
+  {
+    "name": "Public.com",
+    "brandTier": "mid",
+    "fameScore": 0.50,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 1500000,
+    "avgCPM": 52,
+    "collaborationStyle": "investing explainer, platform review, portfolio walkthrough",
+    "brandPersonality": "social, transparent, community-driven, modern-investing",
+    "notes": "Social investing platform; strong fit for stock market and investing creators with younger audiences"
+  },
+  {
+    "name": "Credit Karma",
+    "brandTier": "mid",
+    "fameScore": 0.72,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 6000000,
+    "avgCPM": 42,
+    "collaborationStyle": "credit score story, financial health segment, app walkthrough",
+    "brandPersonality": "empowering, accessible, no-nonsense, financial-wellness",
+    "notes": "Extremely recognizable brand; easy integration for any personal finance creator; wide creator range accepted"
+  },
+  {
+    "name": "Seeking Alpha",
+    "brandTier": "mid",
+    "fameScore": 0.55,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 58,
+    "collaborationStyle": "stock analysis integration, investing research story, premium tool demo",
+    "brandPersonality": "analytical, data-driven, investor-grade, serious",
+    "notes": "Premium stock research platform; high CPM due to affluent investor audience; best for serious investing channels"
+  },
+  {
+    "name": "Masterworks",
+    "brandTier": "mid",
+    "fameScore": 0.48,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 20000,
+    "maxSubscribers": 2000000,
+    "avgCPM": 60,
+    "collaborationStyle": "alternative investing story, art as asset class, platform walkthrough",
+    "brandPersonality": "sophisticated, alternative, wealth-building, exclusive",
+    "notes": "Art investing platform; one of the highest CPM sponsors in finance; active YouTube sponsorship program"
+  },
+  {
     "name": "Blossom",
-    "niche": "finance",
     "brandTier": "emerging",
-    "fameScore": 0.2,
-    "idealCreatorTier": [
-      "nano",
-      "micro"
-    ],
+    "fameScore": 0.20,
+    "idealCreatorTier": ["nano", "micro"],
     "minSubscribers": 1000,
     "maxSubscribers": 200000,
-    "avgCPM": 60,
+    "avgCPM": 50,
     "collaborationStyle": "investing explainer, app review, beginner finance tutorial",
     "brandPersonality": "approachable, beginner-friendly, community-driven, transparent",
     "notes": "Stock market social app targeting Gen Z investors; high CPM for small niche audiences"
+  },
+  {
+    "name": "Copilot Money",
+    "brandTier": "emerging",
+    "fameScore": 0.25,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 300000,
+    "avgCPM": 52,
+    "collaborationStyle": "budgeting app walkthrough, financial clarity story, routine integration",
+    "brandPersonality": "design-obsessed, premium-budgeting, Apple-ecosystem, modern",
+    "notes": "Beautifully designed budgeting app for Apple users; ideal for creators who blend finance with productivity or lifestyle"
+  },
+  {
+    "name": "Carry",
+    "brandTier": "emerging",
+    "fameScore": 0.18,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 58,
+    "collaborationStyle": "solo 401k explainer, self-employed finance story, tax-advantaged investing",
+    "brandPersonality": "entrepreneur-focused, empowering, tax-savvy, modern",
+    "notes": "Retirement account platform for self-employed creators and freelancers; highly relevant to the creator economy itself"
+  },
+  {
+    "name": "Composer",
+    "brandTier": "emerging",
+    "fameScore": 0.22,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 200000,
+    "avgCPM": 55,
+    "collaborationStyle": "automated investing demo, algorithmic trading story, quant-lite content",
+    "brandPersonality": "systematic, data-driven, modern, algorithmic",
+    "notes": "No-code automated investing platform; strong fit for quant-curious or data-driven finance creators"
+  },
+  {
+    "name": "Tally",
+    "brandTier": "emerging",
+    "fameScore": 0.24,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 350000,
+    "avgCPM": 46,
+    "collaborationStyle": "debt payoff story, credit card management demo, financial freedom narrative",
+    "brandPersonality": "empowering, debt-free focused, practical, relief-driven",
+    "notes": "Automated credit card debt manager; strong emotional hook for creators covering debt payoff or financial recovery stories"
+  },
+  {
+    "name": "Titan",
+    "brandTier": "emerging",
+    "fameScore": 0.28,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 400000,
+    "avgCPM": 60,
+    "collaborationStyle": "wealth management story, hedge-fund-style investing demo, premium investing segment",
+    "brandPersonality": "sophisticated, aspirational, hedge-fund-accessible, modern",
+    "notes": "App offering institutional-style investing to retail investors; highest CPM tier in emerging finance brands"
   }
 ]

@@ -1,52 +1,194 @@
 [
   {
     "name": "HelloFresh",
-    "niche": "food",
     "brandTier": "iconic",
-    "fameScore": 0.82,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "fameScore": 0.85,
+    "idealCreatorTier": ["micro", "mid", "macro", "mega"],
     "minSubscribers": 10000,
-    "maxSubscribers": 10000000,
+    "maxSubscribers": 20000000,
     "avgCPM": 35,
     "collaborationStyle": "meal unboxing, recipe integration, discount code",
     "brandPersonality": "fresh, convenient, family-friendly, approachable",
-    "notes": "One of the most prolific YouTube sponsors ever; wide creator range accepted"
+    "notes": "One of the most prolific YouTube sponsors ever; wide creator range accepted; very fast deal turnaround"
+  },
+  {
+    "name": "DoorDash",
+    "brandTier": "iconic",
+    "fameScore": 0.90,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 30000000,
+    "avgCPM": 28,
+    "collaborationStyle": "lifestyle integration, food challenge, convenience story",
+    "brandPersonality": "convenient, urban, fast, everyday",
+    "notes": "Broad appeal beyond food niche; often sponsors entertainment and lifestyle creators too"
+  },
+  {
+    "name": "Whole Foods",
+    "brandTier": "iconic",
+    "fameScore": 0.88,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 15000000,
+    "avgCPM": 30,
+    "collaborationStyle": "grocery haul, healthy meal prep, ingredient showcase",
+    "brandPersonality": "health-conscious, premium, organic, values-driven",
+    "notes": "Strong fit for healthy eating, meal prep, and clean eating creators; Amazon-owned so deals can be bundled"
+  },
+  {
+    "name": "KitchenAid",
+    "brandTier": "iconic",
+    "fameScore": 0.87,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 10000000,
+    "avgCPM": 38,
+    "collaborationStyle": "baking showcase, equipment review, recipe integration",
+    "brandPersonality": "classic, crafted, home-baker, aspirational-kitchen",
+    "notes": "Iconic kitchen brand; extremely strong fit for baking and home cooking creators; high product recognition drives conversion"
   },
   {
     "name": "Made In Cookware",
-    "niche": "food",
     "brandTier": "mid",
-    "fameScore": 0.5,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "fameScore": 0.50,
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 2000000,
-    "avgCPM": 38,
+    "avgCPM": 40,
     "collaborationStyle": "recipe showcase, product review, kitchen tour",
     "brandPersonality": "craft, quality, chef-inspired, premium-accessible",
-    "notes": "Rapidly growing DTC cookware brand with active creator program"
+    "notes": "Rapidly growing DTC cookware brand with active creator program; strong fit for serious home cooks"
+  },
+  {
+    "name": "Thrive Market",
+    "brandTier": "mid",
+    "fameScore": 0.55,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 36,
+    "collaborationStyle": "pantry haul, healthy eating story, membership walkthrough",
+    "brandPersonality": "health-conscious, value-driven, ethical, membership-first",
+    "notes": "Online organic grocery membership; great for healthy eating, clean eating, and budget wellness creators"
+  },
+  {
+    "name": "Factor Meals",
+    "brandTier": "mid",
+    "fameScore": 0.58,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 38,
+    "collaborationStyle": "meal unboxing, busy lifestyle story, macro-tracking integration",
+    "brandPersonality": "performance-nutrition, convenient, clean, fitness-adjacent",
+    "notes": "Prepared meal delivery targeting fitness and busy professional audiences; high crossover with fitness creators"
+  },
+  {
+    "name": "Hexclad",
+    "brandTier": "mid",
+    "fameScore": 0.60,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 15000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 42,
+    "collaborationStyle": "cooking demo, kitchen upgrade story, chef-style recipe",
+    "brandPersonality": "premium, hybrid-tech, chef-endorsed, aspirational",
+    "notes": "Gordon Ramsay-backed cookware brand; strong conversion for cooking creators with an aspirational kitchen aesthetic"
+  },
+  {
+    "name": "Diaspora Co.",
+    "brandTier": "mid",
+    "fameScore": 0.40,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 800000,
+    "avgCPM": 44,
+    "collaborationStyle": "spice showcase, recipe integration, sourcing story",
+    "brandPersonality": "ethical, flavor-forward, culturally rich, artisan",
+    "notes": "Single-origin spice company with strong values story; ideal for creators focused on global cuisine or ethical sourcing"
+  },
+  {
+    "name": "Chomps",
+    "brandTier": "mid",
+    "fameScore": 0.45,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 1000000,
+    "avgCPM": 35,
+    "collaborationStyle": "snack review, on-the-go lifestyle, high-protein story",
+    "brandPersonality": "clean-label, protein-forward, no-nonsense, active-lifestyle",
+    "notes": "Grass-fed meat stick brand; great crossover between food and fitness creators; easy casual integration"
   },
   {
     "name": "Brightland",
-    "niche": "food",
     "brandTier": "emerging",
     "fameScore": 0.25,
-    "idealCreatorTier": [
-      "nano",
-      "micro"
-    ],
+    "idealCreatorTier": ["nano", "micro"],
     "minSubscribers": 1000,
     "maxSubscribers": 150000,
     "avgCPM": 50,
     "collaborationStyle": "ingredient spotlight, cooking integration, aesthetic unboxing",
     "brandPersonality": "artisan, farm-to-table, aesthetic, health-conscious",
-    "notes": "Premium olive oil / vinegar brand; ideal for food creators with aesthetic / slow-living angle"
+    "notes": "Premium olive oil and vinegar brand; ideal for food creators with an aesthetic or slow-living angle"
+  },
+  {
+    "name": "Fly By Jing",
+    "brandTier": "emerging",
+    "fameScore": 0.28,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 300000,
+    "avgCPM": 46,
+    "collaborationStyle": "sauce integration, recipe showcase, flavor story",
+    "brandPersonality": "bold, Sichuan-inspired, chef-driven, unapologetically flavorful",
+    "notes": "Cult chili crisp and sauce brand; strong fit for creators covering Asian cuisine, bold flavors, or chef-adjacent content"
+  },
+  {
+    "name": "Graza",
+    "brandTier": "emerging",
+    "fameScore": 0.30,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 400000,
+    "avgCPM": 44,
+    "collaborationStyle": "cooking integration, squeeze-bottle showcase, recipe content",
+    "brandPersonality": "playful, fresh, Spanish-inspired, cooking-joy",
+    "notes": "Viral squeeze-bottle olive oil brand; great for creators who make visually engaging cooking content"
+  },
+  {
+    "name": "Wildgrain",
+    "brandTier": "emerging",
+    "fameScore": 0.24,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 200000,
+    "avgCPM": 48,
+    "collaborationStyle": "sourdough/bread unboxing, home dining story, artisan food content",
+    "brandPersonality": "artisan, slow-food, cozy, premium-baked",
+    "notes": "Frozen artisan bread and pasta subscription; perfect for cottage-food, cozy cooking, or home dining creators"
+  },
+  {
+    "name": "Omsom",
+    "brandTier": "emerging",
+    "fameScore": 0.22,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 42,
+    "collaborationStyle": "Asian recipe integration, pantry staple showcase, cultural food story",
+    "brandPersonality": "proud, bold, Asian-American, flavor-first",
+    "notes": "Asian-American sauce and starter brand; ideal for creators covering Asian cuisine or cultural food content"
+  },
+  {
+    "name": "Banza",
+    "brandTier": "emerging",
+    "fameScore": 0.32,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 500000,
+    "avgCPM": 36,
+    "collaborationStyle": "healthy swap story, pasta recipe, high-protein meal prep",
+    "brandPersonality": "health-forward, accessible, feel-good, ingredient-simple",
+    "notes": "Chickpea pasta brand; strong crossover between food and fitness/nutrition creators; easy recipe integration"
   }
 ]
