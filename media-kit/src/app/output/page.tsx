@@ -76,8 +76,14 @@ export default function OutputPage() {
   }, [loadFromStorage]);
 
   async function handleRefresh() {
-    const payloadRaw = typeof window !== "undefined" ? window.sessionStorage.getItem("lastMatchPayload") : null;
-    const shownRaw = typeof window !== "undefined" ? window.sessionStorage.getItem("shownBrandNames") : null;
+    const payloadRaw =
+      typeof window !== "undefined"
+        ? window.sessionStorage.getItem("lastMatchPayload")
+        : null;
+    const shownRaw =
+      typeof window !== "undefined"
+        ? window.sessionStorage.getItem("shownBrandNames")
+        : null;
     if (!payloadRaw || refreshUsed) return;
     try {
       const payload = JSON.parse(payloadRaw) as Record<string, unknown>;
@@ -88,20 +94,27 @@ export default function OutputPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...payload, excludeBrands: shown }),
       });
-      const next = (await res.json()) as MatchResponse & { error?: string; insufficientNiche?: string };
+      const next = (await res.json()) as MatchResponse & {
+        error?: string;
+        insufficientNiche?: string;
+      };
       if (!res.ok) {
         const nicheMsg =
           typeof next?.insufficientNiche === "string"
             ? `The ${next.insufficientNiche} niche doesn't have enough companies. `
             : "";
-        const rest = typeof next?.error === "string" ? next.error : "Refresh failed.";
+        const rest =
+          typeof next?.error === "string" ? next.error : "Refresh failed.";
         setRefreshError(nicheMsg + rest);
         return;
       }
       setRefreshError(null);
       const nextNames = (next.recommendations ?? []).map((r) => r.brandName);
       window.sessionStorage.setItem("matchResult", JSON.stringify(next));
-      window.sessionStorage.setItem("shownBrandNames", JSON.stringify([...shown, ...nextNames]));
+      window.sessionStorage.setItem(
+        "shownBrandNames",
+        JSON.stringify([...shown, ...nextNames]),
+      );
       window.sessionStorage.setItem(REFRESH_USED_KEY, "true");
       setRefreshUsed(true);
       setData(next);
@@ -113,7 +126,9 @@ export default function OutputPage() {
     }
   }
 
-  const expandedRec = data?.recommendations.find((r, i) => (r.brandName + i) === expandedKey);
+  const expandedRec = data?.recommendations.find(
+    (r, i) => r.brandName + i === expandedKey,
+  );
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-zinc-50 to-emerald-50/30 px-4 py-12 font-sans text-zinc-900 dark:from-zinc-950 dark:to-emerald-950/20 dark:text-zinc-50 sm:px-6 sm:py-16">
@@ -124,12 +139,16 @@ export default function OutputPage() {
               Sponsorship recommendations
             </h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Four in your niche (2 reach, 2 target) and one from a related niche.
+              Four in your niche (2 reach, 2 target) and one from a related
+              niche.
             </p>
             {!data && (
               <p className="text-xs text-zinc-500">
                 No recommendations found. Start from the{" "}
-                <Link href="/input" className="font-medium text-emerald-600 underline dark:text-emerald-400">
+                <Link
+                  href="/input"
+                  className="font-medium text-emerald-600 underline dark:text-emerald-400"
+                >
                   input page
                 </Link>
                 .
@@ -149,7 +168,11 @@ export default function OutputPage() {
               disabled={refreshLoading || !data || refreshUsed}
               className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-emerald-500 px-4 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-emerald-600 disabled:opacity-50 dark:border-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-700"
             >
-              {refreshLoading ? "Loading…" : refreshUsed ? "Refresh used" : "Refresh suggestions"}
+              {refreshLoading
+                ? "Loading…"
+                : refreshUsed
+                  ? "Refresh used"
+                  : "Refresh suggestions"}
             </button>
           </div>
         </header>
@@ -168,7 +191,15 @@ export default function OutputPage() {
                 const key = rec.brandName + index;
                 const isExpanded = expandedKey === key;
                 const delayClass =
-                  index === 0 ? "" : index === 1 ? "animate-slide-down-in-delay-1" : index === 2 ? "animate-slide-down-in-delay-2" : index === 3 ? "animate-slide-down-in-delay-3" : "animate-slide-down-in-delay-4";
+                  index === 0
+                    ? ""
+                    : index === 1
+                      ? "animate-slide-down-in-delay-1"
+                      : index === 2
+                        ? "animate-slide-down-in-delay-2"
+                        : index === 3
+                          ? "animate-slide-down-in-delay-3"
+                          : "animate-slide-down-in-delay-4";
                 return (
                   <article
                     key={key}
@@ -181,16 +212,24 @@ export default function OutputPage() {
                           {rec.kind === "reach"
                             ? "Reach"
                             : rec.kind === "related"
-                              ? rec.sourceNiche ? `Related (${rec.sourceNiche})` : "Related"
+                              ? rec.sourceNiche
+                                ? `Related (${rec.sourceNiche})`
+                                : "Related"
                               : "Target"}
                         </p>
                         <h2 className="mt-0.5 truncate text-base font-semibold text-zinc-900 dark:text-zinc-50">
                           {rec.brandName}
                         </h2>
                         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-zinc-600 dark:text-zinc-400">
-                          <span>Score: {rec.compatibilityScore.toFixed(1)}</span>
-                          <span>{rec.acceptance.bucket} ({rec.acceptance.percent}%)</span>
-                          <span>{formatPricing(rec.pricing.min, rec.pricing.max)}</span>
+                          <span>
+                            Score: {rec.compatibilityScore.toFixed(1)}
+                          </span>
+                          <span>
+                            {rec.acceptance.bucket} ({rec.acceptance.percent}%)
+                          </span>
+                          <span>
+                            {formatPricing(rec.pricing.min, rec.pricing.max)}
+                          </span>
                         </div>
                       </div>
                       <button
@@ -207,12 +246,19 @@ export default function OutputPage() {
             </section>
 
             {/* Right: expand (detail panel or placeholder) (~60%, more space) */}
-            <aside className="min-w-0 flex-[3] animate-slide-down-in animate-slide-down-in-delay-5 min-h-[540px] rounded-xl border bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900" style={{ animationFillMode: "backwards" }}>
+            <aside
+              className="min-w-0 flex-[3] animate-slide-down-in animate-slide-down-in-delay-5 min-h-[540px] rounded-xl border bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+              style={{ animationFillMode: "backwards" }}
+            >
               {expandedRec ? (
                 <div className="flex h-full flex-col gap-4">
                   <div>
                     <p className="text-xs font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
-                      {expandedRec.kind === "reach" ? "Reach" : expandedRec.kind === "related" ? "Related" : "Target"}
+                      {expandedRec.kind === "reach"
+                        ? "Reach"
+                        : expandedRec.kind === "related"
+                          ? "Related"
+                          : "Target"}
                     </p>
                     <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
                       {expandedRec.brandName}
@@ -220,14 +266,18 @@ export default function OutputPage() {
                   </div>
                   <div className="space-y-4 rounded-lg bg-zinc-50 p-4 dark:bg-zinc-800/50">
                     <div>
-                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Tailored professional bio</p>
+                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                        Tailored professional bio
+                      </p>
                       <p className="mt-1 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
                         {expandedRec.bio}
                       </p>
                     </div>
 
                     <div className="mt-6">
-                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Tailored pitch email</p>
+                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                        Tailored pitch email
+                      </p>
                       <p className="mt-1 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
                         {expandedRec.pitchEmail}
                       </p>
@@ -240,7 +290,8 @@ export default function OutputPage() {
                     Expand company info here
                   </p>
                   <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
-                    Click &quot;Expand&quot; on a company in the list to view bio and pitch.
+                    Click &quot;Expand&quot; on a company in the list to view
+                    bio and pitch.
                   </p>
                 </div>
               )}
