@@ -92,6 +92,11 @@ interface MatchResponse {
     name: string;
     youtubeChannelId: string;
     niche: string | null;
+    estimatedSubscribers: number;
+    estimatedAvgViews: number;
+    tier: CreatorTierName;
+    channelDescription?: string | null;
+    recentVideoTitles?: string[];
   };
   recommendations: BrandRecommendation[];
 }
@@ -532,6 +537,13 @@ export async function POST(req: Request) {
         name: normalized.name,
         youtubeChannelId: normalized.youtubeChannelId,
         niche: normalized.nicheOverride ?? null,
+        estimatedSubscribers: creator.estimatedSubscribers,
+        estimatedAvgViews: creator.estimatedAvgViews,
+        tier: creator.tier,
+        ...(youtubeData && {
+          channelDescription: youtubeData.channelDescription || null,
+          recentVideoTitles: youtubeData.recentVideoTitles ?? [],
+        }),
       },
       recommendations,
     };
