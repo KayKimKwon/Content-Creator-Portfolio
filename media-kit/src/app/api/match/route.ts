@@ -253,9 +253,18 @@ function scoreBrand(
   }
 
   // 9) Pricing recommendation based on estimated avg views and brand CPM.
+  // Restrict range for huge creators (e.g. Mr Beast): narrower band and cap.
+  const PRICE_CAP = 2_000_000; // max per integration (USD)
   const basePrice = (creator.estimatedAvgViews * brand.avgCPM) / 1000;
-  const min = Math.round(basePrice * 0.8);
-  const max = Math.round(basePrice * 1.2);
+  const isHigh = basePrice > 500_000;
+  const minMult = isHigh ? 0.92 : 0.8;
+  const maxMult = isHigh ? 1.08 : 1.2;
+  let min = Math.round(basePrice * minMult);
+  let max = Math.round(basePrice * maxMult);
+  if (max > PRICE_CAP) {
+    max = PRICE_CAP;
+    min = Math.min(min, Math.round(PRICE_CAP * 0.9));
+  }
 
   const pricing: PricingRange = {
     min,

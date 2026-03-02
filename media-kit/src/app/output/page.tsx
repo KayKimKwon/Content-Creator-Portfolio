@@ -39,6 +39,16 @@ interface MatchResponse {
 
 const REFRESH_USED_KEY = "matchRefreshUsed";
 
+function formatPricing(min: number, max: number): string {
+  if (max >= 1_000_000) {
+    return `$${(min / 1_000_000).toFixed(1)}M – $${(max / 1_000_000).toFixed(1)}M`;
+  }
+  if (max >= 1_000) {
+    return `$${(min / 1_000).toFixed(0)}k – $${(max / 1_000).toFixed(0)}k`;
+  }
+  return `$${min} – $${max}`;
+}
+
 export default function OutputPage() {
   const [data, setData] = useState<MatchResponse | null>(null);
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
@@ -103,12 +113,14 @@ export default function OutputPage() {
     }
   }
 
+  const expandedRec = data?.recommendations.find((r, i) => (r.brandName + i) === expandedKey);
+
   return (
-    <main className="min-h-screen bg-zinc-50 px-6 py-16 font-sans text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-      <div className="mx-auto flex max-w-5xl flex-col gap-10">
-        <header className="flex items-center justify-between gap-4">
-          <div className="space-y-2">
-            <h1 className="text-2xl font-semibold sm:text-3xl">
+    <main className="min-h-screen bg-gradient-to-b from-zinc-50 to-emerald-50/30 px-4 py-12 font-sans text-zinc-900 dark:from-zinc-950 dark:to-emerald-950/20 dark:text-zinc-50 sm:px-6 sm:py-16">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8">
+        <header className="flex flex-wrap items-center justify-between gap-4 animate-slide-down-in">
+          <div className="space-y-1">
+            <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 sm:text-3xl">
               Sponsorship recommendations
             </h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
@@ -117,7 +129,7 @@ export default function OutputPage() {
             {!data && (
               <p className="text-xs text-zinc-500">
                 No recommendations found. Start from the{" "}
-                <Link href="/input" className="text-emerald-600 underline dark:text-emerald-400">
+                <Link href="/input" className="font-medium text-emerald-600 underline dark:text-emerald-400">
                   input page
                 </Link>
                 .
@@ -127,7 +139,7 @@ export default function OutputPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/input"
-              className="inline-flex items-center justify-center rounded-full border border-zinc-300 bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-700 transition hover:bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+              className="inline-flex items-center justify-center rounded-full border border-zinc-300 bg-white px-4 py-2 text-xs font-medium text-zinc-700 shadow-sm transition hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
             >
               Back to input
             </Link>
@@ -135,7 +147,7 @@ export default function OutputPage() {
               type="button"
               onClick={handleRefresh}
               disabled={refreshLoading || !data || refreshUsed}
-              className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-emerald-50 px-4 py-2 text-xs font-medium text-emerald-700 transition hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-500 dark:bg-emerald-950 dark:text-emerald-300 dark:hover:bg-emerald-900"
+              className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-emerald-500 px-4 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-emerald-600 disabled:opacity-50 dark:border-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-700"
             >
               {refreshLoading ? "Loading…" : refreshUsed ? "Refresh used" : "Refresh suggestions"}
             </button>
@@ -143,83 +155,96 @@ export default function OutputPage() {
         </header>
 
         {refreshError && (
-          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800 dark:bg-red-950 dark:text-red-200">
+          <p className="animate-slide-down-in rounded-xl bg-red-50 px-4 py-3 text-sm text-red-800 dark:bg-red-950 dark:text-red-200">
             {refreshError}
           </p>
         )}
 
         {data && (
-          <section className="grid gap-6 sm:grid-cols-2">
-            {data.recommendations.map((rec, index) => {
-              const key = rec.brandName + index;
-              const isExpanded = expandedKey === key;
-
-              return (
-                <article
-                  key={key}
-                  className="flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 text-sm shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <p className="text-xs text-zinc-500">
-                        {rec.kind === "reach"
-                          ? "Reach recommendation"
-                          : rec.kind === "related"
-                            ? `Related niche${rec.sourceNiche ? ` (${rec.sourceNiche})` : ""}`
-                            : "Target recommendation"}
-                      </p>
-                      <h2 className="mt-1 text-base font-semibold">{rec.brandName}</h2>
+          <div className="grid min-h-[420px] gap-6 lg:grid-cols-[1fr,1fr]">
+            {/* Left: company list */}
+            <section className="flex flex-col gap-3">
+              {data.recommendations.map((rec, index) => {
+                const key = rec.brandName + index;
+                const isExpanded = expandedKey === key;
+                return (
+                  <article
+                    key={key}
+                    className={`animate-slide-down-in rounded-xl border bg-white p-4 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-900 ${index === 0 ? "" : index === 1 ? "animate-slide-down-in-delay-1" : index === 2 ? "animate-slide-down-in-delay-2" : "animate-slide-down-in-delay-3"}`}
+                    style={{ animationFillMode: "backwards" }}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+                          {rec.kind === "reach"
+                            ? "Reach"
+                            : rec.kind === "related"
+                              ? rec.sourceNiche ? `Related (${rec.sourceNiche})` : "Related"
+                              : "Target"}
+                        </p>
+                        <h2 className="mt-0.5 truncate text-base font-semibold text-zinc-900 dark:text-zinc-50">
+                          {rec.brandName}
+                        </h2>
+                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-zinc-600 dark:text-zinc-400">
+                          <span>Score: {rec.compatibilityScore.toFixed(1)}</span>
+                          <span>{rec.acceptance.bucket} ({rec.acceptance.percent}%)</span>
+                          <span>{formatPricing(rec.pricing.min, rec.pricing.max)}</span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setExpandedKey(isExpanded ? null : key)}
+                        className="shrink-0 rounded-lg bg-emerald-500 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700"
+                      >
+                        {isExpanded ? "Collapse" : "Expand"}
+                      </button>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => setExpandedKey(isExpanded ? null : key)}
-                      className="text-xs font-medium text-emerald-600 underline hover:text-emerald-700 dark:text-emerald-400 dark:hover:text-emerald-300"
-                    >
-                      {isExpanded ? "Hide details" : "View details"}
-                    </button>
+                  </article>
+                );
+              })}
+            </section>
+
+            {/* Right: detail panel or placeholder */}
+            <aside className="animate-slide-down-in animate-slide-down-in-delay-4 rounded-xl border bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900" style={{ animationFillMode: "backwards" }}>
+              {expandedRec ? (
+                <div className="flex h-full flex-col gap-4">
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+                      {expandedRec.kind === "reach" ? "Reach" : expandedRec.kind === "related" ? "Related" : "Target"}
+                    </p>
+                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                      {expandedRec.brandName}
+                    </h3>
                   </div>
-
-                  <div className="space-y-1 text-xs text-zinc-600 dark:text-zinc-400">
-                    <p>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                        Compatibility score:
-                      </span>{" "}
-                      {rec.compatibilityScore.toFixed(1)}
-                    </p>
-                    <p>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                        Acceptance probability:
-                      </span>{" "}
-                      {rec.acceptance.bucket} ({rec.acceptance.percent}%)
-                    </p>
-                    <p>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                        Suggested pricing:
-                      </span>{" "}
-                      ${rec.pricing.min} – ${rec.pricing.max} per integration
-                    </p>
+                  <div className="space-y-4 rounded-lg bg-zinc-50 p-4 dark:bg-zinc-800/50">
+                    <div>
+                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Tailored professional bio</p>
+                      <p className="mt-1 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
+                        {expandedRec.bio}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Tailored pitch email</p>
+                      <p className="mt-1 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
+                        {expandedRec.pitchEmail}
+                      </p>
+                    </div>
                   </div>
-
-                  {isExpanded && (
-                    <>
-                      <div className="space-y-1 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                        <p className="font-medium">Tailored professional bio</p>
-                        <p className="text-xs whitespace-pre-line">{rec.bio}</p>
-                      </div>
-
-                      <div className="space-y-1 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                        <p className="font-medium">Tailored pitch email</p>
-                        <p className="text-xs whitespace-pre-line">{rec.pitchEmail}</p>
-                      </div>
-                    </>
-                  )}
-                </article>
-              );
-            })}
-          </section>
+                </div>
+              ) : (
+                <div className="flex h-full min-h-[320px] flex-col items-center justify-center rounded-lg border-2 border-dashed border-zinc-200 bg-zinc-50/50 text-center dark:border-zinc-700 dark:bg-zinc-800/30">
+                  <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                    Expand company info here
+                  </p>
+                  <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
+                    Click &quot;Expand&quot; on a company in the list to view bio and pitch.
+                  </p>
+                </div>
+              )}
+            </aside>
+          </div>
         )}
       </div>
     </main>
   );
 }
-
