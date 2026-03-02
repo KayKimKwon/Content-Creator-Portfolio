@@ -38,11 +38,8 @@ interface MatchResponse {
 
 export default function OutputPage() {
   const [data, setData] = useState<MatchResponse | null>(null);
-<<<<<<< Updated upstream
-=======
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
   const [refreshLoading, setRefreshLoading] = useState(false);
->>>>>>> Stashed changes
 
   const loadFromStorage = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -119,41 +116,6 @@ export default function OutputPage() {
         </header>
 
         {data && (
-<<<<<<< Updated upstream
-          <section className="grid gap-6 md:grid-cols-3">
-            {data.recommendations.map((rec, index) => (
-              <article
-                key={rec.brandName + index}
-                className="flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 text-sm shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
-              >
-                <div>
-                  <p className="text-xs text-zinc-500">
-                    {rec.kind === "reach" ? "Reach recommendation" : "Target recommendation"}
-                  </p>
-                  <h2 className="mt-1 text-base font-semibold">{rec.brandName}</h2>
-                </div>
-
-                <div className="space-y-1 text-xs text-zinc-600 dark:text-zinc-400">
-                  <p>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                      Compatibility score:
-                    </span>{" "}
-                    {rec.compatibilityScore.toFixed(1)}
-                  </p>
-                  <p>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                      Acceptance probability:
-                    </span>{" "}
-                    {rec.acceptance.bucket} ({rec.acceptance.percent}%)
-                  </p>
-                  <p>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-50">
-                      Suggested pricing:
-                    </span>{" "}
-                    ${rec.pricing.min} – ${rec.pricing.max} per integration
-                  </p>
-                </div>
-=======
           <section className="grid gap-6 sm:grid-cols-2">
             {data.recommendations.map((rec, index) => {
               const key = rec.brandName + index;
@@ -179,19 +141,44 @@ export default function OutputPage() {
                       {isExpanded ? "Hide details" : "View details"}
                     </button>
                   </div>
->>>>>>> Stashed changes
 
-                <div className="space-y-1 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                  <p className="font-medium">Tailored professional bio</p>
-                  <p className="text-xs whitespace-pre-line">{rec.bio}</p>
-                </div>
+                  <div className="space-y-1 text-xs text-zinc-600 dark:text-zinc-400">
+                    <p>
+                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                        Compatibility score:
+                      </span>{" "}
+                      {rec.compatibilityScore.toFixed(1)}
+                    </p>
+                    <p>
+                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                        Acceptance probability:
+                      </span>{" "}
+                      {rec.acceptance.bucket} ({rec.acceptance.percent}%)
+                    </p>
+                    <p>
+                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                        Suggested pricing:
+                      </span>{" "}
+                      ${rec.pricing.min} – ${rec.pricing.max} per integration
+                    </p>
+                  </div>
 
-                <div className="space-y-1 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
-                  <p className="font-medium">Tailored pitch email</p>
-                  <p className="text-xs whitespace-pre-line">{rec.pitchEmail}</p>
-                </div>
-              </article>
-            ))}
+                  {isExpanded && (
+                    <>
+                      <div className="space-y-1 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
+                        <p className="font-medium">Tailored professional bio</p>
+                        <p className="text-xs whitespace-pre-line">{rec.bio}</p>
+                      </div>
+
+                      <div className="space-y-1 rounded-lg bg-zinc-50 p-3 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300">
+                        <p className="font-medium">Tailored pitch email</p>
+                        <p className="text-xs whitespace-pre-line">{rec.pitchEmail}</p>
+                      </div>
+                    </>
+                  )}
+                </article>
+              );
+            })}
           </section>
         )}
       </div>
