@@ -101,6 +101,11 @@ export default function InputPage() {
       setError("Please enter your email.");
       return;
     }
+    const emailTrimmed = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
 
     const parseNumberOrNull = (value: string) => {
       const trimmed = value.trim();

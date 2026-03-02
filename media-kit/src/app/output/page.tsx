@@ -17,6 +17,8 @@ interface PricingRange {
   currency: "USD";
 }
 
+type CreatorTierName = "nano" | "micro" | "mid" | "macro" | "mega";
+
 interface BrandRecommendation {
   brandName: string;
   kind: RecommendationKind;
@@ -26,6 +28,22 @@ interface BrandRecommendation {
   bio: string;
   pitchEmail: string;
   sourceNiche?: string;
+  brandTier?: "iconic" | "mid" | "emerging";
+  collaborationStyle?: string;
+  idealCreatorTier?: CreatorTierName[];
+  avgCPM?: number;
+  tierFit?: boolean;
+   // Score breakdown and range context
+  nicheScore?: number;
+  tierScore?: number;
+  subsScore?: number;
+  contentScore?: number;
+  fameNumeric?: number;
+  targetBoost?: number;
+  repeatPenalty?: number;
+  alreadyWorkedWith?: boolean;
+  minSubscribers?: number;
+  maxSubscribers?: number | null;
 }
 
 interface MatchResponse {
@@ -33,6 +51,9 @@ interface MatchResponse {
     name: string;
     youtubeChannelId: string;
     niche: string | null;
+    tier?: CreatorTierName;
+    estimatedSubscribers?: number;
+    estimatedAvgViews?: number;
   };
   recommendations: BrandRecommendation[];
 }
@@ -55,6 +76,7 @@ export default function OutputPage() {
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [refreshUsed, setRefreshUsed] = useState(false);
   const [refreshError, setRefreshError] = useState<string | null>(null);
+  const [copied, setCopied] = useState<"bio" | "email" | null>(null);
 
   const loadFromStorage = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -69,6 +91,24 @@ export default function OutputPage() {
     }
     const used = window.sessionStorage.getItem(REFRESH_USED_KEY);
     setRefreshUsed(used === "true");
+  }, []);
+
+  const handleCopy = useCallback((text: string, which: "bio" | "email") => {
+    if (!text) return;
+    if (!navigator.clipboard) {
+      return;
+    }
+    navigator.clipboard.writeText(text).then(
+      () => {
+        setCopied(which);
+        setTimeout(() => {
+          setCopied((prev) => (prev === which ? null : prev));
+        }, 1500);
+      },
+      () => {
+        // silently ignore clipboard failures
+      },
+    );
   }, []);
 
   useEffect(() => {
@@ -170,18 +210,25 @@ export default function OutputPage() {
                 Creator stats
               </Link>
             )}
-            <button
-              type="button"
-              onClick={handleRefresh}
-              disabled={refreshLoading || !data || refreshUsed}
-              className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-emerald-500 px-4 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-emerald-600 disabled:opacity-50 dark:border-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-700"
-            >
-              {refreshLoading
-                ? "Loading…"
-                : refreshUsed
-                  ? "Refresh used"
-                  : "Refresh suggestions"}
-            </button>
+            <div className="flex flex-col items-end gap-0.5">
+              <button
+                type="button"
+                onClick={handleRefresh}
+                disabled={refreshLoading || !data || refreshUsed}
+                className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-emerald-500 px-4 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-emerald-600 disabled:opacity-50 dark:border-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-700"
+              >
+                {refreshLoading
+                  ? "Loading…"
+                  : refreshUsed
+                    ? "Refresh used"
+                    : "Refresh suggestions"}
+              </button>
+              {refreshUsed && (
+                <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                  You&apos;ve used your one refresh for this run.
+                </p>
+              )}
+            </div>
           </div>
         </header>
 
@@ -272,24 +319,352 @@ export default function OutputPage() {
                       {expandedRec.brandName}
                     </h3>
                   </div>
+
+                  {/* Company–creator fit stats */}
+                  <div className="rounded-lg border border-zinc-200 bg-zinc-50/80 p-4 dark:border-zinc-700 dark:bg-zinc-800/50">
+                    <p className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                      Fit & relationship
+                    </p>
+                    <dl className="mt-3 space-y-2 text-sm">
+                      {expandedRec.brandTier && (
+                        <div>
+                          <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                            Brand tier
+                          </dt>
+                          <dd className="mt-0.5 capitalize font-medium text-zinc-800 dark:text-zinc-200">
+                            {expandedRec.brandTier}
+                          </dd>
+                        </div>
+                      )}
+                      {data?.creator?.tier && (
+                        <div>
+                          <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                            Your tier fit
+                          </dt>
+                          <dd className="mt-0.5 text-zinc-700 dark:text-zinc-300">
+                            {expandedRec.tierFit ? (
+                              <span className="text-emerald-600 dark:text-emerald-400">
+                                Your tier ({data.creator.tier}) is in this
+                                brand&apos;s ideal range
+                              </span>
+                            ) : expandedRec.idealCreatorTier?.length ? (
+                              <span>
+                                They typically work with{" "}
+                                {expandedRec.idealCreatorTier
+                                  .map(
+                                    (t) =>
+                                      t.charAt(0).toUpperCase() + t.slice(1),
+                                  )
+                                  .join(", ")}{" "}
+                                creators
+                              </span>
+                            ) : null}
+                          </dd>
+                        </div>
+                      )}
+                      {expandedRec.avgCPM != null && (
+                        <div>
+                          <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                            Typical CPM (niche)
+                          </dt>
+                          <dd className="mt-0.5 font-medium tabular-nums text-zinc-800 dark:text-zinc-200">
+                            ${expandedRec.avgCPM}
+                          </dd>
+                        </div>
+                      )}
+                      {expandedRec.collaborationStyle && (
+                        <div>
+                          <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                            Suggested collaboration style
+                          </dt>
+                          <dd className="mt-0.5 text-zinc-700 dark:text-zinc-300">
+                            {expandedRec.collaborationStyle}
+                          </dd>
+                        </div>
+                      )}
+                    </dl>
+                  </div>
+
                   <div className="space-y-4 rounded-lg bg-zinc-50 p-4 dark:bg-zinc-800/50">
                     <div>
-                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                        Tailored professional bio
-                      </p>
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                          Tailored professional bio
+                        </p>
+                        <span aria-live="polite" aria-atomic="true" className="sr-only">
+                          {copied === "bio" ? "Bio copied to clipboard." : ""}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(expandedRec.bio, "bio")}
+                          aria-label={copied === "bio" ? "Bio copied" : "Copy bio"}
+                          className="rounded-full border border-zinc-300 px-2 py-0.5 text-[11px] font-medium text-zinc-600 shadow-sm transition hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-700"
+                        >
+                          {copied === "bio" ? "Copied" : "Copy"}
+                        </button>
+                      </div>
                       <p className="mt-1 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
                         {expandedRec.bio}
                       </p>
                     </div>
 
                     <div className="mt-6">
-                      <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                        Tailored pitch email
-                      </p>
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                          Tailored pitch email
+                        </p>
+                        <span aria-live="polite" aria-atomic="true" className="sr-only">
+                          {copied === "email" ? "Pitch email copied to clipboard." : ""}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleCopy(expandedRec.pitchEmail, "email")
+                          }
+                          aria-label={copied === "email" ? "Pitch email copied" : "Copy pitch email"}
+                          className="rounded-full border border-zinc-300 px-2 py-0.5 text-[11px] font-medium text-zinc-600 shadow-sm transition hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-700"
+                        >
+                          {copied === "email" ? "Copied" : "Copy"}
+                        </button>
+                      </div>
                       <p className="mt-1 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
                         {expandedRec.pitchEmail}
                       </p>
                     </div>
+                  </div>
+
+                  <div className="rounded-lg border border-dashed border-zinc-200 bg-zinc-50/80 p-4 text-xs dark:border-zinc-700 dark:bg-zinc-800/40">
+                    <p className="text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                      Detailed stats
+                    </p>
+                    <dl className="mt-3 grid gap-3 sm:grid-cols-2">
+                      <div>
+                        <dt className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                          Creator snapshot
+                        </dt>
+                        <dd className="mt-1 space-y-0.5 text-zinc-700 dark:text-zinc-300">
+                          {data?.creator?.tier && (
+                            <p>
+                              Tier:{" "}
+                              <span className="font-medium">
+                                {data.creator.tier}
+                              </span>
+                            </p>
+                          )}
+                          {data?.creator?.estimatedSubscribers != null && (
+                            <p>
+                              Subs:{" "}
+                              <span className="font-medium tabular-nums">
+                                {data.creator.estimatedSubscribers.toLocaleString()}
+                              </span>
+                            </p>
+                          )}
+                          {data?.creator?.estimatedAvgViews != null && (
+                            <p>
+                              Avg views/video:{" "}
+                              <span className="font-medium tabular-nums">
+                                {data.creator.estimatedAvgViews.toLocaleString()}
+                              </span>
+                            </p>
+                          )}
+                          {expandedRec.pricing && expandedRec.avgCPM != null && (
+                            <p>
+                              Implied CPM from range:{" "}
+                              <span className="font-medium tabular-nums">
+                                {(() => {
+                                  const avgViews =
+                                    data?.creator?.estimatedAvgViews ?? 0;
+                                  if (!avgViews) return "—";
+                                  const midPrice =
+                                    (expandedRec.pricing.min +
+                                      expandedRec.pricing.max) /
+                                    2;
+                                  const implied =
+                                    (midPrice / Math.max(1, avgViews)) * 1000;
+                                  return `$${implied.toFixed(0)}/k vs $${expandedRec.avgCPM}/k`;
+                                })()}
+                              </span>
+                            </p>
+                          )}
+                        </dd>
+                      </div>
+
+                      <div>
+                        <dt className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                          Company snapshot
+                        </dt>
+                        <dd className="mt-1 space-y-0.5 text-zinc-700 dark:text-zinc-300">
+                          {expandedRec.brandTier && (
+                            <p>
+                              Tier:{" "}
+                              <span className="capitalize font-medium">
+                                {expandedRec.brandTier}
+                              </span>
+                            </p>
+                          )}
+                          {expandedRec.minSubscribers != null && (
+                            <p>
+                              Typical subs range:{" "}
+                              <span className="font-medium tabular-nums">
+                                {expandedRec.minSubscribers.toLocaleString()}{" "}
+                                –{" "}
+                                {(expandedRec.maxSubscribers ??
+                                  expandedRec.minSubscribers * 10
+                                ).toLocaleString()}
+                              </span>
+                            </p>
+                          )}
+                          {expandedRec.minSubscribers != null &&
+                            data?.creator?.estimatedSubscribers != null && (
+                              <p>
+                                Your size vs range:{" "}
+                                <span className="font-medium tabular-nums">
+                                  {(() => {
+                                    const subs =
+                                      data.creator.estimatedSubscribers;
+                                    const min = expandedRec.minSubscribers!;
+                                    const max =
+                                      expandedRec.maxSubscribers ??
+                                      expandedRec.minSubscribers! * 10;
+                                    if (subs < min) return "below typical";
+                                    if (subs > max) return "above typical";
+                                    return "inside typical range";
+                                  })()}
+                                </span>
+                              </p>
+                            )}
+                          <p>
+                            Recommended price:{" "}
+                            <span className="font-medium">
+                              {formatPricing(
+                                expandedRec.pricing.min,
+                                expandedRec.pricing.max,
+                              )}
+                            </span>
+                          </p>
+                          {expandedRec.avgCPM != null && (
+                            <p>
+                              Typical CPM:{" "}
+                              <span className="font-medium tabular-nums">
+                                ${expandedRec.avgCPM}
+                              </span>
+                            </p>
+                          )}
+                        </dd>
+                      </div>
+
+                      <div>
+                        <dt className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                          Match context
+                        </dt>
+                        <dd className="mt-1 space-y-0.5 text-zinc-700 dark:text-zinc-300">
+                          <p>
+                            Match type:{" "}
+                            <span className="font-medium">
+                              {expandedRec.kind === "reach"
+                                ? "Reach"
+                                : expandedRec.kind === "related"
+                                  ? "Related"
+                                  : "Target"}
+                              {expandedRec.sourceNiche
+                                ? ` · ${expandedRec.sourceNiche}`
+                                : ""}
+                            </span>
+                          </p>
+                          <p>
+                            Compatibility score:{" "}
+                            <span className="font-medium">
+                              {expandedRec.compatibilityScore.toFixed(1)}
+                            </span>
+                          </p>
+                          <p>
+                            Acceptance:{" "}
+                            <span className="font-medium">
+                              {expandedRec.acceptance.bucket} (
+                              {expandedRec.acceptance.percent}%)
+                            </span>
+                          </p>
+                          {expandedRec.nicheScore != null && (
+                            <p>
+                              Niche factor:{" "}
+                              <span className="font-medium tabular-nums">
+                                {expandedRec.nicheScore.toFixed(0)}/100
+                              </span>
+                            </p>
+                          )}
+                          {expandedRec.contentScore != null && (
+                            <p>
+                              Content fit:{" "}
+                              <span className="font-medium tabular-nums">
+                                {expandedRec.contentScore.toFixed(0)}/100
+                              </span>
+                            </p>
+                          )}
+                          {expandedRec.tierScore != null && (
+                            <p>
+                              Tier alignment:{" "}
+                              <span className="font-medium tabular-nums">
+                                {expandedRec.tierScore.toFixed(0)}/100
+                              </span>
+                            </p>
+                          )}
+                          {expandedRec.subsScore != null && (
+                            <p>
+                              Subs range fit:{" "}
+                              <span className="font-medium tabular-nums">
+                                {expandedRec.subsScore.toFixed(0)}/100
+                              </span>
+                            </p>
+                          )}
+                          {expandedRec.fameNumeric != null && (
+                            <p>
+                              Brand fame:{" "}
+                              <span className="font-medium tabular-nums">
+                                {expandedRec.fameNumeric.toFixed(0)}/100
+                              </span>
+                            </p>
+                          )}
+                        </dd>
+                      </div>
+
+                      <div>
+                        <dt className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                          Relationship &amp; leverage
+                        </dt>
+                        <dd className="mt-1 space-y-0.5 text-zinc-700 dark:text-zinc-300">
+                          <p>
+                            Past collab status:{" "}
+                            <span className="font-medium">
+                              {expandedRec.alreadyWorkedWith
+                                ? "Existing partner"
+                                : "First‑time pitch"}
+                            </span>
+                          </p>
+                          <p>
+                            Target company:{" "}
+                            <span className="font-medium">
+                              {expandedRec.targetBoost &&
+                              expandedRec.targetBoost > 0
+                                ? "Yes"
+                                : "No"}
+                            </span>
+                          </p>
+                          {data?.creator?.name && (
+                            <p>
+                              Negotiation leverage:{" "}
+                              <span className="font-medium">
+                                {expandedRec.alreadyWorkedWith
+                                  ? "Warm relationship (mention prior work and results)."
+                                  : expandedRec.targetBoost &&
+                                      expandedRec.targetBoost > 0
+                                    ? "High intent (they’re on your wishlist—aim for top of range)."
+                                    : "Standard cold pitch (anchor around mid‑range pricing)."}
+                              </span>
+                            </p>
+                          )}
+                        </dd>
+                      </div>
+                    </dl>
                   </div>
                 </div>
               ) : (

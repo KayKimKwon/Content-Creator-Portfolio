@@ -5,10 +5,16 @@ import Link from "next/link";
 
 type CreatorTierName = "nano" | "micro" | "mid" | "macro" | "mega";
 
+interface NicheProbability {
+  niche: string;
+  probability: number;
+}
+
 interface CreatorStats {
   name: string;
   youtubeChannelId: string;
   niche: string | null;
+  nicheProbabilities?: NicheProbability[];
   estimatedSubscribers?: number;
   estimatedAvgViews?: number;
   tier?: CreatorTierName;
@@ -24,6 +30,61 @@ function formatNumber(n: number): string {
 
 function tierLabel(tier: CreatorTierName): string {
   return tier.charAt(0).toUpperCase() + tier.slice(1);
+}
+
+const PIE_COLORS = [
+  "rgb(16 185 129)" /* emerald-500 */,
+  "rgb(52 211 153)" /* emerald-400 */,
+  "rgb(110 231 183)" /* emerald-300 */,
+];
+
+function NichePieChart({
+  segments,
+}: {
+  segments: { niche: string; probability: number }[];
+}) {
+  const size = 140;
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = Math.min(cx, cy) - 4;
+  let cumulative = 0;
+  const paths = segments.map(({ probability }, i) => {
+    const startAngle = (cumulative / 100) * 2 * Math.PI;
+    cumulative += probability;
+    const endAngle = (cumulative / 100) * 2 * Math.PI;
+    const x1 = cx + r * Math.sin(startAngle);
+    const y1 = cy - r * Math.cos(startAngle);
+    const x2 = cx + r * Math.sin(endAngle);
+    const y2 = cy - r * Math.cos(endAngle);
+    const large = probability > 50 ? 1 : 0;
+    const d = [
+      `M ${cx} ${cy}`,
+      `L ${x1} ${y1}`,
+      `A ${r} ${r} 0 ${large} 1 ${x2} ${y2}`,
+      "Z",
+    ].join(" ");
+    return (
+      <path
+        key={i}
+        d={d}
+        fill={PIE_COLORS[i % PIE_COLORS.length]}
+        className="stroke-white dark:stroke-zinc-900"
+        strokeWidth={1.5}
+      />
+    );
+  });
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      className="shrink-0"
+      aria-hidden
+    >
+      {paths}
+    </svg>
+  );
 }
 
 export default function StatsPage() {
@@ -103,10 +164,50 @@ export default function StatsPage() {
                 </div>
                 <div>
                   <dt className="text-xs text-zinc-500 dark:text-zinc-400">
-                    Niche
+                    Detected niche
                   </dt>
-                  <dd className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-300">
-                    {creator.niche ?? "—"}
+                  <dd className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
+                    {creator.nicheProbabilities &&
+                    creator.nicheProbabilities.length > 0 ? (
+                      <div className="mt-2 flex flex-wrap items-center justify-center gap-4">
+                        <NichePieChart
+                          segments={creator.nicheProbabilities.map(
+                            ({ niche, probability }) => ({
+                              niche,
+                              probability,
+                            }),
+                          )}
+                        />
+                        <ul className="flex flex-col gap-1 text-xs">
+                          {creator.nicheProbabilities.map(
+                            ({ niche, probability }, i) => (
+                              <li
+                                key={niche}
+                                className="flex items-center gap-2 capitalize"
+                              >
+                                <span
+                                  className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                                    i === 0
+                                      ? "bg-emerald-500"
+                                      : i === 1
+                                        ? "bg-emerald-400"
+                                        : "bg-emerald-300"
+                                  }`}
+                                />
+                                <span className="text-zinc-700 dark:text-zinc-300">
+                                  {niche}
+                                </span>
+                                <span className="tabular-nums font-medium text-emerald-600 dark:text-emerald-400">
+                                  {probability}%
+                                </span>
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      </div>
+                    ) : (
+                      (creator.niche ?? "—")
+                    )}
                   </dd>
                 </div>
               </dl>

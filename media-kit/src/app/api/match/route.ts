@@ -85,6 +85,28 @@ interface BrandRecommendation {
   bio: string;
   pitchEmail: string;
   sourceNiche?: string; // set for kind === "related"
+  // Company–creator relationship (for expanded panel)
+  brandTier?: "iconic" | "mid" | "emerging";
+  collaborationStyle?: string;
+  idealCreatorTier?: CreatorTierName[];
+  avgCPM?: number;
+  tierFit?: boolean; // true if creator's tier is in brand's idealCreatorTier
+  // Score breakdown and range context
+  nicheScore?: number;
+  tierScore?: number;
+  subsScore?: number;
+  contentScore?: number;
+  fameNumeric?: number;
+  targetBoost?: number;
+  repeatPenalty?: number;
+  alreadyWorkedWith?: boolean;
+  minSubscribers?: number;
+  maxSubscribers?: number | null;
+}
+
+interface NicheProbability {
+  niche: string;
+  probability: number;
 }
 
 interface MatchResponse {
@@ -92,6 +114,7 @@ interface MatchResponse {
     name: string;
     youtubeChannelId: string;
     niche: string | null;
+    nicheProbabilities?: NicheProbability[];
     estimatedSubscribers: number;
     estimatedAvgViews: number;
     tier: CreatorTierName;
@@ -129,12 +152,20 @@ function tokenizeTextToSet(text: string | null | undefined): Set<string> {
 }
 
 function inferNicheFromTokens(contentTokens: Set<string>): string | null {
+  const top = inferNicheProbabilities(contentTokens, 1);
+  return top.length > 0 ? top[0].niche : null;
+}
+
+/** Returns up to 3 niches with probabilities that sum to 100. */
+function inferNicheProbabilities(
+  contentTokens: Set<string>,
+  maxNiches: number = 3
+): { niche: string; probability: number }[] {
   const metaConfig = getMeta();
   const niches = metaConfig.niches ?? [];
-  if (!niches.length || contentTokens.size === 0) return null;
+  if (!niches.length || contentTokens.size === 0) return [];
 
-  let bestNiche: string | null = null;
-  let bestScore = 0;
+  const scored: { niche: string; score: number }[] = [];
 
   for (const niche of niches) {
     const brands = getBrandsForNiche(niche);
@@ -147,13 +178,28 @@ function inferNicheFromTokens(contentTokens: Set<string>): string | null {
         if (contentTokens.has(token)) score++;
       }
     }
-    if (score > bestScore) {
-      bestScore = score;
-      bestNiche = niche;
-    }
+    if (score > 0) scored.push({ niche, score });
   }
 
-  return bestScore > 0 ? bestNiche : null;
+  if (scored.length === 0) return [];
+
+  scored.sort((a, b) => b.score - a.score);
+  const top = scored.slice(0, Math.min(maxNiches, scored.length));
+  const total = top.reduce((s, x) => s + x.score, 0);
+  if (total === 0) return [];
+
+  const probs = top.map(({ niche, score }) => ({
+    niche,
+    probability: Math.round((100 * score) / total),
+  }));
+
+  // Ensure sum is exactly 100 (rounding can give 99 or 101).
+  const sum = probs.reduce((s, p) => s + p.probability, 0);
+  if (sum !== 100 && probs.length > 0) {
+    probs[0].probability += 100 - sum;
+  }
+
+  return probs;
 }
 
 function getTierFromSubscribers(subscribers: number): CreatorTierName {
@@ -359,6 +405,16 @@ function scoreBrand(
     finalScore,
     acceptance: { bucket, percent },
     pricing,
+    nicheScore,
+    tierScore,
+    subsScore,
+    contentScore,
+    fameNumeric,
+    targetBoost,
+    repeatPenalty,
+    alreadyWorkedWith,
+    minSubscribers: minSubs,
+    maxSubscribers: brand.maxSubscribers,
   };
 }
 
@@ -435,15 +491,16 @@ export async function POST(req: Request) {
     }
 
     // If the user did not supply a niche, infer it locally from channel content.
-    if (!normalized.nicheOverride && youtubeData) {
+    let nicheProbabilities: NicheProbability[] | undefined;
+    if (youtubeData) {
       const combined = [
         youtubeData.channelDescription ?? "",
         ...(youtubeData.recentVideoTitles ?? []),
       ].join(" ");
       const tokens = tokenizeTextToSet(combined);
-      const inferred = inferNicheFromTokens(tokens);
-      if (inferred) {
-        normalized.nicheOverride = inferred;
+      nicheProbabilities = inferNicheProbabilities(tokens, 3);
+      if (!normalized.nicheOverride && nicheProbabilities.length > 0) {
+        normalized.nicheOverride = nicheProbabilities[0].niche;
       }
     }
 
@@ -606,6 +663,7 @@ export async function POST(req: Request) {
         const genByIndex = generated[index];
         const genByName = generated.find((g) => g.brandName?.trim() === item.brand.name?.trim());
         const gen = genByIndex ?? genByName;
+        const tierFit = item.brand.idealCreatorTier?.includes(creator.tier) ?? false;
         return {
           brandName: item.brand.name,
           kind,
@@ -613,6 +671,21 @@ export async function POST(req: Request) {
           acceptance: item.acceptance,
           pricing: item.pricing,
           ...(isRelated && relatedNiche ? { sourceNiche: relatedNiche } : {}),
+          brandTier: item.brand.brandTier,
+          collaborationStyle: item.brand.collaborationStyle,
+          idealCreatorTier: item.brand.idealCreatorTier,
+          avgCPM: item.brand.avgCPM,
+          tierFit,
+          nicheScore: item.nicheScore,
+          tierScore: item.tierScore,
+          subsScore: item.subsScore,
+          contentScore: item.contentScore,
+          fameNumeric: item.fameNumeric,
+          targetBoost: item.targetBoost,
+          repeatPenalty: item.repeatPenalty,
+          alreadyWorkedWith: item.alreadyWorkedWith,
+          minSubscribers: item.minSubscribers,
+          maxSubscribers: item.maxSubscribers,
           bio: (gen?.bio?.trim() || "") || `Creator bio for ${normalized.name} and ${item.brand.name} will appear here.`,
           pitchEmail: (gen?.pitchEmail?.trim() || "") || `Pitch email for ${item.brand.name} will appear here once generated.`,
         };
@@ -624,6 +697,7 @@ export async function POST(req: Request) {
         name: normalized.name,
         youtubeChannelId: normalized.youtubeChannelId,
         niche: normalized.nicheOverride ?? null,
+        ...(nicheProbabilities && nicheProbabilities.length > 0 && { nicheProbabilities }),
         estimatedSubscribers: creator.estimatedSubscribers,
         estimatedAvgViews: creator.estimatedAvgViews,
         tier: creator.tier,
