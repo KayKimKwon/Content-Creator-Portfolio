@@ -1,6 +1,6 @@
-# SponsorsMatch — AI Sponsorship Matchmaking for Content Creators
+# Niche.io — AI Sponsorship Matchmaking for Content Creators
 
-SponsorsMatch analyzes your YouTube channel and matches you with brands that are the right fit — then writes your pitch email for you.
+Niche.io analyzes your YouTube channel and matches you with brands that are the right fit — then writes your pitch email for you.
 
 Built at **HOTH XIII** with Next.js, Claude AI, and the YouTube Data API.
 
