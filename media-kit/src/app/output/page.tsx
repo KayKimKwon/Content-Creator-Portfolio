@@ -155,13 +155,21 @@ export default function OutputPage() {
               </p>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/input"
               className="inline-flex items-center justify-center rounded-full border border-zinc-300 bg-white px-4 py-2 text-xs font-medium text-zinc-700 shadow-sm transition hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
             >
               Back to input
             </Link>
+            {data?.creator && (
+              <Link
+                href="/stats"
+                className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-white px-4 py-2 text-xs font-medium text-emerald-700 transition hover:bg-emerald-50 dark:border-emerald-500 dark:bg-zinc-800 dark:text-emerald-300 dark:hover:bg-emerald-950/50"
+              >
+                Creator stats
+              </Link>
+            )}
             <button
               type="button"
               onClick={handleRefresh}
