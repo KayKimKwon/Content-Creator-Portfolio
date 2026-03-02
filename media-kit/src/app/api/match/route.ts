@@ -101,6 +101,7 @@ interface CreatorProfile {
   estimatedAvgViews: number;
   niche: string | null;
   tier: CreatorTierName;
+  contentTokens?: Set<string>;
 }
 
 interface YouTubeCreatorData {
@@ -108,6 +109,52 @@ interface YouTubeCreatorData {
   avgViewsPerVideo: number;
   channelDescription: string;
   recentVideoTitles: string[];
+}
+
+async function inferNicheFromContent(
+  youtubeData: YouTubeCreatorData
+): Promise<string | null> {
+  const metaConfig = getMeta();
+  const allowed = metaConfig.niches ?? [];
+  if (!allowed.length) return null;
+
+  const description = youtubeData.channelDescription ?? "";
+  const titles = (youtubeData.recentVideoTitles ?? []).map((t) => `- ${t}`).join("\n");
+
+  const prompt =
+    `You are classifying a YouTube channel into exactly one niche from this list:\n` +
+    `${allowed.join(", ")}\n\n` +
+    `Channel description:\n${description}\n\n` +
+    `Recent video titles:\n${titles}\n\n` +
+    `Respond with ONLY the single niche string from the list above (no explanations or extra text).`;
+
+  const msg = await anthropic.messages.create({
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 30,
+    messages: [{ role: "user", content: prompt }],
+  });
+
+  const raw =
+    msg.content[0].type === "text" ? msg.content[0].text.trim() : "";
+  if (!raw) return null;
+
+  const normalized = raw.toLowerCase().replace(/[^a-z0-9\s]/g, "").trim();
+  const match = allowed.find(
+    (n) => n.toLowerCase() === normalized
+  );
+  return match ?? null;
+}
+
+function tokenizeTextToSet(text: string | null | undefined): Set<string> {
+  const set = new Set<string>();
+  if (!text) return set;
+  const tokens = text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .split(/\s+/)
+    .filter((t) => t.length >= 3);
+  for (const t of tokens) set.add(t);
+  return set;
 }
 
 function getTierFromSubscribers(subscribers: number): CreatorTierName {
@@ -134,11 +181,16 @@ function estimateCreatorProfile(
   youtubeData?: YouTubeCreatorData | null
 ): CreatorProfile {
   if (youtubeData) {
+    const combinedText = [
+      youtubeData.channelDescription ?? "",
+      ...(youtubeData.recentVideoTitles ?? []),
+    ].join(" ");
     return {
       estimatedSubscribers: youtubeData.subscriberCount,
       estimatedAvgViews: youtubeData.avgViewsPerVideo,
       niche: request.nicheOverride ?? null,
       tier: getTierFromSubscribers(youtubeData.subscriberCount),
+      contentTokens: tokenizeTextToSet(combinedText),
     };
   }
 
@@ -214,9 +266,27 @@ function scoreBrand(
     }
   }
 
-  // 4) Base compatibility score (0–100)
+  // 4) Content-fit score based on overlap between channel description/titles
+  //    and the brand's collaboration style, personality, and notes.
+  let contentScore = 60;
+  if (creator.contentTokens && creator.contentTokens.size > 0) {
+    const brandText = `${brand.collaborationStyle ?? ""} ${brand.brandPersonality ?? ""} ${brand.notes ?? ""}`;
+    const brandTokens = Array.from(tokenizeTextToSet(brandText));
+    if (brandTokens.length > 0) {
+      let overlap = 0;
+      for (const token of brandTokens) {
+        if (creator.contentTokens.has(token)) overlap++;
+      }
+      const ratio = overlap / brandTokens.length;
+      // Map overlap ratio into a 40–100 range, capped so a few strong overlaps
+      // are rewarded without overpowering other factors.
+      contentScore = Math.round(40 + Math.min(ratio, 0.5) * 120);
+    }
+  }
+
+  // 5) Base compatibility score (0–100), now including content-fit.
   const compatibilityScore =
-    0.5 * nicheScore + 0.25 * tierScore + 0.25 * subsScore;
+    0.4 * nicheScore + 0.2 * tierScore + 0.2 * subsScore + 0.2 * contentScore;
 
   // 5) Brand fame (0–100 from fameScore 0–1)
   const fameNumeric = Math.max(0, Math.min(1, brand.fameScore)) * 100;
@@ -352,6 +422,19 @@ export async function POST(req: Request) {
         };
       } catch (err) {
         console.warn("YouTube API failed, using fallback profile:", err);
+      }
+    }
+
+    // Optionally infer niche from channel content when the user selected auto-detect.
+    const wantsAutoNiche = raw.niche === "__auto__";
+    if (wantsAutoNiche && youtubeData) {
+      try {
+        const inferred = await inferNicheFromContent(youtubeData);
+        if (inferred) {
+          normalized.nicheOverride = inferred;
+        }
+      } catch (err) {
+        console.warn("Anthropic niche inference failed; falling back to manual niche.", err);
       }
     }
 
