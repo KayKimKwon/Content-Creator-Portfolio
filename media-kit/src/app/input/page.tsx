@@ -40,48 +40,37 @@ export default function InputPage() {
       return;
     }
 
-    const parseNumberOrNull = (value: string) => {
-      const trimmed = value.trim();
-      if (!trimmed) return null;
-      const n = Number(trimmed.replace(/,/g, ""));
-      return Number.isNaN(n) ? null : n;
-    };
-
-    const payload = {
-      name,
-      youtubeChannelID,
-      niche,
-      email,
-      targetCompanies,
-      pastCollabs,
-      platforms: [
-        {
-          instagramFollowers: parseNumberOrNull(instagramFollowers),
-          instagramMaxLikes: parseNumberOrNull(instagramMaxLikes),
-          instagramMaxViews: parseNumberOrNull(instagramMaxViews),
-          tiktokFollowers: parseNumberOrNull(tiktokFollowers),
-          tiktokMaxLikes: parseNumberOrNull(tiktokMaxLikes),
-          tiktokMaxViews: parseNumberOrNull(tiktokMaxViews),
-        },
-      ],
-    };
+    // Format platform followers into text for the analyze API
+    const platformParts: string[] = [];
+    if (instagramFollowers.trim()) platformParts.push(`Instagram: ${instagramFollowers} followers`);
+    if (tiktokFollowers.trim()) platformParts.push(`TikTok: ${tiktokFollowers} followers`);
+    const otherPlatforms = platformParts.join("\n");
 
     try {
       setIsLoading(true);
-      const res = await fetch("/api/match", {
+
+      const ytData = await fetch("/api/youtube", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+        body: JSON.stringify({ channelId: youtubeChannelID }),
+      }).then((r) => r.json());
 
-      if (!res.ok) {
-        throw new Error("Failed to generate recommendations.");
-      }
+      const analysis = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ytData, otherPlatforms, niche }),
+      }).then((r) => r.json());
 
-      const data = await res.json();
-      if (typeof window !== "undefined") {
-        window.sessionStorage.setItem("matchResult", JSON.stringify(data));
-      }
+      const generated = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ytData, analysis, name, email }),
+      }).then((r) => r.json());
+
+      localStorage.setItem(
+        "results",
+        JSON.stringify({ ytData, analysis, generated, name, email })
+      );
       router.push("/output");
     } catch (err) {
       setError(
