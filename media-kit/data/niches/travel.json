@@ -1,15 +1,9 @@
 [
   {
     "name": "Booking.com",
-    "niche": "travel",
     "brandTier": "iconic",
     "fameScore": 0.91,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro", "mega"],
     "minSubscribers": 5000,
     "maxSubscribers": 30000000,
     "avgCPM": 30,
@@ -18,36 +12,183 @@
     "notes": "One of the most widely-used travel sponsors; accessible to creators of all sizes"
   },
   {
-    "name": "Heymondo Travel Insurance",
-    "niche": "travel",
+    "name": "Airbnb",
+    "brandTier": "iconic",
+    "fameScore": 0.94,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 35,
+    "collaborationStyle": "stay showcase, destination vlog, unique property feature",
+    "brandPersonality": "experiential, community, belonging, wanderlust",
+    "notes": "Strong fit for creators who feature unique stays or destination-focused content; selective for direct deals"
+  },
+  {
+    "name": "Google Flights / Google Travel",
+    "brandTier": "iconic",
+    "fameScore": 0.96,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 100000,
+    "maxSubscribers": 30000000,
+    "avgCPM": 28,
+    "collaborationStyle": "flight search tutorial, travel planning integration, campaign",
+    "brandPersonality": "helpful, intelligent, seamless, universal",
+    "notes": "Occasional campaign-based sponsorships; more selective than typical travel sponsors"
+  },
+  {
+    "name": "Chase Sapphire (Travel Cards)",
+    "brandTier": "iconic",
+    "fameScore": 0.89,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 15000000,
+    "avgCPM": 55,
+    "collaborationStyle": "travel rewards story, points strategy, luxury travel integration",
+    "brandPersonality": "premium, rewards-savvy, aspirational, travel-lifestyle",
+    "notes": "Highest CPM in travel niche; heavily regulated; strong fit for travel-finance crossover creators"
+  },
+  {
+    "name": "Heymondo",
     "brandTier": "mid",
-    "fameScore": 0.4,
-    "idealCreatorTier": [
-      "micro",
-      "mid"
-    ],
+    "fameScore": 0.40,
+    "idealCreatorTier": ["micro", "mid"],
     "minSubscribers": 5000,
     "maxSubscribers": 800000,
     "avgCPM": 42,
     "collaborationStyle": "travel safety story, sponsored segment, affiliate",
     "brandPersonality": "adventurous, responsible, global, safety-conscious",
-    "notes": "Aggressively sponsoring travel creators; good commission rates for affiliates"
+    "notes": "Aggressively sponsoring travel creators; good commission rates; fast onboarding"
+  },
+  {
+    "name": "eSIM Go / Airalo",
+    "brandTier": "mid",
+    "fameScore": 0.45,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 2000000,
+    "avgCPM": 38,
+    "collaborationStyle": "travel connectivity story, eSIM setup demo, international travel tip",
+    "brandPersonality": "practical, modern, digital-nomad, friction-free",
+    "notes": "eSIM providers are among the fastest-growing travel sponsors; Airalo especially active with creators"
+  },
+  {
+    "name": "Viator",
+    "brandTier": "mid",
+    "fameScore": 0.58,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 32,
+    "collaborationStyle": "tour/experience feature, destination guide, activity showcase",
+    "brandPersonality": "experiential, local, adventurous, discovery-driven",
+    "notes": "Tours and experiences marketplace; great fit for destination-focused and cultural travel creators"
+  },
+  {
+    "name": "World Nomads",
+    "brandTier": "mid",
+    "fameScore": 0.52,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 1500000,
+    "avgCPM": 40,
+    "collaborationStyle": "adventure travel safety story, insurance explainer, sponsored segment",
+    "brandPersonality": "adventurous, responsible, explorer-minded, community",
+    "notes": "Travel insurance brand built for adventurous travelers; strong fit for backpacking, solo travel, and adventure creators"
+  },
+  {
+    "name": "Osprey",
+    "brandTier": "mid",
+    "fameScore": 0.55,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 2000000,
+    "avgCPM": 36,
+    "collaborationStyle": "packing showcase, gear review, adventure travel integration",
+    "brandPersonality": "adventure, durable, trusted, outdoors-meets-travel",
+    "notes": "Premium backpack and travel gear brand; ideal for adventure, hiking, and long-term travel creators"
+  },
+  {
+    "name": "Away",
+    "brandTier": "mid",
+    "fameScore": 0.62,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 4000000,
+    "avgCPM": 38,
+    "collaborationStyle": "packing tutorial, luggage review, travel aesthetic content",
+    "brandPersonality": "sleek, modern, travel-lifestyle, design-forward",
+    "notes": "DTC luggage brand with strong lifestyle crossover; great fit for aesthetic and luxury travel creators"
   },
   {
     "name": "Ekster Wallets",
-    "niche": "travel",
     "brandTier": "emerging",
-    "fameScore": 0.3,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
+    "fameScore": 0.30,
+    "idealCreatorTier": ["nano", "micro", "mid"],
     "minSubscribers": 2000,
     "maxSubscribers": 400000,
     "avgCPM": 40,
     "collaborationStyle": "travel gear review, minimalist packing, everyday carry",
     "brandPersonality": "sleek, minimalist, smart, travel-optimized",
-    "notes": "Smart wallet brand; ideal for minimalist travel creators or everyday carry content"
+    "notes": "Smart wallet brand; ideal for minimalist travel or everyday carry content"
+  },
+  {
+    "name": "Nomad Lane",
+    "brandTier": "emerging",
+    "fameScore": 0.24,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 200000,
+    "avgCPM": 42,
+    "collaborationStyle": "carry-on review, digital nomad packing, travel gear showcase",
+    "brandPersonality": "digital-nomad, minimalist, functional, design-conscious",
+    "notes": "Cult carry-on and travel bag brand for digital nomads; great fit for remote work travel creators"
+  },
+  {
+    "name": "Saily",
+    "brandTier": "emerging",
+    "fameScore": 0.20,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 300000,
+    "avgCPM": 35,
+    "collaborationStyle": "international travel tip, eSIM demo, connectivity story",
+    "brandPersonality": "practical, modern, traveler-first, affordable",
+    "notes": "NordVPN-backed eSIM app; aggressively entering the creator sponsorship space with competitive rates"
+  },
+  {
+    "name": "Polarsteps",
+    "brandTier": "emerging",
+    "fameScore": 0.22,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 36,
+    "collaborationStyle": "trip documentation story, travel journaling, route showcase",
+    "brandPersonality": "memory-keeping, wanderlust, community, storytelling",
+    "notes": "Travel tracking and trip book app; ideal for long-term travelers and creators who document full journeys"
+  },
+  {
+    "name": "Pack & Smooch",
+    "brandTier": "emerging",
+    "fameScore": 0.17,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 100000,
+    "avgCPM": 38,
+    "collaborationStyle": "travel accessories review, aesthetic gear showcase, minimalist packing",
+    "brandPersonality": "handcrafted, premium, understated, quality-first",
+    "notes": "Handmade felt and leather tech accessories for travelers; ideal for aesthetic minimalist or digital nomad creators"
+  },
+  {
+    "name": "TravelPerk",
+    "brandTier": "emerging",
+    "fameScore": 0.28,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 400000,
+    "avgCPM": 44,
+    "collaborationStyle": "business travel story, travel management demo, corporate travel integration",
+    "brandPersonality": "professional, efficient, business-first, modern",
+    "notes": "Business travel management platform; strong fit for creators covering entrepreneurship, remote work, or business travel"
   }
 ]

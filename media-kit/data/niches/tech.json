@@ -1,13 +1,9 @@
 [
   {
     "name": "Samsung",
-    "niche": "tech",
     "brandTier": "iconic",
     "fameScore": 0.96,
-    "idealCreatorTier": [
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["macro", "mega"],
     "minSubscribers": 500000,
     "maxSubscribers": 50000000,
     "avgCPM": 20,
@@ -16,37 +12,183 @@
     "notes": "Reserved for large channels; typically goes through agency intermediaries"
   },
   {
+    "name": "Intel",
+    "brandTier": "iconic",
+    "fameScore": 0.92,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 100000,
+    "maxSubscribers": 30000000,
+    "avgCPM": 30,
+    "collaborationStyle": "PC build integration, benchmark showcase, performance campaign",
+    "brandPersonality": "performance, engineering-driven, trusted, future-forward",
+    "notes": "Strong fit for PC building, hardware review, and gaming-adjacent tech creators"
+  },
+  {
+    "name": "LG",
+    "brandTier": "iconic",
+    "fameScore": 0.88,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 100000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 25,
+    "collaborationStyle": "product review, setup showcase, home tech integration",
+    "brandPersonality": "innovative, lifestyle-tech, premium, reliable",
+    "notes": "Active in creator space for monitors, TVs, and home appliances; good fit for setup and home tech creators"
+  },
+  {
+    "name": "Microsoft",
+    "brandTier": "iconic",
+    "fameScore": 0.97,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 50000000,
+    "avgCPM": 35,
+    "collaborationStyle": "software tutorial, Surface review, productivity integration, campaign",
+    "brandPersonality": "professional, innovative, accessible, productivity-first",
+    "notes": "Wide range of sponsorable products (Surface, Xbox, Office, Copilot); more creator-accessible than Apple"
+  },
+  {
     "name": "Anker",
-    "niche": "tech",
     "brandTier": "mid",
-    "fameScore": 0.6,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "fameScore": 0.60,
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
     "maxSubscribers": 5000000,
     "avgCPM": 27,
     "collaborationStyle": "product review, unboxing, setup/desk tour integration",
     "brandPersonality": "reliable, practical, value-focused, everyday-tech",
-    "notes": "Extremely creator-friendly; one of the most accessible mid-tier tech sponsors"
+    "notes": "Extremely creator-friendly; one of the most accessible mid-tier tech sponsors; fast approvals"
+  },
+  {
+    "name": "NordVPN",
+    "brandTier": "mid",
+    "fameScore": 0.70,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 8000000,
+    "avgCPM": 32,
+    "collaborationStyle": "privacy story, mid-roll segment, evergreen integration",
+    "brandPersonality": "security-focused, trustworthy, digital-freedom, practical",
+    "notes": "One of the most prolific YouTube sponsors across all tech and non-tech niches; very easy integration"
+  },
+  {
+    "name": "Squarespace",
+    "brandTier": "mid",
+    "fameScore": 0.70,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 8000000,
+    "avgCPM": 28,
+    "collaborationStyle": "website showcase, portfolio story, mid-roll segment",
+    "brandPersonality": "creative, polished, entrepreneurial, design-forward",
+    "notes": "Universal fit for any tech creator with a personal brand or portfolio; perennial YouTube sponsor"
+  },
+  {
+    "name": "Logitech",
+    "brandTier": "mid",
+    "fameScore": 0.65,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 28,
+    "collaborationStyle": "peripheral review, desk setup showcase, productivity integration",
+    "brandPersonality": "functional, reliable, setup-culture, productivity-driven",
+    "notes": "Covers mice, keyboards, webcams, and streamgear; wide fit across tech, gaming, and productivity creators"
+  },
+  {
+    "name": "Dashlane",
+    "brandTier": "mid",
+    "fameScore": 0.48,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 1500000,
+    "avgCPM": 34,
+    "collaborationStyle": "cybersecurity story, password manager demo, mid-roll",
+    "brandPersonality": "security-first, practical, trustworthy, digital-hygiene",
+    "notes": "Password manager with active creator program; good alternative angle to NordVPN for privacy-focused content"
+  },
+  {
+    "name": "Webflow",
+    "brandTier": "mid",
+    "fameScore": 0.52,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 1000000,
+    "avgCPM": 40,
+    "collaborationStyle": "no-code tutorial, portfolio build, design workflow showcase",
+    "brandPersonality": "design-forward, empowering, no-code, professional",
+    "notes": "Strong fit for web design, no-code, and developer-adjacent tech creators; high CPM due to B2B audience"
   },
   {
     "name": "Ugreen",
-    "niche": "tech",
     "brandTier": "emerging",
     "fameScore": 0.33,
-    "idealCreatorTier": [
-      "nano",
-      "micro",
-      "mid"
-    ],
+    "idealCreatorTier": ["nano", "micro", "mid"],
     "minSubscribers": 2000,
     "maxSubscribers": 500000,
     "avgCPM": 33,
     "collaborationStyle": "setup tour, cable/hub review, desk organization",
     "brandPersonality": "clean, functional, setup-culture, value-premium",
-    "notes": "Aggressively sponsoring tech/setup creators; fast approval, competitive rates"
+    "notes": "Aggressively sponsoring tech and setup creators; fast approval, competitive rates"
+  },
+  {
+    "name": "Elgato",
+    "brandTier": "emerging",
+    "fameScore": 0.40,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 600000,
+    "avgCPM": 36,
+    "collaborationStyle": "streaming setup review, creator gear showcase, studio tour",
+    "brandPersonality": "creator-native, streaming-focused, clean, professional",
+    "notes": "Capture cards, stream decks, and lighting for creators; ideal for YouTube/streaming setup content"
+  },
+  {
+    "name": "Roborock",
+    "brandTier": "emerging",
+    "fameScore": 0.30,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 500000,
+    "avgCPM": 38,
+    "collaborationStyle": "smart home review, product demo, home tech integration",
+    "brandPersonality": "smart-home, efficient, innovative, premium-accessible",
+    "notes": "Robot vacuum brand actively sponsoring tech and lifestyle creators; strong demo potential"
+  },
+  {
+    "name": "Incogni",
+    "brandTier": "emerging",
+    "fameScore": 0.25,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 400000,
+    "avgCPM": 35,
+    "collaborationStyle": "privacy story, data removal demo, digital safety segment",
+    "brandPersonality": "privacy-first, empowering, digital-safety, no-nonsense",
+    "notes": "Data removal service by Surfshark; rising fast as a YouTube sponsor in tech and general creator space"
+  },
+  {
+    "name": "Figma",
+    "brandTier": "emerging",
+    "fameScore": 0.38,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 600000,
+    "avgCPM": 42,
+    "collaborationStyle": "design tutorial, workflow showcase, UI/UX integration",
+    "brandPersonality": "collaborative, design-native, modern, creator-built",
+    "notes": "Design tool with a passionate creator community; ideal for UI/UX, web design, and product design channels"
+  },
+  {
+    "name": "Camo",
+    "brandTier": "emerging",
+    "fameScore": 0.20,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 38,
+    "collaborationStyle": "webcam setup tutorial, creator gear review, remote work integration",
+    "brandPersonality": "creator-focused, clever, remote-work, quality-obsessed",
+    "notes": "App that turns your iPhone into a pro webcam; great fit for creator setup, remote work, and productivity channels"
   }
 ]
