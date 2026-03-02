@@ -25,3 +25,24 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
+
+@keyframes slide-down-in {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down-in {
+  animation: slide-down-in 0.35s ease-out forwards;
+}
+
+.animate-slide-down-in-delay-1 { animation-delay: 50ms; }
+.animate-slide-down-in-delay-2 { animation-delay: 100ms; }
+.animate-slide-down-in-delay-3 { animation-delay: 150ms; }
+.animate-slide-down-in-delay-4 { animation-delay: 200ms; }
+.animate-slide-down-in-delay-5 { animation-delay: 250ms; }

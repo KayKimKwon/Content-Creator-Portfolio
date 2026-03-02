@@ -133,10 +133,14 @@ export default function InputPage() {
       const data = await res.json();
 
       if (!res.ok) {
+        const nicheMsg =
+          typeof data?.insufficientNiche === "string"
+            ? `The ${data.insufficientNiche} niche doesn't have enough companies. `
+            : "";
         const message =
           typeof data?.error === "string"
-            ? data.error
-            : "Failed to generate recommendations.";
+            ? nicheMsg + data.error
+            : nicheMsg || "Failed to generate recommendations.";
         throw new Error(message);
       }
       if (typeof window !== "undefined") {
@@ -161,10 +165,10 @@ export default function InputPage() {
   }
 
   return (
-    <main className="min-h-screen bg-zinc-50 px-6 py-16 font-sans text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
+    <main className="min-h-screen bg-gradient-to-b from-zinc-50 to-emerald-50/30 px-4 py-12 font-sans text-zinc-900 dark:from-zinc-950 dark:to-emerald-950/20 dark:text-zinc-50 sm:px-6 sm:py-16">
       <div className="mx-auto flex max-w-3xl flex-col gap-10">
-        <header className="space-y-3">
-          <h1 className="text-2xl font-semibold sm:text-3xl">
+        <header className="space-y-3 animate-slide-down-in">
+          <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 sm:text-3xl">
             Creator sponsorship profile
           </h1>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
@@ -175,7 +179,8 @@ export default function InputPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="space-y-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950"
+          className="animate-slide-down-in animate-slide-down-in-delay-1 space-y-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+          style={{ animationFillMode: "backwards" }}
         >
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
@@ -187,7 +192,7 @@ export default function InputPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Jane Doe"
-                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
               />
             </div>
 
@@ -200,7 +205,7 @@ export default function InputPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
               />
             </div>
           </div>
@@ -214,7 +219,7 @@ export default function InputPage() {
               value={youtubeChannelID}
               onChange={(e) => setYoutubeChannelID(e.target.value)}
               placeholder="e.g. UC_x5XG1OV2P6uZZ5FSM9Ttw"
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
             />
             <p className="text-xs text-zinc-500">
               Your channel ID (starts with UC…). We fetch your stats and recent
@@ -230,7 +235,7 @@ export default function InputPage() {
               value={niche}
               onChange={(e) => setNiche(e.target.value)}
               required
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
             >
               <option value="">Select a niche</option>
               {nicheOptions.map((n) => (
@@ -253,7 +258,7 @@ export default function InputPage() {
               value={targetCompanies}
               onChange={(e) => setTargetCompanies(e.target.value)}
               placeholder="Nike, Gymshark, Adidas"
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
             />
             <p className="text-xs text-zinc-500">
               If you already know who you want to pitch, list brand names here
@@ -270,7 +275,7 @@ export default function InputPage() {
               value={pastCollabs}
               onChange={(e) => setPastCollabs(e.target.value)}
               placeholder="Brand names or notes, comma-separated"
-              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+              className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
             />
           </div>
 
@@ -295,7 +300,7 @@ export default function InputPage() {
                   value={instagramFollowers}
                   onChange={(e) => setInstagramFollowers(e.target.value)}
                   placeholder="25,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
                 />
               </div>
               <div className="space-y-2">
@@ -307,7 +312,7 @@ export default function InputPage() {
                   value={instagramMaxLikes}
                   onChange={(e) => setInstagramMaxLikes(e.target.value)}
                   placeholder="10,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
                 />
               </div>
               <div className="space-y-2">
@@ -319,7 +324,7 @@ export default function InputPage() {
                   value={instagramMaxViews}
                   onChange={(e) => setInstagramMaxViews(e.target.value)}
                   placeholder="150,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
                 />
               </div>
             </div>
@@ -335,7 +340,7 @@ export default function InputPage() {
                   value={tiktokFollowers}
                   onChange={(e) => setTiktokFollowers(e.target.value)}
                   placeholder="40,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
                 />
               </div>
               <div className="space-y-2">
@@ -347,7 +352,7 @@ export default function InputPage() {
                   value={tiktokMaxLikes}
                   onChange={(e) => setTiktokMaxLikes(e.target.value)}
                   placeholder="20,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
                 />
               </div>
               <div className="space-y-2">
@@ -359,7 +364,7 @@ export default function InputPage() {
                   value={tiktokMaxViews}
                   onChange={(e) => setTiktokMaxViews(e.target.value)}
                   placeholder="300,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
                 />
               </div>
             </div>
