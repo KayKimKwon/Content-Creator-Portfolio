@@ -117,14 +117,14 @@ export default function OutputPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-zinc-50 to-emerald-50/30 px-4 py-12 font-sans text-zinc-900 dark:from-zinc-950 dark:to-emerald-950/20 dark:text-zinc-50 sm:px-6 sm:py-16">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8">
         <header className="flex flex-wrap items-center justify-between gap-4 animate-slide-down-in">
           <div className="space-y-1">
             <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 sm:text-3xl">
               Sponsorship recommendations
             </h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Three in your niche (1 reach, 2 target) and one from a related niche.
+              Four in your niche (2 reach, 2 target) and one from a related niche.
             </p>
             {!data && (
               <p className="text-xs text-zinc-500">
@@ -161,16 +161,18 @@ export default function OutputPage() {
         )}
 
         {data && (
-          <div className="grid min-h-[420px] gap-6 lg:grid-cols-[1fr,1fr]">
-            {/* Left: company list */}
-            <section className="flex flex-col gap-3">
+          <div className="flex min-h-[540px] flex-row gap-8">
+            {/* Left: companies + overview (~40%) */}
+            <section className="flex min-w-0 flex-[2] flex-col gap-3">
               {data.recommendations.map((rec, index) => {
                 const key = rec.brandName + index;
                 const isExpanded = expandedKey === key;
+                const delayClass =
+                  index === 0 ? "" : index === 1 ? "animate-slide-down-in-delay-1" : index === 2 ? "animate-slide-down-in-delay-2" : index === 3 ? "animate-slide-down-in-delay-3" : "animate-slide-down-in-delay-4";
                 return (
                   <article
                     key={key}
-                    className={`animate-slide-down-in rounded-xl border bg-white p-4 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-900 ${index === 0 ? "" : index === 1 ? "animate-slide-down-in-delay-1" : index === 2 ? "animate-slide-down-in-delay-2" : "animate-slide-down-in-delay-3"}`}
+                    className={`animate-slide-down-in rounded-xl border bg-white p-4 shadow-sm transition dark:border-zinc-800 dark:bg-zinc-900 ${delayClass}`}
                     style={{ animationFillMode: "backwards" }}
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -204,8 +206,8 @@ export default function OutputPage() {
               })}
             </section>
 
-            {/* Right: detail panel or placeholder */}
-            <aside className="animate-slide-down-in animate-slide-down-in-delay-4 rounded-xl border bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900" style={{ animationFillMode: "backwards" }}>
+            {/* Right: expand (detail panel or placeholder) (~60%, more space) */}
+            <aside className="min-w-0 flex-[3] animate-slide-down-in animate-slide-down-in-delay-5 min-h-[540px] rounded-xl border bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900" style={{ animationFillMode: "backwards" }}>
               {expandedRec ? (
                 <div className="flex h-full flex-col gap-4">
                   <div>
@@ -223,7 +225,8 @@ export default function OutputPage() {
                         {expandedRec.bio}
                       </p>
                     </div>
-                    <div>
+
+                    <div className="mt-6">
                       <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">Tailored pitch email</p>
                       <p className="mt-1 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
                         {expandedRec.pitchEmail}
@@ -232,7 +235,7 @@ export default function OutputPage() {
                   </div>
                 </div>
               ) : (
-                <div className="flex h-full min-h-[320px] flex-col items-center justify-center rounded-lg border-2 border-dashed border-zinc-200 bg-zinc-50/50 text-center dark:border-zinc-700 dark:bg-zinc-800/30">
+                <div className="flex h-full min-h-[400px] flex-col items-center justify-center rounded-lg border-2 border-dashed border-zinc-200 bg-zinc-50/50 text-center dark:border-zinc-700 dark:bg-zinc-800/30">
                   <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
                     Expand company info here
                   </p>

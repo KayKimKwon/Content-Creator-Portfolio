@@ -253,18 +253,18 @@ function scoreBrand(
   }
 
   // 9) Pricing recommendation based on estimated avg views and brand CPM.
-  // Restrict range for huge creators (e.g. Mr Beast): narrower band and cap.
-  const PRICE_CAP = 2_000_000; // max per integration (USD)
-  const basePrice = (creator.estimatedAvgViews * brand.avgCPM) / 1000;
-  const isHigh = basePrice > 500_000;
+  // Scale down for huge creators so numbers don't explode (no fixed cap).
+  const rawBase = (creator.estimatedAvgViews * brand.avgCPM) / 1000;
+  const SCALE_THRESHOLD = 500_000;
+  const basePrice =
+    rawBase <= SCALE_THRESHOLD
+      ? rawBase
+      : SCALE_THRESHOLD * Math.pow(rawBase / SCALE_THRESHOLD, 0.6);
+  const isHigh = rawBase > SCALE_THRESHOLD;
   const minMult = isHigh ? 0.92 : 0.8;
   const maxMult = isHigh ? 1.08 : 1.2;
-  let min = Math.round(basePrice * minMult);
-  let max = Math.round(basePrice * maxMult);
-  if (max > PRICE_CAP) {
-    max = PRICE_CAP;
-    min = Math.min(min, Math.round(PRICE_CAP * 0.9));
-  }
+  const min = Math.round(basePrice * minMult);
+  const max = Math.round(basePrice * maxMult);
 
   const pricing: PricingRange = {
     min,
@@ -372,10 +372,10 @@ export async function POST(req: Request) {
       (b) => !excludeSet.has(b.name.toLowerCase().trim())
     );
 
-    if (inNicheBrands.length < 3) {
+    if (inNicheBrands.length < 4) {
       return new Response(
         JSON.stringify({
-          error: `Not enough brands in the "${userNiche}" niche to generate recommendations (found ${inNicheBrands.length}, need at least 3). Try another niche or add more brands to data/niches/${userNiche}.json.`,
+          error: `Not enough brands in the "${userNiche}" niche to generate recommendations (found ${inNicheBrands.length}, need at least 4). Try another niche or add more brands to data/niches/${userNiche}.json.`,
           insufficientNiche: userNiche,
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
@@ -400,32 +400,36 @@ export async function POST(req: Request) {
         (s.acceptance.bucket === "High" || s.acceptance.bucket === "Medium")
     );
 
-    const chosenReach = reachCandidates[0] ?? scoredInNiche[0];
+    const chosenReach1 = reachCandidates[0] ?? scoredInNiche[0];
+    const chosenReach2 =
+      reachCandidates.find((s) => s.brand.name !== chosenReach1.brand.name) ??
+      scoredInNiche.find((s) => s.brand.name !== chosenReach1.brand.name);
     const chosenTargets: typeof scoredInNiche = [];
     for (const cand of targetCandidates) {
-      if (cand.brand.name === chosenReach.brand.name) continue;
+      if (cand.brand.name === chosenReach1.brand.name || cand.brand.name === chosenReach2?.brand.name) continue;
       chosenTargets.push(cand);
       if (chosenTargets.length === 2) break;
     }
     let i = 0;
     while (chosenTargets.length < 2 && i < scoredInNiche.length) {
       const cand = scoredInNiche[i++];
-      if (cand.brand.name === chosenReach.brand.name) continue;
+      if (cand.brand.name === chosenReach1.brand.name || cand.brand.name === chosenReach2?.brand.name) continue;
       if (chosenTargets.some((c) => c.brand.name === cand.brand.name)) continue;
       chosenTargets.push(cand);
     }
 
     const inNichePicked = [
-      chosenReach,
+      chosenReach1,
+      chosenReach2,
       chosenTargets[0],
       chosenTargets[1],
-    ].filter(Boolean).slice(0, 3);
+    ].filter((s): s is NonNullable<typeof s> => s != null).slice(0, 4);
     const chosenNames = new Set(inNichePicked.map((s) => s.brand.name));
 
     // Step 2: One recommendation from a similar (but not same) niche.
     const similarNiches = getSimilarNiches(userNiche).filter((n) => n !== userNiche);
     const relatedBrands = getBrandsForNiches(similarNiches).filter(
-      (b) => !excludeSet.has(b.name.toLowerCase().trim()) && !chosenNames.has(b.name)
+      (b) => !excludeSet.has((b.name ?? "").toLowerCase().trim()) && !chosenNames.has(b.name)
     );
     const scoredRelated = relatedBrands.map(scoreOne).sort((a, b) => b.finalScore - a.finalScore);
     const chosenRelated = scoredRelated[0];
@@ -434,15 +438,15 @@ export async function POST(req: Request) {
     const picked = [
       ...inNichePicked,
       ...(chosenRelated ? [chosenRelated] : []),
-    ].slice(0, 4);
+    ].slice(0, 5);
 
     const recommendations: BrandRecommendation[] = picked
       .filter((item): item is NonNullable<typeof item> => item != null && item.brand != null)
       .map((item, index) => {
-        const isRelated = index === 3 && chosenRelated != null;
+        const isRelated = index === 4 && chosenRelated != null;
         const kind: RecommendationKind = isRelated
           ? "related"
-          : index === 0
+          : index < 2
             ? "reach"
             : "target";
 
