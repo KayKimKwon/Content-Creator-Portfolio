@@ -146,7 +146,11 @@ export default function InputPage() {
         window.sessionStorage.setItem("shownBrandNames", JSON.stringify(shown));
         window.sessionStorage.setItem("matchRefreshUsed", "false");
       }
+
       router.push("/output");
+
+
+
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Something went wrong. Please try again."
@@ -383,4 +387,3 @@ export default function InputPage() {
     </main>
   );
 }
-
