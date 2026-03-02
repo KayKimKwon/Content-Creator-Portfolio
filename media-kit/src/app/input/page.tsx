@@ -251,6 +251,7 @@ export default function InputPage() {
               className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
             >
               <option value="">Select a niche</option>
+              <option value="__auto__">Auto-detect from your YouTube channel</option>
               {nicheOptions.map((n) => (
                 <option key={n} value={n}>
                   {n}
@@ -258,8 +259,7 @@ export default function InputPage() {
               ))}
             </select>
             <p className="text-xs text-zinc-500">
-              Recommendations will focus on this niche plus one from a related
-              niche.
+              Recommendations will focus on this niche plus one from a related niche. You can also choose auto-detect to infer your niche from channel content.
             </p>
           </div>
 
