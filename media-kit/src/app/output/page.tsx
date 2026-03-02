@@ -44,9 +44,11 @@ export default function OutputPage() {
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [refreshUsed, setRefreshUsed] = useState(false);
+  const [refreshError, setRefreshError] = useState<string | null>(null);
 
   const loadFromStorage = useCallback(() => {
     if (typeof window === "undefined") return;
+    setRefreshError(null);
     const raw = window.sessionStorage.getItem("matchResult");
     if (!raw) return;
     try {
@@ -76,11 +78,17 @@ export default function OutputPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...payload, excludeBrands: shown }),
       });
-      const next = (await res.json()) as MatchResponse & { error?: string };
+      const next = (await res.json()) as MatchResponse & { error?: string; insufficientNiche?: string };
       if (!res.ok) {
-        setData(null);
+        const nicheMsg =
+          typeof next?.insufficientNiche === "string"
+            ? `The ${next.insufficientNiche} niche doesn't have enough companies. `
+            : "";
+        const rest = typeof next?.error === "string" ? next.error : "Refresh failed.";
+        setRefreshError(nicheMsg + rest);
         return;
       }
+      setRefreshError(null);
       const nextNames = (next.recommendations ?? []).map((r) => r.brandName);
       window.sessionStorage.setItem("matchResult", JSON.stringify(next));
       window.sessionStorage.setItem("shownBrandNames", JSON.stringify([...shown, ...nextNames]));
@@ -89,7 +97,7 @@ export default function OutputPage() {
       setData(next);
       setExpandedKey(null);
     } catch {
-      // could set error state
+      setRefreshError("Refresh failed. Try again or go back to input.");
     } finally {
       setRefreshLoading(false);
     }
@@ -133,6 +141,12 @@ export default function OutputPage() {
             </button>
           </div>
         </header>
+
+        {refreshError && (
+          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800 dark:bg-red-950 dark:text-red-200">
+            {refreshError}
+          </p>
+        )}
 
         {data && (
           <section className="grid gap-6 sm:grid-cols-2">

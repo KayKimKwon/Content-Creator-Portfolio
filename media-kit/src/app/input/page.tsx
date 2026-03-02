@@ -133,10 +133,14 @@ export default function InputPage() {
       const data = await res.json();
 
       if (!res.ok) {
+        const nicheMsg =
+          typeof data?.insufficientNiche === "string"
+            ? `The ${data.insufficientNiche} niche doesn't have enough companies. `
+            : "";
         const message =
           typeof data?.error === "string"
-            ? data.error
-            : "Failed to generate recommendations.";
+            ? nicheMsg + data.error
+            : nicheMsg || "Failed to generate recommendations.";
         throw new Error(message);
       }
       if (typeof window !== "undefined") {

@@ -367,6 +367,7 @@ export async function POST(req: Request) {
       return new Response(
         JSON.stringify({
           error: `Not enough brands in the "${userNiche}" niche to generate recommendations (found ${inNicheBrands.length}, need at least 3). Try another niche or add more brands to data/niches/${userNiche}.json.`,
+          insufficientNiche: userNiche,
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
