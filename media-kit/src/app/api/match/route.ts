@@ -507,11 +507,13 @@ export async function POST(req: Request) {
       // If Claude call fails, leave generated empty; placeholders will be used below.
     }
 
-    const genMap = new Map(generated.map((g) => [g.brandName, g]));
-
+    // Match by index: prompt lists brands in fixed order, so generated[i] corresponds to pickedWithKind[i].
+    // Fallback to name lookup if the model returns the same count and we want to tolerate reordering.
     const recommendations: BrandRecommendation[] = pickedWithKind.map(
-      ({ item, kind, isRelated }) => {
-        const gen = genMap.get(item.brand.name);
+      ({ item, kind, isRelated }, index) => {
+        const genByIndex = generated[index];
+        const genByName = generated.find((g) => g.brandName?.trim() === item.brand.name?.trim());
+        const gen = genByIndex ?? genByName;
         return {
           brandName: item.brand.name,
           kind,
@@ -519,8 +521,8 @@ export async function POST(req: Request) {
           acceptance: item.acceptance,
           pricing: item.pricing,
           ...(isRelated && relatedNiche ? { sourceNiche: relatedNiche } : {}),
-          bio: gen?.bio ?? "",
-          pitchEmail: gen?.pitchEmail ?? "",
+          bio: (gen?.bio?.trim() || "") || `Creator bio for ${normalized.name} and ${item.brand.name} will appear here.`,
+          pitchEmail: (gen?.pitchEmail?.trim() || "") || `Pitch email for ${item.brand.name} will appear here once generated.`,
         };
       }
     );
