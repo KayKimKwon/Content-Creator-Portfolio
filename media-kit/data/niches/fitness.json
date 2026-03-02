@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Nike",
+    "niche": "fitness",
+    "brandTier": "iconic",
+    "fameScore": 0.98,
+    "idealCreatorTier": [
+      "mid",
+      "macro",
+      "mega"
+    ],
+    "minSubscribers": 100000,
+    "maxSubscribers": 50000000,
+    "avgCPM": 25,
+    "collaborationStyle": "performance-driven, campaign-based, ambassador",
+    "brandPersonality": "premium, motivational, high-performance, aspirational",
+    "notes": "Highly selective; prioritizes athletes and high-production fitness creators"
+  },
+  {
+    "name": "MyProtein",
+    "niche": "fitness",
+    "brandTier": "mid",
+    "fameScore": 0.58,
+    "idealCreatorTier": [
+      "micro",
+      "mid",
+      "macro"
+    ],
+    "minSubscribers": 5000,
+    "maxSubscribers": 3000000,
+    "avgCPM": 28,
+    "collaborationStyle": "discount code, product gifting, affiliate",
+    "brandPersonality": "science-backed, value, accessible, gym-culture",
+    "notes": "Very active sponsor in fitness space; known for generous affiliate commissions"
+  },
+  {
+    "name": "Whoop",
+    "niche": "fitness",
+    "brandTier": "emerging",
+    "fameScore": 0.41,
+    "idealCreatorTier": [
+      "micro",
+      "mid"
+    ],
+    "minSubscribers": 10000,
+    "maxSubscribers": 1000000,
+    "avgCPM": 40,
+    "collaborationStyle": "review, data-driven storytelling, lifestyle integration",
+    "brandPersonality": "data-obsessed, elite, biohacking, performance-tracking",
+    "notes": "Rising wearable brand — great for creators who blend fitness with tech/optimization content"
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Amazon",
+    "niche": "lifestyle",
+    "brandTier": "iconic",
+    "fameScore": 0.97,
+    "idealCreatorTier": [
+      "micro",
+      "mid",
+      "macro",
+      "mega"
+    ],
+    "minSubscribers": 5000,
+    "maxSubscribers": 50000000,
+    "avgCPM": 18,
+    "collaborationStyle": "affiliate-heavy, product placement, seasonal campaigns",
+    "brandPersonality": "convenient, everyday, value-driven, universal",
+    "notes": "Primarily drives affiliate / Amazon Associates deals; direct sponsorships reserved for macro+"
+  },
+  {
+    "name": "Notion",
+    "niche": "lifestyle",
+    "brandTier": "mid",
+    "fameScore": 0.62,
+    "idealCreatorTier": [
+      "micro",
+      "mid",
+      "macro"
+    ],
+    "minSubscribers": 10000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 30,
+    "collaborationStyle": "integration demo, tutorial, workflow showcase",
+    "brandPersonality": "clean, modern, aspirational, productivity-focused",
+    "notes": "Extremely active sponsorship program; creator-friendly with good rep responsiveness"
+  },
+  {
+    "name": "Skylight Calendar",
+    "niche": "lifestyle",
+    "brandTier": "emerging",
+    "fameScore": 0.28,
+    "idealCreatorTier": [
+      "nano",
+      "micro",
+      "mid"
+    ],
+    "minSubscribers": 1000,
+    "maxSubscribers": 500000,
+    "avgCPM": 35,
+    "collaborationStyle": "family/home integration, routine showcase",
+    "brandPersonality": "family-oriented, organized, wholesome, practical",
+    "notes": "Smart home family product — great fit for daily routine / family lifestyle creators"
+  }
+]

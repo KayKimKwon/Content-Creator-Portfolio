@@ -1,0 +1,10 @@
+{
+  "lifestyle": ["fitness", "beauty", "food", "travel"],
+  "fitness": ["lifestyle", "food"],
+  "beauty": ["lifestyle"],
+  "food": ["lifestyle", "fitness", "travel"],
+  "tech": ["gaming", "finance"],
+  "finance": ["tech", "lifestyle"],
+  "gaming": ["tech"],
+  "travel": ["lifestyle", "food"]
+}

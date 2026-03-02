@@ -1,42 +1,27 @@
 // API route for the YouTube-powered sponsorship matchmaking engine.
 // Defines request/response contracts and ranking logic for brand recommendations.
+// Uses per-niche brand files: first step is to load only the user's niche, then
+// add one recommendation from a similar niche.
+//
+// Similar-niche source: static data/similar-niches.json (not GPT per request).
+// Static JSON: no API cost, fast, deterministic, easy to tune. GPT each time would
+// allow context-aware related niches but adds latency, cost, and variability.
 
-import brandsData from "../../../../data/brands.json";
+import {
+  getMeta,
+  getBrandsForNiche,
+  getSimilarNiches,
+  getBrandsForNiches,
+  type Brand,
+} from "@/lib/brands";
+import {
+  parseChannelId,
+  fetchYouTubeCreatorData,
+} from "@/lib/youtube";
 
 type PlatformName = "instagram" | "tiktok";
 
-type BrandTier = "iconic" | "mid" | "emerging";
 type CreatorTierName = "nano" | "micro" | "mid" | "macro" | "mega";
-
-interface Brand {
-  name: string;
-  niche: string;
-  brandTier: BrandTier;
-  fameScore: number;
-  idealCreatorTier: CreatorTierName[];
-  minSubscribers: number;
-  maxSubscribers: number | null;
-  avgCPM: number;
-  collaborationStyle: string;
-  brandPersonality: string;
-  notes?: string;
-}
-
-interface CreatorTierMeta {
-  minSubs: number;
-  maxSubs: number | null;
-}
-
-interface Meta {
-  creatorTiers: Record<CreatorTierName, CreatorTierMeta>;
-}
-
-interface BrandsFile {
-  brands: Brand[];
-  meta: Meta;
-}
-
-const { brands: ALL_BRANDS, meta: BRANDS_META } = brandsData as BrandsFile;
 
 interface RawMatchRequest {
   name: string;
@@ -75,7 +60,7 @@ interface MatchRequest {
 }
 
 type AcceptanceBucket = "High" | "Medium" | "Low";
-type RecommendationKind = "reach" | "target";
+type RecommendationKind = "reach" | "target" | "related";
 
 interface AcceptanceProbability {
   bucket: AcceptanceBucket;
@@ -90,12 +75,13 @@ interface PricingRange {
 
 interface BrandRecommendation {
   brandName: string;
-  kind: RecommendationKind; // "reach" vs "target"
+  kind: RecommendationKind; // "reach" | "target" | "related"
   compatibilityScore: number; // 0–100
   acceptance: AcceptanceProbability;
   pricing: PricingRange;
   bio: string;
   pitchEmail: string;
+  sourceNiche?: string; // set for kind === "related"
 }
 
 interface MatchResponse {
@@ -114,24 +100,14 @@ interface CreatorProfile {
   tier: CreatorTierName;
 }
 
-function estimateCreatorProfile(request: MatchRequest): CreatorProfile {
-  const ig = request.additionalPlatforms.find((p) => p.platform === "instagram");
-  const tt = request.additionalPlatforms.find((p) => p.platform === "tiktok");
+interface YouTubeCreatorData {
+  subscriberCount: number;
+  avgViewsPerVideo: number;
+  channelDescription: string;
+  recentVideoTitles: string[];
+}
 
-  const igFollowers = ig?.followers ?? 0;
-  const ttFollowers = tt?.followers ?? 0;
-
-  // Rough estimate of total audience based on optional IG/TikTok followers.
-  const estimatedSubscribers = Math.max(5000, igFollowers + ttFollowers || 5000);
-
-  // Assume a fraction of audience becomes average views.
-  const estimatedAvgViews = Math.max(
-    1000,
-    Math.round(estimatedSubscribers * 0.3)
-  );
-
-  // Map subs into a CreatorTierName using meta.creatorTiers.
-  let tier: CreatorTierName = "nano";
+function getTierFromSubscribers(subscribers: number): CreatorTierName {
   const tiersOrder: CreatorTierName[] = [
     "nano",
     "micro",
@@ -139,23 +115,45 @@ function estimateCreatorProfile(request: MatchRequest): CreatorProfile {
     "macro",
     "mega",
   ];
-
+  const metaConfig = getMeta();
   for (const t of tiersOrder) {
-    const meta = BRANDS_META.creatorTiers[t];
+    const meta = metaConfig.creatorTiers[t];
     if (!meta) continue;
     const min = meta.minSubs;
     const max = meta.maxSubs ?? Number.MAX_SAFE_INTEGER;
-    if (estimatedSubscribers >= min && estimatedSubscribers <= max) {
-      tier = t;
-      break;
-    }
+    if (subscribers >= min && subscribers <= max) return t;
   }
+  return "nano";
+}
+
+function estimateCreatorProfile(
+  request: MatchRequest,
+  youtubeData?: YouTubeCreatorData | null
+): CreatorProfile {
+  if (youtubeData) {
+    return {
+      estimatedSubscribers: youtubeData.subscriberCount,
+      estimatedAvgViews: youtubeData.avgViewsPerVideo,
+      niche: request.nicheOverride ?? null,
+      tier: getTierFromSubscribers(youtubeData.subscriberCount),
+    };
+  }
+
+  const ig = request.additionalPlatforms.find((p) => p.platform === "instagram");
+  const tt = request.additionalPlatforms.find((p) => p.platform === "tiktok");
+  const igFollowers = ig?.followers ?? 0;
+  const ttFollowers = tt?.followers ?? 0;
+  const estimatedSubscribers = Math.max(5000, igFollowers + ttFollowers || 5000);
+  const estimatedAvgViews = Math.max(
+    1000,
+    Math.round(estimatedSubscribers * 0.3)
+  );
 
   return {
     estimatedSubscribers,
     estimatedAvgViews,
     niche: request.nicheOverride ?? null,
-    tier,
+    tier: getTierFromSubscribers(estimatedSubscribers),
   };
 }
 
@@ -329,74 +327,103 @@ export async function POST(req: Request) {
     const raw = (await req.json()) as RawMatchRequest;
     const normalized = normalizeMatchRequest(raw);
 
-    const creator = estimateCreatorProfile(normalized);
+    let youtubeData: YouTubeCreatorData | null = null;
+    const channelId = parseChannelId(normalized.youtubeChannelId);
+    if (channelId && process.env.YOUTUBE_API_KEY) {
+      try {
+        const data = await fetchYouTubeCreatorData(channelId);
+        youtubeData = {
+          subscriberCount: data.channel.subscriberCount,
+          avgViewsPerVideo: data.avgViewsPerVideo,
+          channelDescription: data.channel.description,
+          recentVideoTitles: data.recentVideos.map((v) => v.title),
+        };
+      } catch (err) {
+        console.warn("YouTube API failed, using fallback profile:", err);
+      }
+    }
+
+    const creator = estimateCreatorProfile(normalized, youtubeData);
+
+    // Niche is required (dropdown); use it to load only that niche's brands first.
+    const userNiche = (normalized.nicheOverride ?? "").toLowerCase().trim();
+    if (!userNiche) {
+      return new Response(
+        JSON.stringify({ error: "Niche is required. Please select a niche from the dropdown." }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
     const excludeSet = new Set(
       normalized.excludeBrands.map((n) => n.toLowerCase().trim())
     );
-    const candidateBrands = ALL_BRANDS.filter(
+
+    // Step 1: Only look at the user's niche file.
+    const inNicheBrands = getBrandsForNiche(userNiche).filter(
       (b) => !excludeSet.has(b.name.toLowerCase().trim())
     );
 
-    // Score all brands for this creator.
-    const scored = candidateBrands.map((brand) => {
+    const scoreOne = (brand: Brand) => {
       const scores = scoreBrand(brand, creator, normalized);
       return { brand, ...scores };
-    }).sort((a, b) => b.finalScore - a.finalScore);
+    };
 
-    // Separate into reach vs target candidates based on fame and acceptance.
-    const reachCandidates = scored.filter(
+    const scoredInNiche = inNicheBrands.map(scoreOne).sort((a, b) => b.finalScore - a.finalScore);
+
+    const reachCandidates = scoredInNiche.filter(
       (s) =>
         (s.brand.brandTier === "iconic" || s.brand.fameScore >= 0.75) &&
         (s.acceptance.bucket === "Medium" || s.acceptance.bucket === "Low")
     );
-
-    const targetCandidates = scored.filter(
+    const targetCandidates = scoredInNiche.filter(
       (s) =>
         (s.brand.brandTier === "mid" || s.brand.brandTier === "emerging") &&
         (s.acceptance.bucket === "High" || s.acceptance.bucket === "Medium")
     );
 
-    const chosenReach1 = reachCandidates[0] ?? scored[0];
-    const chosenReach2 =
-      reachCandidates.find((s) => s.brand.name !== chosenReach1.brand.name) ??
-      scored.find((s) => s.brand.name !== chosenReach1.brand.name) ??
-      scored[1];
-
-    const remainingForTargets = scored.filter(
-      (s) =>
-        s.brand.name !== chosenReach1.brand.name &&
-        s.brand.name !== chosenReach2.brand.name
-    );
-
-    const chosenTargets: typeof scored = [];
+    const chosenReach = reachCandidates[0] ?? scoredInNiche[0];
+    const chosenTargets: typeof scoredInNiche = [];
     for (const cand of targetCandidates) {
-      if (
-        cand.brand.name === chosenReach1.brand.name ||
-        cand.brand.name === chosenReach2.brand.name
-      )
-        continue;
+      if (cand.brand.name === chosenReach.brand.name) continue;
       chosenTargets.push(cand);
       if (chosenTargets.length === 2) break;
     }
-
     let i = 0;
-    while (chosenTargets.length < 2 && i < remainingForTargets.length) {
-      const cand = remainingForTargets[i++];
+    while (chosenTargets.length < 2 && i < scoredInNiche.length) {
+      const cand = scoredInNiche[i++];
+      if (cand.brand.name === chosenReach.brand.name) continue;
       if (chosenTargets.some((c) => c.brand.name === cand.brand.name)) continue;
       chosenTargets.push(cand);
     }
 
-    const picked = [
-      chosenReach1,
-      chosenReach2,
+    const inNichePicked = [
+      chosenReach,
       chosenTargets[0],
       chosenTargets[1],
-    ].filter(Boolean).slice(0, 4);
+    ].filter(Boolean).slice(0, 3);
+    const chosenNames = new Set(inNichePicked.map((s) => s.brand.name));
+
+    // Step 2: One recommendation from a similar (but not same) niche.
+    const similarNiches = getSimilarNiches(userNiche).filter((n) => n !== userNiche);
+    const relatedBrands = getBrandsForNiches(similarNiches).filter(
+      (b) => !excludeSet.has(b.name.toLowerCase().trim()) && !chosenNames.has(b.name)
+    );
+    const scoredRelated = relatedBrands.map(scoreOne).sort((a, b) => b.finalScore - a.finalScore);
+    const chosenRelated = scoredRelated[0];
+    const relatedNiche = chosenRelated?.brand.niche;
+
+    const picked = [
+      ...inNichePicked,
+      ...(chosenRelated ? [chosenRelated] : []),
+    ].slice(0, 4);
 
     const recommendations: BrandRecommendation[] = picked.map((item, index) => {
-      const kind: RecommendationKind =
-        index < 2 ? "reach" : "target";
+      const isRelated = index === 3 && chosenRelated != null;
+      const kind: RecommendationKind = isRelated
+        ? "related"
+        : index === 0
+          ? "reach"
+          : "target";
 
       return {
         brandName: item.brand.name,
@@ -404,6 +431,7 @@ export async function POST(req: Request) {
         compatibilityScore: Number(item.compatibilityScore.toFixed(1)),
         acceptance: item.acceptance,
         pricing: item.pricing,
+        ...(isRelated && relatedNiche ? { sourceNiche: relatedNiche } : {}),
         bio: `This is where a ${kind}-brand tailored bio for ${normalized.name} and ${item.brand.name} will appear.`,
         pitchEmail: `Hi ${item.brand.name},
 

@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Booking.com",
+    "niche": "travel",
+    "brandTier": "iconic",
+    "fameScore": 0.91,
+    "idealCreatorTier": [
+      "micro",
+      "mid",
+      "macro",
+      "mega"
+    ],
+    "minSubscribers": 5000,
+    "maxSubscribers": 30000000,
+    "avgCPM": 30,
+    "collaborationStyle": "accommodation integration, travel vlog, affiliate link",
+    "brandPersonality": "global, accessible, deal-focused, adventure-enabling",
+    "notes": "One of the most widely-used travel sponsors; accessible to creators of all sizes"
+  },
+  {
+    "name": "Heymondo Travel Insurance",
+    "niche": "travel",
+    "brandTier": "mid",
+    "fameScore": 0.4,
+    "idealCreatorTier": [
+      "micro",
+      "mid"
+    ],
+    "minSubscribers": 5000,
+    "maxSubscribers": 800000,
+    "avgCPM": 42,
+    "collaborationStyle": "travel safety story, sponsored segment, affiliate",
+    "brandPersonality": "adventurous, responsible, global, safety-conscious",
+    "notes": "Aggressively sponsoring travel creators; good commission rates for affiliates"
+  },
+  {
+    "name": "Ekster Wallets",
+    "niche": "travel",
+    "brandTier": "emerging",
+    "fameScore": 0.3,
+    "idealCreatorTier": [
+      "nano",
+      "micro",
+      "mid"
+    ],
+    "minSubscribers": 2000,
+    "maxSubscribers": 400000,
+    "avgCPM": 40,
+    "collaborationStyle": "travel gear review, minimalist packing, everyday carry",
+    "brandPersonality": "sleek, minimalist, smart, travel-optimized",
+    "notes": "Smart wallet brand; ideal for minimalist travel creators or everyday carry content"
+  }
+]

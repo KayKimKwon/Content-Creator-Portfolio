@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-03-01",
+  "niches": [
+    "lifestyle",
+    "fitness",
+    "beauty",
+    "food",
+    "tech",
+    "finance",
+    "gaming",
+    "travel"
+  ],
+  "tiers": {
+    "iconic": { "fameScoreRange": [0.75, 1.0], "fameScore_numeric": [8, 10] },
+    "mid": { "fameScoreRange": [0.40, 0.74], "fameScore_numeric": [4, 7] },
+    "emerging": { "fameScoreRange": [0.10, 0.39], "fameScore_numeric": [1, 3] }
+  },
+  "creatorTiers": {
+    "nano": { "minSubs": 500, "maxSubs": 4999 },
+    "micro": { "minSubs": 5000, "maxSubs": 49999 },
+    "mid": { "minSubs": 50000, "maxSubs": 249999 },
+    "macro": { "minSubs": 250000, "maxSubs": 1999999 },
+    "mega": { "minSubs": 2000000, "maxSubs": null }
+  },
+  "schema": {
+    "required": ["name", "niche", "brandTier", "fameScore", "idealCreatorTier", "minSubscribers", "maxSubscribers", "avgCPM", "collaborationStyle", "brandPersonality"],
+    "optional": ["notes"]
+  }
+}

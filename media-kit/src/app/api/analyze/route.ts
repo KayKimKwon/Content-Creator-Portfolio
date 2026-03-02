@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import brands from "@/data/brands.json";
+import { getMeta, getBrandsForNiches } from "@/lib/brands";
 
 const client = new Anthropic();
 
@@ -30,7 +30,7 @@ function calcFame(audience: number, reach: number, engagement:number) {
 function parseFollowers(text: string, platform: "instagram" | "tiktok") {
     const regex = new RegExp('${platform}[^\\d]*([\\d,]+)', "i");
     const match = text.match(regex);
-    return match ? parseInt(match[1].replace(/,/g, "") 10) : 0;
+    return match ? parseInt(match[1].replace(/,/g, ""), 10) : 0;
 }
 
 
@@ -98,13 +98,19 @@ export async function POST(req: NextRequest) {
         const engagementScore = calcEngagementScore(ytData.videos);
         const creatorFame = calcFame(audienceScore, reachScore, engagementScore);
 
-        const detectedNiche = nicheOverride || (await detectNiche(ytData.videos));
+        const detectedNiche = (nicheOverride || (await detectNiche(ytData.videos))).toLowerCase();
 
-
-        const candidates = (brands as any[]).filter((b) => brands.niche === detectNiche);
+        const allBrands = getBrandsForNiches(getMeta().niches);
+        const candidates = allBrands.filter((b) => b.niche === detectedNiche);
         const scored = await Promise.all(
             candidates.map(async (brand) => {
-                const {score, reasoning} = await scoreCompatibility(detectNiche, ytData.videos, brand);
+                const brandForScore = {
+                    name: brand.name,
+                    niche: brand.niche,
+                    description: brand.notes ?? brand.brandPersonality,
+                    typicalCreatorPartners: brand.collaborationStyle,
+                };
+                const { score, reasoning } = await scoreCompatibility(detectNiche, ytData.videos, brandForScore);
                 const finalScore = 0.5 * score + 0.5 * (creatorFame * 10);
 
                 return {brand, compabilityScore: score, finalScore, reasoning};
@@ -126,11 +132,11 @@ export async function POST(req: NextRequest) {
         .sort((a,b) => b.compabilityScore - a.compabilityScore)
         .slice(0,1);
 
-        const toCompany = (type: "target" | "reach") => ({ brand, compatibilityScore, finalScore, reasoning }: typeof scored[0]) => ({
+        const toCompany = (type: "target" | "reach") => ({ brand, compabilityScore, finalScore, reasoning }: (typeof scored)[0]) => ({
             name: brand.name,
-            description: brand.description,
+            description: brand.notes ?? brand.brandPersonality,
             type,
-            compatibilityScore: Math.round(compatibilityScore),
+            compatibilityScore: Math.round(compabilityScore),
             finalScore: Math.round(finalScore),
             acceptanceProbability: finalScore >= 70 ? "High" : finalScore >= 55 ? "Medium" : "Low",
             reasoning,

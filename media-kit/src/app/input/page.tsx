@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function InputPage() {
@@ -10,6 +10,7 @@ export default function InputPage() {
   const [youtubeChannelID, setYoutubeChannelID] = useState("");
   const [email, setEmail] = useState("");
   const [niche, setNiche] = useState("");
+  const [nicheOptions, setNicheOptions] = useState<string[]>([]);
   const [targetCompanies, setTargetCompanies] = useState("");
   const [pastCollabs, setPastCollabs] = useState("");
   const [instagramFollowers, setInstagramFollowers] = useState("");
@@ -21,6 +22,13 @@ export default function InputPage() {
   const [showAdvancedMetrics, setShowAdvancedMetrics] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/meta")
+      .then((r) => r.ok ? r.json() : { niches: [] })
+      .then((data) => setNicheOptions(data.niches ?? []))
+      .catch(() => setNicheOptions([]));
+  }, []);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -38,6 +46,11 @@ export default function InputPage() {
 
     if (!email.trim()) {
       setError("Please enter your email.");
+      return;
+    }
+
+    if (!niche.trim()) {
+      setError("Please select your niche from the dropdown.");
       return;
     }
 
@@ -143,32 +156,41 @@ export default function InputPage() {
 
           <div className="space-y-2">
             <label className="block text-sm font-medium">
-              YouTube channel URL or ID <span className="text-red-500">*</span>
+              YouTube channel ID <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={youtubeChannelID}
               onChange={(e) => setYoutubeChannelID(e.target.value)}
-              placeholder="https://www.youtube.com/@yourchannel or UC..."
+              placeholder="e.g. UC_x5XG1OV2P6uZZ5FSM9Ttw"
               className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
             />
             <p className="text-xs text-zinc-500">
-              We&apos;ll use the YouTube API to fetch your stats and recent
-              videos. No password or auth needed.
+              Your channel ID (starts with UC…). We fetch your stats and recent
+              videos via the YouTube API — no login required.
             </p>
           </div>
 
           <div className="space-y-2">
             <label className="block text-sm font-medium">
-              Niche (optional)
+              Niche <span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
+            <select
               value={niche}
               onChange={(e) => setNiche(e.target.value)}
-              placeholder="e.g. fitness, tech, beauty — or we'll infer from your channel"
+              required
               className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
-            />
+            >
+              <option value="">Select a niche</option>
+              {nicheOptions.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-zinc-500">
+              Recommendations will focus on this niche plus one from a related niche.
+            </p>
           </div>
 
           <div className="space-y-2">

@@ -1,0 +1,52 @@
+[
+  {
+    "name": "HelloFresh",
+    "niche": "food",
+    "brandTier": "iconic",
+    "fameScore": 0.82,
+    "idealCreatorTier": [
+      "micro",
+      "mid",
+      "macro"
+    ],
+    "minSubscribers": 10000,
+    "maxSubscribers": 10000000,
+    "avgCPM": 35,
+    "collaborationStyle": "meal unboxing, recipe integration, discount code",
+    "brandPersonality": "fresh, convenient, family-friendly, approachable",
+    "notes": "One of the most prolific YouTube sponsors ever; wide creator range accepted"
+  },
+  {
+    "name": "Made In Cookware",
+    "niche": "food",
+    "brandTier": "mid",
+    "fameScore": 0.5,
+    "idealCreatorTier": [
+      "micro",
+      "mid",
+      "macro"
+    ],
+    "minSubscribers": 10000,
+    "maxSubscribers": 2000000,
+    "avgCPM": 38,
+    "collaborationStyle": "recipe showcase, product review, kitchen tour",
+    "brandPersonality": "craft, quality, chef-inspired, premium-accessible",
+    "notes": "Rapidly growing DTC cookware brand with active creator program"
+  },
+  {
+    "name": "Brightland",
+    "niche": "food",
+    "brandTier": "emerging",
+    "fameScore": 0.25,
+    "idealCreatorTier": [
+      "nano",
+      "micro"
+    ],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 50,
+    "collaborationStyle": "ingredient spotlight, cooking integration, aesthetic unboxing",
+    "brandPersonality": "artisan, farm-to-table, aesthetic, health-conscious",
+    "notes": "Premium olive oil / vinegar brand; ideal for food creators with aesthetic / slow-living angle"
+  }
+]
