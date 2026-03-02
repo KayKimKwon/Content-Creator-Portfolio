@@ -25,7 +25,7 @@ export default function InputPage() {
 
   useEffect(() => {
     fetch("/api/meta")
-      .then((r) => r.ok ? r.json() : { niches: [] })
+      .then((r) => (r.ok ? r.json() : { niches: [] }))
       .then((data) => setNicheOptions(data.niches ?? []))
       .catch(() => setNicheOptions([]));
   }, []);
@@ -53,19 +53,28 @@ export default function InputPage() {
         }>;
       };
       if (payload.name != null) setName(String(payload.name));
-      if (payload.youtubeChannelID != null) setYoutubeChannelID(String(payload.youtubeChannelID));
+      if (payload.youtubeChannelID != null)
+        setYoutubeChannelID(String(payload.youtubeChannelID));
       if (payload.email != null) setEmail(String(payload.email));
       if (payload.niche != null) setNiche(String(payload.niche));
-      if (payload.targetCompanies != null) setTargetCompanies(String(payload.targetCompanies));
-      if (payload.pastCollabs != null) setPastCollabs(String(payload.pastCollabs));
+      if (payload.targetCompanies != null)
+        setTargetCompanies(String(payload.targetCompanies));
+      if (payload.pastCollabs != null)
+        setPastCollabs(String(payload.pastCollabs));
       const p0 = payload.platforms?.[0];
       if (p0) {
-        if (p0.instagramFollowers != null) setInstagramFollowers(String(p0.instagramFollowers));
-        if (p0.instagramMaxLikes != null) setInstagramMaxLikes(String(p0.instagramMaxLikes));
-        if (p0.instagramMaxViews != null) setInstagramMaxViews(String(p0.instagramMaxViews));
-        if (p0.tiktokFollowers != null) setTiktokFollowers(String(p0.tiktokFollowers));
-        if (p0.tiktokMaxLikes != null) setTiktokMaxLikes(String(p0.tiktokMaxLikes));
-        if (p0.tiktokMaxViews != null) setTiktokMaxViews(String(p0.tiktokMaxViews));
+        if (p0.instagramFollowers != null)
+          setInstagramFollowers(String(p0.instagramFollowers));
+        if (p0.instagramMaxLikes != null)
+          setInstagramMaxLikes(String(p0.instagramMaxLikes));
+        if (p0.instagramMaxViews != null)
+          setInstagramMaxViews(String(p0.instagramMaxViews));
+        if (p0.tiktokFollowers != null)
+          setTiktokFollowers(String(p0.tiktokFollowers));
+        if (p0.tiktokMaxLikes != null)
+          setTiktokMaxLikes(String(p0.tiktokMaxLikes));
+        if (p0.tiktokMaxViews != null)
+          setTiktokMaxViews(String(p0.tiktokMaxViews));
       }
     } catch {
       // ignore invalid stored payload
@@ -145,19 +154,23 @@ export default function InputPage() {
       }
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem("matchResult", JSON.stringify(data));
-        window.sessionStorage.setItem("lastMatchPayload", JSON.stringify(payload));
-        const shown = (data.recommendations ?? []).map((r: { brandName: string }) => r.brandName);
+        window.sessionStorage.setItem(
+          "lastMatchPayload",
+          JSON.stringify(payload),
+        );
+        const shown = (data.recommendations ?? []).map(
+          (r: { brandName: string }) => r.brandName,
+        );
         window.sessionStorage.setItem("shownBrandNames", JSON.stringify(shown));
         window.sessionStorage.setItem("matchRefreshUsed", "false");
       }
 
       router.push("/output");
-
-
-
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "Something went wrong. Please try again."
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.",
       );
     } finally {
       setIsLoading(false);
@@ -290,86 +303,86 @@ export default function InputPage() {
             </button>
             {showAdvancedMetrics && (
               <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-3">
-              <p className="text-sm font-medium">Instagram (optional)</p>
-              <div className="space-y-2">
-                <label className="block text-xs text-zinc-600 dark:text-zinc-400">
-                  Followers
-                </label>
-                <input
-                  type="text"
-                  value={instagramFollowers}
-                  onChange={(e) => setInstagramFollowers(e.target.value)}
-                  placeholder="25,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs text-zinc-600 dark:text-zinc-400">
-                  Max likes (best video)
-                </label>
-                <input
-                  type="text"
-                  value={instagramMaxLikes}
-                  onChange={(e) => setInstagramMaxLikes(e.target.value)}
-                  placeholder="10,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs text-zinc-600 dark:text-zinc-400">
-                  Max views (best video)
-                </label>
-                <input
-                  type="text"
-                  value={instagramMaxViews}
-                  onChange={(e) => setInstagramMaxViews(e.target.value)}
-                  placeholder="150,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
-                />
-              </div>
-            </div>
+                <div className="space-y-3">
+                  <p className="text-sm font-medium">Instagram (optional)</p>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-zinc-600 dark:text-zinc-400">
+                      Followers
+                    </label>
+                    <input
+                      type="text"
+                      value={instagramFollowers}
+                      onChange={(e) => setInstagramFollowers(e.target.value)}
+                      placeholder="25,000"
+                      className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-zinc-600 dark:text-zinc-400">
+                      Max likes (best video)
+                    </label>
+                    <input
+                      type="text"
+                      value={instagramMaxLikes}
+                      onChange={(e) => setInstagramMaxLikes(e.target.value)}
+                      placeholder="10,000"
+                      className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-zinc-600 dark:text-zinc-400">
+                      Max views (best video)
+                    </label>
+                    <input
+                      type="text"
+                      value={instagramMaxViews}
+                      onChange={(e) => setInstagramMaxViews(e.target.value)}
+                      placeholder="150,000"
+                      className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                    />
+                  </div>
+                </div>
 
-            <div className="space-y-3">
-              <p className="text-sm font-medium">TikTok (optional)</p>
-              <div className="space-y-2">
-                <label className="block text-xs text-zinc-600 dark:text-zinc-400">
-                  Followers
-                </label>
-                <input
-                  type="text"
-                  value={tiktokFollowers}
-                  onChange={(e) => setTiktokFollowers(e.target.value)}
-                  placeholder="40,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
-                />
+                <div className="space-y-3">
+                  <p className="text-sm font-medium">TikTok (optional)</p>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-zinc-600 dark:text-zinc-400">
+                      Followers
+                    </label>
+                    <input
+                      type="text"
+                      value={tiktokFollowers}
+                      onChange={(e) => setTiktokFollowers(e.target.value)}
+                      placeholder="40,000"
+                      className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-zinc-600 dark:text-zinc-400">
+                      Max likes (best video)
+                    </label>
+                    <input
+                      type="text"
+                      value={tiktokMaxLikes}
+                      onChange={(e) => setTiktokMaxLikes(e.target.value)}
+                      placeholder="20,000"
+                      className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-zinc-600 dark:text-zinc-400">
+                      Max views (best video)
+                    </label>
+                    <input
+                      type="text"
+                      value={tiktokMaxViews}
+                      onChange={(e) => setTiktokMaxViews(e.target.value)}
+                      placeholder="300,000"
+                      className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="space-y-2">
-                <label className="block text-xs text-zinc-600 dark:text-zinc-400">
-                  Max likes (best video)
-                </label>
-                <input
-                  type="text"
-                  value={tiktokMaxLikes}
-                  onChange={(e) => setTiktokMaxLikes(e.target.value)}
-                  placeholder="20,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="block text-xs text-zinc-600 dark:text-zinc-400">
-                  Max views (best video)
-                </label>
-                <input
-                  type="text"
-                  value={tiktokMaxViews}
-                  onChange={(e) => setTiktokMaxViews(e.target.value)}
-                  placeholder="300,000"
-                  className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-zinc-700 dark:bg-zinc-900 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
-                />
-              </div>
-            </div>
-          </div>
             )}
           </div>
 

@@ -69,7 +69,10 @@ export default function StatsPage() {
           <div className="rounded-xl border border-zinc-200 bg-white p-8 text-center dark:border-zinc-800 dark:bg-zinc-900">
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
               No creator stats yet. Run a match from the{" "}
-              <Link href="/input" className="font-medium text-emerald-600 underline dark:text-emerald-400">
+              <Link
+                href="/input"
+                className="font-medium text-emerald-600 underline dark:text-emerald-400"
+              >
                 input page
               </Link>{" "}
               to see your profile and metrics here.
@@ -83,19 +86,25 @@ export default function StatsPage() {
               </h2>
               <dl className="mt-4 space-y-3">
                 <div>
-                  <dt className="text-xs text-zinc-500 dark:text-zinc-400">Name</dt>
+                  <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                    Name
+                  </dt>
                   <dd className="mt-0.5 text-sm font-medium text-zinc-900 dark:text-zinc-50">
                     {creator.name}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-zinc-500 dark:text-zinc-400">YouTube channel ID</dt>
+                  <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                    YouTube channel ID
+                  </dt>
                   <dd className="mt-0.5 break-all text-sm text-zinc-700 dark:text-zinc-300">
                     {creator.youtubeChannelId}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-xs text-zinc-500 dark:text-zinc-400">Niche</dt>
+                  <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                    Niche
+                  </dt>
                   <dd className="mt-0.5 text-sm text-zinc-700 dark:text-zinc-300">
                     {creator.niche ?? "—"}
                   </dd>
@@ -103,7 +112,9 @@ export default function StatsPage() {
               </dl>
             </section>
 
-            {(creator.estimatedSubscribers != null || creator.estimatedAvgViews != null || creator.tier) && (
+            {(creator.estimatedSubscribers != null ||
+              creator.estimatedAvgViews != null ||
+              creator.tier) && (
               <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
                 <h2 className="text-sm font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
                   Metrics
@@ -111,7 +122,9 @@ export default function StatsPage() {
                 <dl className="mt-4 space-y-3">
                   {creator.estimatedSubscribers != null && (
                     <div>
-                      <dt className="text-xs text-zinc-500 dark:text-zinc-400">Estimated subscribers</dt>
+                      <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                        Estimated subscribers
+                      </dt>
                       <dd className="mt-0.5 text-sm font-medium text-zinc-900 dark:text-zinc-50">
                         {formatNumber(creator.estimatedSubscribers)}
                       </dd>
@@ -119,7 +132,9 @@ export default function StatsPage() {
                   )}
                   {creator.estimatedAvgViews != null && (
                     <div>
-                      <dt className="text-xs text-zinc-500 dark:text-zinc-400">Estimated avg views per video</dt>
+                      <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                        Estimated avg views per video
+                      </dt>
                       <dd className="mt-0.5 text-sm font-medium text-zinc-900 dark:text-zinc-50">
                         {formatNumber(creator.estimatedAvgViews)}
                       </dd>
@@ -127,7 +142,9 @@ export default function StatsPage() {
                   )}
                   {creator.tier && (
                     <div>
-                      <dt className="text-xs text-zinc-500 dark:text-zinc-400">Creator tier</dt>
+                      <dt className="text-xs text-zinc-500 dark:text-zinc-400">
+                        Creator tier
+                      </dt>
                       <dd className="mt-0.5 text-sm font-medium text-zinc-900 dark:text-zinc-50">
                         {tierLabel(creator.tier)}
                       </dd>
@@ -137,36 +154,38 @@ export default function StatsPage() {
               </section>
             )}
 
-            {creator.channelDescription != null && creator.channelDescription !== "" && (
-              <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-                <h2 className="text-sm font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
-                  Channel description
-                </h2>
-                <p className="mt-3 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
-                  {creator.channelDescription}
-                </p>
-              </section>
-            )}
-
-            {creator.recentVideoTitles && creator.recentVideoTitles.length > 0 && (
-              <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-                <h2 className="text-sm font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
-                  Recent video titles
-                </h2>
-                <ul className="mt-3 list-inside list-disc space-y-1 text-sm text-zinc-700 dark:text-zinc-300">
-                  {creator.recentVideoTitles.slice(0, 10).map((title, i) => (
-                    <li key={i} className="truncate">
-                      {title}
-                    </li>
-                  ))}
-                </ul>
-                {creator.recentVideoTitles.length > 10 && (
-                  <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-                    +{creator.recentVideoTitles.length - 10} more
+            {creator.channelDescription != null &&
+              creator.channelDescription !== "" && (
+                <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+                  <h2 className="text-sm font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+                    Channel description
+                  </h2>
+                  <p className="mt-3 whitespace-pre-line text-sm text-zinc-700 dark:text-zinc-300">
+                    {creator.channelDescription}
                   </p>
-                )}
-              </section>
-            )}
+                </section>
+              )}
+
+            {creator.recentVideoTitles &&
+              creator.recentVideoTitles.length > 0 && (
+                <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+                  <h2 className="text-sm font-medium uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+                    Recent video titles
+                  </h2>
+                  <ul className="mt-3 list-inside list-disc space-y-1 text-sm text-zinc-700 dark:text-zinc-300">
+                    {creator.recentVideoTitles.slice(0, 10).map((title, i) => (
+                      <li key={i} className="truncate">
+                        {title}
+                      </li>
+                    ))}
+                  </ul>
+                  {creator.recentVideoTitles.length > 10 && (
+                    <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                      +{creator.recentVideoTitles.length - 10} more
+                    </p>
+                  )}
+                </section>
+              )}
           </div>
         )}
       </div>

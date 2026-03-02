@@ -128,31 +128,12 @@ export async function fetchRecentVideoStats(
     items?: Array<{ contentDetails?: { videoId?: string }; snippet?: { title?: string } }>;
   };
 
-  const videoIds = (playlistData.items ?? [])
-    .map((i) => i.contentDetails?.videoId)
-    .filter(Boolean) as string[];
-
-  if (videoIds.length === 0) return [];
-
-  const videosUrl = new URL(`${BASE}/videos`);
-  videosUrl.searchParams.set("key", key);
-  videosUrl.searchParams.set("id", videoIds.join(","));
-  videosUrl.searchParams.set("part", "statistics,snippet");
-
-  const videosData = (await fetchJson(videosUrl.toString())) as {
-    items?: Array<{
-      id: string;
-      statistics?: { viewCount?: string; likeCount?: string; commentCount?: string };
-      snippet?: { title?: string };
-    }>;
-  };
-
-  return (videosData.items ?? []).map((i) => ({
-    videoId: i.id,
+  return (playlistData.items ?? []).map((i) => ({
+    videoId: i.contentDetails?.videoId ?? "",
     title: i.snippet?.title ?? "",
-    viewCount: parseInt(i.statistics?.viewCount ?? "0", 10) || 0,
-    likeCount: parseInt(i.statistics?.likeCount ?? "0", 10) || 0,
-    commentCount: parseInt(i.statistics?.commentCount ?? "0", 10) || 0,
+    viewCount: 0,
+    likeCount: 0,
+    commentCount: 0,
   }));
 }
 
