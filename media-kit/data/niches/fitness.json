@@ -1,52 +1,194 @@
 [
   {
     "name": "Nike",
-    "niche": "fitness",
     "brandTier": "iconic",
     "fameScore": 0.98,
-    "idealCreatorTier": [
-      "mid",
-      "macro",
-      "mega"
-    ],
+    "idealCreatorTier": ["mid", "macro", "mega"],
     "minSubscribers": 100000,
     "maxSubscribers": 50000000,
     "avgCPM": 25,
-    "collaborationStyle": "performance-driven, campaign-based, ambassador",
+    "collaborationStyle": "performance campaign, ambassador, product integration",
     "brandPersonality": "premium, motivational, high-performance, aspirational",
-    "notes": "Highly selective; prioritizes athletes and high-production fitness creators"
+    "notes": "Highly selective; prioritizes athletes and high-production fitness creators; agency-mediated"
+  },
+  {
+    "name": "Adidas",
+    "brandTier": "iconic",
+    "fameScore": 0.96,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 100000,
+    "maxSubscribers": 40000000,
+    "avgCPM": 23,
+    "collaborationStyle": "lifestyle-sport integration, ambassador, campaign-based",
+    "brandPersonality": "street-meets-sport, inclusive, culture-driven, bold",
+    "notes": "Slightly more creator-accessible than Nike; strong in running, yoga, and street fitness"
+  },
+  {
+    "name": "Peloton",
+    "brandTier": "iconic",
+    "fameScore": 0.88,
+    "idealCreatorTier": ["mid", "macro", "mega"],
+    "minSubscribers": 50000,
+    "maxSubscribers": 10000000,
+    "avgCPM": 35,
+    "collaborationStyle": "home workout integration, equipment review, lifestyle story",
+    "brandPersonality": "premium, community-driven, aspirational, results-focused",
+    "notes": "Best fit for home fitness and wellness lifestyle creators; strong female audience overlap"
+  },
+  {
+    "name": "Lululemon",
+    "brandTier": "iconic",
+    "fameScore": 0.92,
+    "idealCreatorTier": ["micro", "mid", "macro", "mega"],
+    "minSubscribers": 20000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 30,
+    "collaborationStyle": "workout integration, apparel showcase, ambassador",
+    "brandPersonality": "premium-athletic, mindful, community, elevated-everyday",
+    "notes": "Active ambassador program accessible to micro creators; strong yoga, pilates, and run niche fit"
   },
   {
     "name": "MyProtein",
-    "niche": "fitness",
     "brandTier": "mid",
     "fameScore": 0.58,
-    "idealCreatorTier": [
-      "micro",
-      "mid",
-      "macro"
-    ],
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 5000,
     "maxSubscribers": 3000000,
     "avgCPM": 28,
-    "collaborationStyle": "discount code, product gifting, affiliate",
+    "collaborationStyle": "discount code, product gifting, affiliate, supplement review",
     "brandPersonality": "science-backed, value, accessible, gym-culture",
-    "notes": "Very active sponsor in fitness space; known for generous affiliate commissions"
+    "notes": "Very active sponsor in fitness space; known for generous affiliate commissions and fast approvals"
+  },
+  {
+    "name": "Gymshark",
+    "brandTier": "mid",
+    "fameScore": 0.72,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 26,
+    "collaborationStyle": "workout apparel showcase, ambassador, fitness challenge",
+    "brandPersonality": "community-first, aspirational, gym-culture, youth-driven",
+    "notes": "Built almost entirely on creator partnerships; one of the most creator-native brands in fitness"
   },
   {
     "name": "Whoop",
-    "niche": "fitness",
-    "brandTier": "emerging",
-    "fameScore": 0.41,
-    "idealCreatorTier": [
-      "micro",
-      "mid"
-    ],
+    "brandTier": "mid",
+    "fameScore": 0.55,
+    "idealCreatorTier": ["micro", "mid", "macro"],
     "minSubscribers": 10000,
-    "maxSubscribers": 1000000,
+    "maxSubscribers": 2000000,
     "avgCPM": 40,
-    "collaborationStyle": "review, data-driven storytelling, lifestyle integration",
-    "brandPersonality": "data-obsessed, elite, biohacking, performance-tracking",
-    "notes": "Rising wearable brand — great for creators who blend fitness with tech/optimization content"
+    "collaborationStyle": "data-driven storytelling, wearable review, performance tracking",
+    "brandPersonality": "elite, data-obsessed, biohacking, performance-tracking",
+    "notes": "Rising wearable brand; great crossover between fitness and tech/optimization creators"
+  },
+  {
+    "name": "Gainful",
+    "brandTier": "mid",
+    "fameScore": 0.44,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 1000000,
+    "avgCPM": 38,
+    "collaborationStyle": "personalized nutrition story, supplement review, routine integration",
+    "brandPersonality": "personalized, science-forward, clean, goal-oriented",
+    "notes": "Personalized protein/supplement brand; strong fit for creators focused on nutrition and body composition"
+  },
+  {
+    "name": "Hyperice",
+    "brandTier": "mid",
+    "fameScore": 0.50,
+    "idealCreatorTier": ["micro", "mid", "macro"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 2000000,
+    "avgCPM": 42,
+    "collaborationStyle": "recovery routine, product demo, athlete integration",
+    "brandPersonality": "recovery-focused, athletic, high-performance, tech-meets-wellness",
+    "notes": "Recovery tech brand (Hypervolt, etc.); ideal for creators covering training, recovery, or injury prevention"
+  },
+  {
+    "name": "Alo Moves",
+    "brandTier": "mid",
+    "fameScore": 0.48,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 1200000,
+    "avgCPM": 35,
+    "collaborationStyle": "yoga/pilates integration, mindful movement, subscription demo",
+    "brandPersonality": "elevated, mindful, spiritual-meets-athletic, premium",
+    "notes": "Yoga/fitness streaming platform under Alo Yoga; strong fit for yoga, pilates, and mindfulness creators"
+  },
+  {
+    "name": "Tonal",
+    "brandTier": "emerging",
+    "fameScore": 0.36,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 10000,
+    "maxSubscribers": 800000,
+    "avgCPM": 50,
+    "collaborationStyle": "home gym showcase, strength training integration, tech review",
+    "brandPersonality": "innovative, premium, strength-focused, home-gym",
+    "notes": "Smart home strength trainer; high CPM for the right audience — home fitness and tech-forward creators"
+  },
+  {
+    "name": "Momentous",
+    "brandTier": "emerging",
+    "fameScore": 0.32,
+    "idealCreatorTier": ["micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 600000,
+    "avgCPM": 45,
+    "collaborationStyle": "elite supplement review, performance nutrition story, science-backed segment",
+    "brandPersonality": "elite, evidence-based, clean-label, performance-obsessed",
+    "notes": "NSF-certified sports nutrition brand used by pro athletes; ideal for serious fitness and biohacking creators"
+  },
+  {
+    "name": "Lumen",
+    "brandTier": "emerging",
+    "fameScore": 0.28,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 5000,
+    "maxSubscribers": 500000,
+    "avgCPM": 48,
+    "collaborationStyle": "metabolism tracking story, biohacking integration, product review",
+    "brandPersonality": "science-driven, biohacking, data-curious, health-optimization",
+    "notes": "Handheld metabolism tracker; strong niche fit for creators covering nutrition science, fasting, or metabolic health"
+  },
+  {
+    "name": "Viivo",
+    "brandTier": "emerging",
+    "fameScore": 0.18,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 1000,
+    "maxSubscribers": 150000,
+    "avgCPM": 36,
+    "collaborationStyle": "recovery product demo, soreness/injury story, athlete lifestyle",
+    "brandPersonality": "accessible, recovery-focused, community, practical",
+    "notes": "Emerging recovery brand targeting everyday athletes; approachable for smaller fitness creators"
+  },
+  {
+    "name": "Bala",
+    "brandTier": "emerging",
+    "fameScore": 0.30,
+    "idealCreatorTier": ["nano", "micro", "mid"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 400000,
+    "avgCPM": 33,
+    "collaborationStyle": "workout integration, aesthetic fitness content, product showcase",
+    "brandPersonality": "design-forward, playful, accessible, lifestyle-fitness",
+    "notes": "Aesthetically driven fitness accessories (weighted bangles, bars); great for yoga, pilates, and aesthetic workout creators"
+  },
+  {
+    "name": "Ketone-IQ",
+    "brandTier": "emerging",
+    "fameScore": 0.22,
+    "idealCreatorTier": ["nano", "micro"],
+    "minSubscribers": 2000,
+    "maxSubscribers": 200000,
+    "avgCPM": 52,
+    "collaborationStyle": "performance drink review, cognitive/physical edge story, biohacking segment",
+    "brandPersonality": "cutting-edge, performance, science-forward, keto-adjacent",
+    "notes": "Ketone drink for mental and physical performance; niche but high CPM — ideal for biohacking, endurance, and optimization creators"
   }
 ]

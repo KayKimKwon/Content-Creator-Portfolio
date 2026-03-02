@@ -30,6 +30,48 @@ export default function InputPage() {
       .catch(() => setNicheOptions([]));
   }, []);
 
+  // Pre-fill from last submission when returning from output (e.g. "Back to input").
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = window.sessionStorage.getItem("lastMatchPayload");
+    if (!raw) return;
+    try {
+      const payload = JSON.parse(raw) as {
+        name?: string;
+        youtubeChannelID?: string;
+        email?: string;
+        niche?: string;
+        targetCompanies?: string;
+        pastCollabs?: string;
+        platforms?: Array<{
+          instagramFollowers?: number | null;
+          instagramMaxLikes?: number | null;
+          instagramMaxViews?: number | null;
+          tiktokFollowers?: number | null;
+          tiktokMaxLikes?: number | null;
+          tiktokMaxViews?: number | null;
+        }>;
+      };
+      if (payload.name != null) setName(String(payload.name));
+      if (payload.youtubeChannelID != null) setYoutubeChannelID(String(payload.youtubeChannelID));
+      if (payload.email != null) setEmail(String(payload.email));
+      if (payload.niche != null) setNiche(String(payload.niche));
+      if (payload.targetCompanies != null) setTargetCompanies(String(payload.targetCompanies));
+      if (payload.pastCollabs != null) setPastCollabs(String(payload.pastCollabs));
+      const p0 = payload.platforms?.[0];
+      if (p0) {
+        if (p0.instagramFollowers != null) setInstagramFollowers(String(p0.instagramFollowers));
+        if (p0.instagramMaxLikes != null) setInstagramMaxLikes(String(p0.instagramMaxLikes));
+        if (p0.instagramMaxViews != null) setInstagramMaxViews(String(p0.instagramMaxViews));
+        if (p0.tiktokFollowers != null) setTiktokFollowers(String(p0.tiktokFollowers));
+        if (p0.tiktokMaxLikes != null) setTiktokMaxLikes(String(p0.tiktokMaxLikes));
+        if (p0.tiktokMaxViews != null) setTiktokMaxViews(String(p0.tiktokMaxViews));
+      }
+    } catch {
+      // ignore invalid stored payload
+    }
+  }, []);
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setError(null);
@@ -88,16 +130,21 @@ export default function InputPage() {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to generate recommendations.");
-      }
-
       const data = await res.json();
+
+      if (!res.ok) {
+        const message =
+          typeof data?.error === "string"
+            ? data.error
+            : "Failed to generate recommendations.";
+        throw new Error(message);
+      }
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem("matchResult", JSON.stringify(data));
         window.sessionStorage.setItem("lastMatchPayload", JSON.stringify(payload));
         const shown = (data.recommendations ?? []).map((r: { brandName: string }) => r.brandName);
         window.sessionStorage.setItem("shownBrandNames", JSON.stringify(shown));
+        window.sessionStorage.setItem("matchRefreshUsed", "false");
       }
       router.push("/output");
     } catch (err) {

@@ -37,10 +37,13 @@ interface MatchResponse {
   recommendations: BrandRecommendation[];
 }
 
+const REFRESH_USED_KEY = "matchRefreshUsed";
+
 export default function OutputPage() {
   const [data, setData] = useState<MatchResponse | null>(null);
   const [expandedKey, setExpandedKey] = useState<string | null>(null);
   const [refreshLoading, setRefreshLoading] = useState(false);
+  const [refreshUsed, setRefreshUsed] = useState(false);
 
   const loadFromStorage = useCallback(() => {
     if (typeof window === "undefined") return;
@@ -52,6 +55,8 @@ export default function OutputPage() {
     } catch {
       // ignore
     }
+    const used = window.sessionStorage.getItem(REFRESH_USED_KEY);
+    setRefreshUsed(used === "true");
   }, []);
 
   useEffect(() => {
@@ -61,7 +66,7 @@ export default function OutputPage() {
   async function handleRefresh() {
     const payloadRaw = typeof window !== "undefined" ? window.sessionStorage.getItem("lastMatchPayload") : null;
     const shownRaw = typeof window !== "undefined" ? window.sessionStorage.getItem("shownBrandNames") : null;
-    if (!payloadRaw) return;
+    if (!payloadRaw || refreshUsed) return;
     try {
       const payload = JSON.parse(payloadRaw) as Record<string, unknown>;
       const shown: string[] = shownRaw ? JSON.parse(shownRaw) : [];
@@ -71,11 +76,16 @@ export default function OutputPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...payload, excludeBrands: shown }),
       });
-      if (!res.ok) throw new Error("Refresh failed");
-      const next = (await res.json()) as MatchResponse;
+      const next = (await res.json()) as MatchResponse & { error?: string };
+      if (!res.ok) {
+        setData(null);
+        return;
+      }
       const nextNames = (next.recommendations ?? []).map((r) => r.brandName);
       window.sessionStorage.setItem("matchResult", JSON.stringify(next));
       window.sessionStorage.setItem("shownBrandNames", JSON.stringify([...shown, ...nextNames]));
+      window.sessionStorage.setItem(REFRESH_USED_KEY, "true");
+      setRefreshUsed(true);
       setData(next);
       setExpandedKey(null);
     } catch {
@@ -106,14 +116,22 @@ export default function OutputPage() {
               </p>
             )}
           </div>
-          <button
-            type="button"
-            onClick={handleRefresh}
-            disabled={refreshLoading || !data}
-            className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-emerald-50 px-4 py-2 text-xs font-medium text-emerald-700 transition hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-500 dark:bg-emerald-950 dark:text-emerald-300 dark:hover:bg-emerald-900"
-          >
-            {refreshLoading ? "Loading…" : "Refresh suggestions"}
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/input"
+              className="inline-flex items-center justify-center rounded-full border border-zinc-300 bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-700 transition hover:bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+            >
+              Back to input
+            </Link>
+            <button
+              type="button"
+              onClick={handleRefresh}
+              disabled={refreshLoading || !data || refreshUsed}
+              className="inline-flex items-center justify-center rounded-full border border-emerald-600 bg-emerald-50 px-4 py-2 text-xs font-medium text-emerald-700 transition hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-500 dark:bg-emerald-950 dark:text-emerald-300 dark:hover:bg-emerald-900"
+            >
+              {refreshLoading ? "Loading…" : refreshUsed ? "Refresh used" : "Refresh suggestions"}
+            </button>
+          </div>
         </header>
 
         {data && (

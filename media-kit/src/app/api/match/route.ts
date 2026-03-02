@@ -363,6 +363,15 @@ export async function POST(req: Request) {
       (b) => !excludeSet.has(b.name.toLowerCase().trim())
     );
 
+    if (inNicheBrands.length < 3) {
+      return new Response(
+        JSON.stringify({
+          error: `Not enough brands in the "${userNiche}" niche to generate recommendations (found ${inNicheBrands.length}, need at least 3). Try another niche or add more brands to data/niches/${userNiche}.json.`,
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const scoreOne = (brand: Brand) => {
       const scores = scoreBrand(brand, creator, normalized);
       return { brand, ...scores };
@@ -417,16 +426,18 @@ export async function POST(req: Request) {
       ...(chosenRelated ? [chosenRelated] : []),
     ].slice(0, 4);
 
-    const recommendations: BrandRecommendation[] = picked.map((item, index) => {
-      const isRelated = index === 3 && chosenRelated != null;
-      const kind: RecommendationKind = isRelated
-        ? "related"
-        : index === 0
-          ? "reach"
-          : "target";
+    const recommendations: BrandRecommendation[] = picked
+      .filter((item): item is NonNullable<typeof item> => item != null && item.brand != null)
+      .map((item, index) => {
+        const isRelated = index === 3 && chosenRelated != null;
+        const kind: RecommendationKind = isRelated
+          ? "related"
+          : index === 0
+            ? "reach"
+            : "target";
 
-      return {
-        brandName: item.brand.name,
+        return {
+          brandName: item.brand.name,
         kind,
         compatibilityScore: Number(item.compatibilityScore.toFixed(1)),
         acceptance: item.acceptance,
