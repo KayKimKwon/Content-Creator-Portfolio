@@ -58,8 +58,8 @@ export function getBrandsForNiche(niche: string): Brand[] {
   if (!existsSync(filePath)) return [];
   try {
     const raw = readFileSync(filePath, "utf8");
-    const arr = JSON.parse(raw) as Brand[];
-    return Array.isArray(arr) ? arr : [];
+    const arr = JSON.parse(raw) as Omit<Brand, "niche">[];
+    return Array.isArray(arr) ? arr.map((b) => ({ ...b, niche: key })) : [];
   } catch {
     return [];
   }
