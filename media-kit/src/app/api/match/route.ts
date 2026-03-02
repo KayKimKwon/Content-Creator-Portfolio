@@ -2,6 +2,10 @@
 // Defines request/response contracts and ranking logic for brand recommendations.
 
 import brandsData from "../../../../data/brands.json";
+import {
+  parseChannelId,
+  fetchYouTubeCreatorData,
+} from "@/lib/youtube";
 
 type PlatformName = "instagram" | "tiktok";
 
@@ -114,24 +118,14 @@ interface CreatorProfile {
   tier: CreatorTierName;
 }
 
-function estimateCreatorProfile(request: MatchRequest): CreatorProfile {
-  const ig = request.additionalPlatforms.find((p) => p.platform === "instagram");
-  const tt = request.additionalPlatforms.find((p) => p.platform === "tiktok");
+interface YouTubeCreatorData {
+  subscriberCount: number;
+  avgViewsPerVideo: number;
+  channelDescription: string;
+  recentVideoTitles: string[];
+}
 
-  const igFollowers = ig?.followers ?? 0;
-  const ttFollowers = tt?.followers ?? 0;
-
-  // Rough estimate of total audience based on optional IG/TikTok followers.
-  const estimatedSubscribers = Math.max(5000, igFollowers + ttFollowers || 5000);
-
-  // Assume a fraction of audience becomes average views.
-  const estimatedAvgViews = Math.max(
-    1000,
-    Math.round(estimatedSubscribers * 0.3)
-  );
-
-  // Map subs into a CreatorTierName using meta.creatorTiers.
-  let tier: CreatorTierName = "nano";
+function getTierFromSubscribers(subscribers: number): CreatorTierName {
   const tiersOrder: CreatorTierName[] = [
     "nano",
     "micro",
@@ -139,23 +133,44 @@ function estimateCreatorProfile(request: MatchRequest): CreatorProfile {
     "macro",
     "mega",
   ];
-
   for (const t of tiersOrder) {
     const meta = BRANDS_META.creatorTiers[t];
     if (!meta) continue;
     const min = meta.minSubs;
     const max = meta.maxSubs ?? Number.MAX_SAFE_INTEGER;
-    if (estimatedSubscribers >= min && estimatedSubscribers <= max) {
-      tier = t;
-      break;
-    }
+    if (subscribers >= min && subscribers <= max) return t;
   }
+  return "nano";
+}
+
+function estimateCreatorProfile(
+  request: MatchRequest,
+  youtubeData?: YouTubeCreatorData | null
+): CreatorProfile {
+  if (youtubeData) {
+    return {
+      estimatedSubscribers: youtubeData.subscriberCount,
+      estimatedAvgViews: youtubeData.avgViewsPerVideo,
+      niche: request.nicheOverride ?? null,
+      tier: getTierFromSubscribers(youtubeData.subscriberCount),
+    };
+  }
+
+  const ig = request.additionalPlatforms.find((p) => p.platform === "instagram");
+  const tt = request.additionalPlatforms.find((p) => p.platform === "tiktok");
+  const igFollowers = ig?.followers ?? 0;
+  const ttFollowers = tt?.followers ?? 0;
+  const estimatedSubscribers = Math.max(5000, igFollowers + ttFollowers || 5000);
+  const estimatedAvgViews = Math.max(
+    1000,
+    Math.round(estimatedSubscribers * 0.3)
+  );
 
   return {
     estimatedSubscribers,
     estimatedAvgViews,
     niche: request.nicheOverride ?? null,
-    tier,
+    tier: getTierFromSubscribers(estimatedSubscribers),
   };
 }
 
@@ -329,7 +344,23 @@ export async function POST(req: Request) {
     const raw = (await req.json()) as RawMatchRequest;
     const normalized = normalizeMatchRequest(raw);
 
-    const creator = estimateCreatorProfile(normalized);
+    let youtubeData: YouTubeCreatorData | null = null;
+    const channelId = parseChannelId(normalized.youtubeChannelId);
+    if (channelId && process.env.YOUTUBE_API_KEY) {
+      try {
+        const data = await fetchYouTubeCreatorData(channelId);
+        youtubeData = {
+          subscriberCount: data.channel.subscriberCount,
+          avgViewsPerVideo: data.avgViewsPerVideo,
+          channelDescription: data.channel.description,
+          recentVideoTitles: data.recentVideos.map((v) => v.title),
+        };
+      } catch (err) {
+        console.warn("YouTube API failed, using fallback profile:", err);
+      }
+    }
+
+    const creator = estimateCreatorProfile(normalized, youtubeData);
 
     const excludeSet = new Set(
       normalized.excludeBrands.map((n) => n.toLowerCase().trim())

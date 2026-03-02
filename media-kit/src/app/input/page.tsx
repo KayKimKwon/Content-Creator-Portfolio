@@ -143,18 +143,18 @@ export default function InputPage() {
 
           <div className="space-y-2">
             <label className="block text-sm font-medium">
-              YouTube channel URL or ID <span className="text-red-500">*</span>
+              YouTube channel ID <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={youtubeChannelID}
               onChange={(e) => setYoutubeChannelID(e.target.value)}
-              placeholder="https://www.youtube.com/@yourchannel or UC..."
+              placeholder="e.g. UC_x5XG1OV2P6uZZ5FSM9Ttw"
               className="w-full rounded-lg border border-zinc-300 bg-zinc-50 px-3 py-2 text-sm outline-none ring-0 focus:border-zinc-900 dark:border-zinc-700 dark:bg-zinc-900"
             />
             <p className="text-xs text-zinc-500">
-              We&apos;ll use the YouTube API to fetch your stats and recent
-              videos. No password or auth needed.
+              Your channel ID (starts with UC…). We fetch your stats and recent
+              videos via the YouTube API — no login required.
             </p>
           </div>
 
