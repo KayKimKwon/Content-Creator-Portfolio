@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 
 type AcceptanceBucket = "High" | "Medium" | "Low";
-type RecommendationKind = "reach" | "target";
+type RecommendationKind = "reach" | "target" | "related";
 
 interface AcceptanceProbability {
   bucket: AcceptanceBucket;
@@ -25,6 +25,7 @@ interface BrandRecommendation {
   pricing: PricingRange;
   bio: string;
   pitchEmail: string;
+  sourceNiche?: string;
 }
 
 interface MatchResponse {
@@ -93,7 +94,7 @@ export default function OutputPage() {
               Sponsorship recommendations
             </h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Two reach brands and two target brands to pitch.
+              Three in your niche (1 reach, 2 target) and one from a related niche.
             </p>
             {!data && (
               <p className="text-xs text-zinc-500">
@@ -129,7 +130,11 @@ export default function OutputPage() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <p className="text-xs text-zinc-500">
-                        {rec.kind === "reach" ? "Reach recommendation" : "Target recommendation"}
+                        {rec.kind === "reach"
+                          ? "Reach recommendation"
+                          : rec.kind === "related"
+                            ? `Related niche${rec.sourceNiche ? ` (${rec.sourceNiche})` : ""}`
+                            : "Target recommendation"}
                       </p>
                       <h2 className="mt-1 text-base font-semibold">{rec.brandName}</h2>
                     </div>

@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Fidelity",
+    "niche": "finance",
+    "brandTier": "iconic",
+    "fameScore": 0.88,
+    "idealCreatorTier": [
+      "mid",
+      "macro",
+      "mega"
+    ],
+    "minSubscribers": 100000,
+    "maxSubscribers": 20000000,
+    "avgCPM": 45,
+    "collaborationStyle": "educational integration, sponsored segment, brand awareness",
+    "brandPersonality": "trustworthy, authoritative, long-term, established",
+    "notes": "Heavily regulated — requires compliance review; CPM is high but process is slower"
+  },
+  {
+    "name": "Monarch Money",
+    "niche": "finance",
+    "brandTier": "mid",
+    "fameScore": 0.42,
+    "idealCreatorTier": [
+      "micro",
+      "mid"
+    ],
+    "minSubscribers": 5000,
+    "maxSubscribers": 1000000,
+    "avgCPM": 55,
+    "collaborationStyle": "budgeting tutorial, app walkthrough, personal finance story",
+    "brandPersonality": "modern, empowering, visual, budgeting-focused",
+    "notes": "Fast-growing Mint alternative; actively seeking finance and lifestyle creator partners"
+  },
+  {
+    "name": "Blossom",
+    "niche": "finance",
+    "brandTier": "emerging",
+    "fameScore": 0.2,
+    "idealCreatorTier": [
+      "nano",
+      "micro"
+    ],
+    "minSubscribers": 1000,
+    "maxSubscribers": 200000,
+    "avgCPM": 60,
+    "collaborationStyle": "investing explainer, app review, beginner finance tutorial",
+    "brandPersonality": "approachable, beginner-friendly, community-driven, transparent",
+    "notes": "Stock market social app targeting Gen Z investors; high CPM for small niche audiences"
+  }
+]

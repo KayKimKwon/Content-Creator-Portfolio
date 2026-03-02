@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Samsung",
+    "niche": "tech",
+    "brandTier": "iconic",
+    "fameScore": 0.96,
+    "idealCreatorTier": [
+      "macro",
+      "mega"
+    ],
+    "minSubscribers": 500000,
+    "maxSubscribers": 50000000,
+    "avgCPM": 20,
+    "collaborationStyle": "product launch, device review, campaign integration",
+    "brandPersonality": "innovative, premium, mainstream, feature-rich",
+    "notes": "Reserved for large channels; typically goes through agency intermediaries"
+  },
+  {
+    "name": "Anker",
+    "niche": "tech",
+    "brandTier": "mid",
+    "fameScore": 0.6,
+    "idealCreatorTier": [
+      "micro",
+      "mid",
+      "macro"
+    ],
+    "minSubscribers": 10000,
+    "maxSubscribers": 5000000,
+    "avgCPM": 27,
+    "collaborationStyle": "product review, unboxing, setup/desk tour integration",
+    "brandPersonality": "reliable, practical, value-focused, everyday-tech",
+    "notes": "Extremely creator-friendly; one of the most accessible mid-tier tech sponsors"
+  },
+  {
+    "name": "Ugreen",
+    "niche": "tech",
+    "brandTier": "emerging",
+    "fameScore": 0.33,
+    "idealCreatorTier": [
+      "nano",
+      "micro",
+      "mid"
+    ],
+    "minSubscribers": 2000,
+    "maxSubscribers": 500000,
+    "avgCPM": 33,
+    "collaborationStyle": "setup tour, cable/hub review, desk organization",
+    "brandPersonality": "clean, functional, setup-culture, value-premium",
+    "notes": "Aggressively sponsoring tech/setup creators; fast approval, competitive rates"
+  }
+]
