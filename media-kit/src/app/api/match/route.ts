@@ -7,6 +7,7 @@
 // Static JSON: no API cost, fast, deterministic, easy to tune. GPT each time would
 // allow context-aware related niches but adds latency, cost, and variability.
 
+import Anthropic from "@anthropic-ai/sdk";
 import {
   getMeta,
   getBrandsForNiche,
@@ -18,6 +19,8 @@ import {
   parseChannelId,
   fetchYouTubeCreatorData,
 } from "@/lib/youtube";
+
+const anthropic = new Anthropic();
 
 type PlatformName = "instagram" | "tiktok";
 
@@ -440,7 +443,8 @@ export async function POST(req: Request) {
       ...(chosenRelated ? [chosenRelated] : []),
     ].slice(0, 5);
 
-    const recommendations: BrandRecommendation[] = picked
+    // Build kind labels once so we can use them in the prompt and in the output.
+    const pickedWithKind = picked
       .filter((item): item is NonNullable<typeof item> => item != null && item.brand != null)
       .map((item, index) => {
         const isRelated = index === 4 && chosenRelated != null;
@@ -449,20 +453,77 @@ export async function POST(req: Request) {
           : index < 2
             ? "reach"
             : "target";
+        return { item, kind, isRelated };
+      });
 
+    const subsK = Math.round(creator.estimatedSubscribers / 1000);
+    const avgViews = Math.round(creator.estimatedAvgViews);
+    const pastCollabNote =
+      normalized.pastCollabs.length > 0
+        ? `Past brand collabs: ${normalized.pastCollabs.join(", ")}.`
+        : "";
+
+    // One API call for all brands to stay within free-tier rate limits (5 req/min).
+    const brandList = pickedWithKind
+      .map(
+        ({ item, kind }, i) =>
+          `${i + 1}. Brand: ${item.brand.name} | Personality: ${item.brand.brandPersonality} | Collab style: ${item.brand.collaborationStyle} | Rate: $${item.pricing.min}–$${item.pricing.max} | Match type: ${kind}`
+      )
+      .join("\n");
+
+    const batchPrompt =
+      `You are helping a ${userNiche} content creator named ${normalized.name} pitch brands for sponsorships.\n` +
+      `Creator stats: ~${subsK}k subscribers, ~${avgViews.toLocaleString()} avg views/video (${creator.tier} tier). ${pastCollabNote}\n\n` +
+      `For each brand below, write:\n` +
+      `1. A 2-sentence creator bio tailored to that brand (highlight audience fit and content style)\n` +
+      `2. A short, professional cold-pitch email (under 150 words) that:\n` +
+      `   - Opens with a hook about why they are a natural fit\n` +
+      `   - Mentions channel stats\n` +
+      `   - Proposes a specific collaboration format matching the brand's collab style\n` +
+      `   - Includes the rate range naturally\n` +
+      `   - Closes with a CTA to schedule a call or reply\n` +
+      `   - Has no subject line, plain text only, no placeholders\n\n` +
+      `Brands:\n${brandList}\n\n` +
+      `Return ONLY valid JSON in this exact shape, with no extra text:\n` +
+      `[\n` +
+      `  { "brandName": "<name>", "bio": "<2-sentence bio>", "pitchEmail": "<email body>" },\n` +
+      `  ...\n` +
+      `]`;
+
+    let generated: { brandName: string; bio: string; pitchEmail: string }[] = [];
+    try {
+      const msg = await anthropic.messages.create({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 2000,
+        messages: [{ role: "user", content: batchPrompt }],
+      });
+      const raw = msg.content[0].type === "text" ? msg.content[0].text.trim() : "[]";
+      const jsonStart = raw.indexOf("[");
+      const jsonEnd = raw.lastIndexOf("]");
+      generated = jsonStart !== -1 && jsonEnd !== -1
+        ? (JSON.parse(raw.slice(jsonStart, jsonEnd + 1)) as typeof generated)
+        : [];
+    } catch {
+      // If Claude call fails, leave generated empty; placeholders will be used below.
+    }
+
+    const genMap = new Map(generated.map((g) => [g.brandName, g]));
+
+    const recommendations: BrandRecommendation[] = pickedWithKind.map(
+      ({ item, kind, isRelated }) => {
+        const gen = genMap.get(item.brand.name);
         return {
           brandName: item.brand.name,
-        kind,
-        compatibilityScore: Number(item.compatibilityScore.toFixed(1)),
-        acceptance: item.acceptance,
-        pricing: item.pricing,
-        ...(isRelated && relatedNiche ? { sourceNiche: relatedNiche } : {}),
-        bio: `This is where a ${kind}-brand tailored bio for ${normalized.name} and ${item.brand.name} will appear.`,
-        pitchEmail: `Hi ${item.brand.name},
-
-This is a placeholder pitch email for a ${kind} recommendation. Once GPT is wired in, this will be customized to your channel stats and the ${item.brand.name} brand profile.`,
-      };
-    });
+          kind,
+          compatibilityScore: Number(item.compatibilityScore.toFixed(1)),
+          acceptance: item.acceptance,
+          pricing: item.pricing,
+          ...(isRelated && relatedNiche ? { sourceNiche: relatedNiche } : {}),
+          bio: gen?.bio ?? "",
+          pitchEmail: gen?.pitchEmail ?? "",
+        };
+      }
+    );
 
     const response: MatchResponse = {
       creator: {
