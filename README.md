@@ -2,7 +2,7 @@
 
 Niche.io analyzes your YouTube channel and matches you with brands that are the right fit — then writes your pitch email for you.
 
-Built at **HOTH XIII** with Next.js, Claude AI, and the YouTube Data API.
+Built at **HOTH XIII** with Next.js, Anthropic API, and the YouTube Data API.
 
 ---
 
